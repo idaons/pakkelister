@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from "react-dom";
 import "./styles.css";
+import NyListe from "./nyListe/NyListe";
 
 interface Props {
    name: string
@@ -8,7 +9,12 @@ interface Props {
 
 class App extends React.Component<Props> {
   render() {
-    return <div>Hello {this.props.name}</div>;
+    return (
+        <>
+            <div>Hello {this.props.name}</div>
+            <NyListe />
+        </>
+    );
   }
 }
 
