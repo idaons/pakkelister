@@ -75,6 +75,7 @@ export default function NyListe(){
                );
            })
            }
+           <button>Opprett liste</button>
        </>
    )
 }
