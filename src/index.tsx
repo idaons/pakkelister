@@ -11,7 +11,6 @@ class App extends React.Component<Props> {
   render() {
     return (
         <>
-            <div>Hello {this.props.name}</div>
             <NyListe />
         </>
     );

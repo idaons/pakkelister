@@ -1,5 +1,6 @@
 import * as React from 'react';
 import  { useState } from 'react';
+import './NyListe.less';
 
 const aktivitetsListeSommer=["Klatring", "Fottur", "Tinderangling", "Jogging"];
 const aktivitetsListeVinter=["Randonée", "Fjellski", "Langrenn klassisk", "Skøyteski"];
@@ -47,6 +48,8 @@ export default function NyListe(){
                Vinter
            </label>
            <h2>Aktiviteter</h2>
+           <div className="valgGruppe">
+
            {aktivitetsListeSommer.concat(aktivitetsListeVinter).concat(aktivitetsListeAnnet).map((a) => {
                return (
                    <label key={a}>
@@ -60,7 +63,9 @@ export default function NyListe(){
                    </label>
                );
            })  }
+           </div>
            <h2>Overnatting</h2>
+           <div className="valgGruppe">
            {overnattingsListe.map((o) => {
                return (
                    <label key={o}>
@@ -75,6 +80,7 @@ export default function NyListe(){
                );
            })
            }
+           </div>
            <button>Opprett liste</button>
        </>
    )
