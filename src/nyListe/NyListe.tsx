@@ -1,6 +1,6 @@
 import * as React from 'react';
 import  { useState } from 'react';
-import './NyListe.less';
+import classes from './NyListe.less';
 
 const aktivitetsListeSommer=["Klatring", "Fottur", "Tinderangling", "Jogging"];
 const aktivitetsListeVinter=["Randonée", "Fjellski", "Langrenn klassisk", "Skøyteski"];
@@ -12,7 +12,6 @@ export default function NyListe(){
     const [aktiviteter, setAktiviteter] = useState<string[]>([]);
     const [overnatting, setOvernatting] = useState<string>();
 
-    console.log(aktiviteter)
 
     const onAktivitetCheckbox = (e: any) => {
         if(e.target.checked){
@@ -29,26 +28,28 @@ export default function NyListe(){
        <>
            <h1>Ny Liste</h1>
            <h2>Sesong</h2>
-           <label>
-               <input
-                   type="radio"
-                   value="sommer"
-                   checked={sesong === 'sommer'}
-                   onChange={(e) => setSesong(e.target.value)}
-               />
-               Sommer
-           </label>
-           <label>
-               <input
-                   type="radio"
-                   value="vinter"
-                   checked={sesong === 'vinter'}
-                   onChange={(e) => setSesong(e.target.value)}
-               />
-               Vinter
-           </label>
+           <div className={classes.valgGruppe}>
+               <label>
+                   <input
+                       type="radio"
+                       value="sommer"
+                       checked={sesong === 'sommer'}
+                       onChange={(e) => setSesong(e.target.value)}
+                   />
+                   Sommer
+               </label>
+               <label>
+                   <input
+                       type="radio"
+                       value="vinter"
+                       checked={sesong === 'vinter'}
+                       onChange={(e) => setSesong(e.target.value)}
+                   />
+                   Vinter
+               </label>
+           </div>
            <h2>Aktiviteter</h2>
-           <div className="valgGruppe">
+           <div className={classes.valgGruppe}>
 
            {aktivitetsListeSommer.concat(aktivitetsListeVinter).concat(aktivitetsListeAnnet).map((a) => {
                return (
@@ -65,7 +66,7 @@ export default function NyListe(){
            })  }
            </div>
            <h2>Overnatting</h2>
-           <div className="valgGruppe">
+           <div className={classes.valgGruppe}>
            {overnattingsListe.map((o) => {
                return (
                    <label key={o}>
@@ -81,7 +82,7 @@ export default function NyListe(){
            })
            }
            </div>
-           <button>Opprett liste</button>
+           <button className={classes.opprett}>Opprett liste</button>
        </>
    )
 }
