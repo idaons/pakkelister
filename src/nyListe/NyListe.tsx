@@ -5,12 +5,14 @@ import classes from './NyListe.less';
 const aktivitetsListeSommer=["Klatring", "Fottur", "Tinderangling", "Jogging"];
 const aktivitetsListeVinter=["Randonée", "Fjellski", "Langrenn klassisk", "Skøyteski"];
 const aktivitetsListeAnnet=["Fest", "Bytur"];
+const kjønnListe=["Mann", "Kvinne", "Begge", "Vil ikke oppgi"]
 const overnattingsListe=["DNT-hytte", "Telt", "Hus/hotell"];
 
 export default function NyListe(){
     const [sesong, setSesong] = useState<string>();
     const [aktiviteter, setAktiviteter] = useState<string[]>([]);
     const [overnatting, setOvernatting] = useState<string>();
+    const [kjønn, setKjønn] = useState<string>();
 
 
     const onAktivitetCheckbox = (e: any) => {
@@ -74,9 +76,26 @@ export default function NyListe(){
                            type="radio"
                            value={o}
                            checked={overnatting === o}
-                           onChange={(e) => setOvernatting(e.target.value)}
+                           onChange={(e) => setKjønn(e.target.value)}
                        />
                        {o}
+                   </label>
+               );
+           })
+           }
+           </div>
+           <h2>Kjønn</h2>
+           <div className={classes.valgGruppe}>
+           {kjønnListe.map((k) => {
+               return (
+                   <label key={k}>
+                       <input
+                           type="radio"
+                           value={k}
+                           checked={kjønn === k}
+                           onChange={(e) => setOvernatting(e.target.value)}
+                       />
+                       {k}
                    </label>
                );
            })
