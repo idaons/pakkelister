@@ -1,15 +1,12 @@
 interface ListeElementMedAntall {
-    antall: Number;
-    element: String;
+  antall: number;
+  element: string;
 }
 
-
-type ListeElement = String | ListeElementMedAntall;
+type ListeElement = string | ListeElementMedAntall;
 
 interface ListeType {
-    navn: String;
-    innhold: ListeElement[]
-    lister?: ListeType[];
+  navn: string;
+  innhold: ListeElement[];
+  lister?: ListeType[];
 }
-
-

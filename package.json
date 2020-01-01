@@ -22,10 +22,23 @@
     "@types/react": "^16.9.5",
     "@types/react-dom": "^16.9.1",
     "autoprefixer": "^9.7.3",
+    "husky": "^3.1.0",
     "less": "^3.10.3",
+    "lint-staged": "^9.5.0",
     "parcel-bundler": "^1.12.3",
     "postcss-modules": "^1.4.1",
     "prettier": "^1.18.2",
     "typescript": "^3.6.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,css,json,md,html}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
