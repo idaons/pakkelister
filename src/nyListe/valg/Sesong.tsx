@@ -1,29 +1,34 @@
-import * as React from "react";
-import ValgStyle from "./ValgStyle";
-import Radio from "../../utils/baseComponents/Radio";
+import * as React from 'react';
+import ValgStyle from './ValgStyle';
+import Radio from '../../utils/baseComponents/Radio';
 
 interface Props {
-  sesong: string;
-  setSesong: (sesong: string) => void;
+    sesong: string;
+    setSesong: (sesong: SesongEnum) => void;
+}
+
+export enum SesongEnum {
+    Sommer = 'Sommer',
+    Vinter = 'Vinter',
 }
 
 function Sesong(props: Props) {
-  return (
-    <ValgStyle name="Sesong">
-      <Radio
-        label="Sommer"
-        value="sommer"
-        checked={props.sesong === "sommer"}
-        onChange={e => props.setSesong(e.target.value)}
-      />
-      <Radio
-        label="Vinter"
-        value="vinter"
-        checked={props.sesong === "vinter"}
-        onChange={e => props.setSesong(e.target.value)}
-      />
-    </ValgStyle>
-  );
+    return (
+        <ValgStyle name="Sesong">
+            <Radio
+                label={SesongEnum.Sommer}
+                value={SesongEnum.Sommer}
+                checked={props.sesong === SesongEnum.Sommer}
+                onChange={e => props.setSesong(SesongEnum.Sommer)}
+            />
+            <Radio
+                label={SesongEnum.Vinter}
+                value={SesongEnum.Vinter}
+                checked={props.sesong === SesongEnum.Vinter}
+                onChange={e => props.setSesong(SesongEnum.Vinter)}
+            />
+        </ValgStyle>
+    );
 }
 
 export default Sesong;
