@@ -1,28 +1,27 @@
 import * as React from 'react';
 import ValgStyle from "./ValgStyle";
 import Radio from "../../utils/baseComponents/Radio";
-
-const kjønnListe = ["Mann", "Kvinne", "Begge", "Vil ikke oppgi"];
+import {getKjønnArray, Kjønn} from "../../models/kjønn";
 
 interface Props {
-    kjønn: string;
-    setKjønn: (kjønn: string) => void;
+    kjønn: Kjønn;
+    setKjønn: (kjønn: Kjønn) => void;
 }
 
-function Kjønn(props: Props) {
+function KjønnValg(props: Props) {
     return (
         <ValgStyle name="Kjønn">
-            {kjønnListe.map((k) =>
+            {getKjønnArray().map((k) =>
                 <Radio
-                    label={k}
+                    label={Kjønn[k]}
                     key={k}
                     value={k}
                     checked={props.kjønn === k}
-                    onChange={(e) => props.setKjønn(e.target.value)}
+                    onChange={(e) => props.setKjønn(+e.target.value)}
                 />
             )}
         </ValgStyle>
     );
 }
 
-export default Kjønn;
+export default KjønnValg;

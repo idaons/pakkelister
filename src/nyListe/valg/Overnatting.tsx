@@ -1,28 +1,27 @@
-import * as React from "react";
-import ValgStyle from "./ValgStyle";
-import Radio from "../../utils/baseComponents/Radio";
-
-const overnattingsListe = ["DNT-hytte", "Telt", "Hus/hotell"];
+import * as React from 'react';
+import ValgStyle from './ValgStyle';
+import Radio from '../../utils/baseComponents/Radio';
+import { getOvernattingArray, Overnatting } from '../../models/overnatting';
 
 interface Props {
-  overnatting: string;
-  setOvernatting: (overnatting: string) => void;
+    overnatting: Overnatting;
+    setOvernatting: (overnatting: Overnatting) => void;
 }
 
-function Overnatting(props: Props) {
-  return (
-    <ValgStyle name="Overnatting">
-      {overnattingsListe.map(o => (
-        <Radio
-          key={o}
-          label={o}
-          value={o}
-          checked={props.overnatting === o}
-          onChange={e => props.setOvernatting(e.target.value)}
-        />
-      ))}
-    </ValgStyle>
-  );
+function OvernattingValg(props: Props) {
+    return (
+        <ValgStyle name="Overnatting">
+            {getOvernattingArray().map(o => (
+                <Radio
+                    key={o}
+                    label={Overnatting[o]}
+                    value={o}
+                    checked={props.overnatting === o}
+                    onChange={e => props.setOvernatting(+e.target.value)}
+                />
+            ))}
+        </ValgStyle>
+    );
 }
 
-export default Overnatting;
+export default OvernattingValg;
