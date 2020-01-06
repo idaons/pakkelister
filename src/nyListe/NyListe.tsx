@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import classes from './nyListe.less';
 import SesongValg from './valg/SesongValg';
 import AktiviteterValg from './valg/AktiviteterValg';
@@ -10,15 +10,28 @@ import { Sesong } from '../models/sesong';
 import { Aktivitet } from '../models/aktivitet';
 import { Overnatting } from '../models/overnatting';
 import { Kjønn } from '../models/kjønn';
+import { AppStages, SetAppStateContext } from '../app/appStateContext';
 
 export default function NyListe() {
+    const setAppContext = useContext(SetAppStateContext);
     const [sesong, setSesong] = useState<Sesong>(Sesong.Sommer);
     const [aktiviteter, setAktiviteter] = useState<Aktivitet[]>([]);
     const [overnatting, setOvernatting] = useState<Overnatting>(Overnatting.DNThytte);
     const [kjønn, setKjønn] = useState<Kjønn>(Kjønn.Mann);
 
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        setAppContext({
+            stage: AppStages.Pack,
+            sesong,
+            aktiviteter,
+            overnatting,
+            kjønn,
+        });
+    };
+
     return (
-        <form className={classes.wrapperstyle}>
+        <form className={classes.wrapperstyle} onSubmit={handleSubmit}>
             <h1 className={classes.header}>Ny Liste</h1>
             <SesongValg sesong={sesong} setSesong={setSesong} />
             <AktiviteterValg valgteAktiviteter={aktiviteter} setAktiviteter={setAktiviteter} />
