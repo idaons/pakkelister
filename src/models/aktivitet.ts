@@ -6,6 +6,7 @@ export enum Aktivitet {
     Tinderangling,
     Jogging,
     Randonée,
+    Isbre,
     Fjellski,
     Langrenn,
     Skøyteski,
@@ -18,11 +19,21 @@ export function getAktivitetAsArray(): Aktivitet[] {
 }
 
 export function erSommerAktivitet(aktivitet: Aktivitet) {
-    return [Aktivitet.Klatring, Aktivitet.Fottur, Aktivitet.Tinderangling, Aktivitet.Jogging].includes(aktivitet);
+    return [
+        Aktivitet.Klatring,
+        Aktivitet.Fottur,
+        Aktivitet.Tinderangling,
+        Aktivitet.Jogging,
+    ].includes(aktivitet);
 }
 
 export function erVinterAktivitet(aktivitet: Aktivitet) {
-    return [Aktivitet.Randonée, Aktivitet.Fjellski, Aktivitet.Langrenn, Aktivitet.Skøyteski].includes(aktivitet);
+    return [
+        Aktivitet.Randonée,
+        Aktivitet.Fjellski,
+        Aktivitet.Langrenn,
+        Aktivitet.Skøyteski,
+    ].includes(aktivitet);
 }
 
 export function erAnnenAktivitet(aktivitet: Aktivitet) {

@@ -1,15 +1,21 @@
 import * as React from 'react';
 import NyListe from '../nyListe/NyListe';
-import { AppStages, AppStateContext, AppStates, defaultAppState, SetAppStateContext } from './appStateContext';
+import {
+    AppStages,
+    AppStateContext,
+    AppStates,
+    defaultAppState,
+    SetAppStateContext,
+} from './appStateContext';
 import { useState } from 'react';
-import Pack from '../pakk/Pack';
+import Pakk from '../pakk/Pakk';
 
 function Stage(props: { state: AppStates }) {
     switch (props.state.stage) {
         case AppStages.Setup:
             return <NyListe />;
         case AppStages.Pack:
-            return <Pack />;
+            return <Pakk />;
         default:
             return <div>Her skulle du ikke vært</div>;
     }

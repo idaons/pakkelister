@@ -1,8 +1,5 @@
-import { Sesong } from '../models/sesong';
-import { Aktivitet } from '../models/aktivitet';
-import { Overnatting } from '../models/overnatting';
-import { Kjønn } from '../models/kjønn';
 import { createContext } from 'react';
+import { Valg } from '../models/valg';
 
 export enum AppStages {
     Setup,
@@ -19,10 +16,7 @@ interface Setup extends Base {
 
 interface Pack extends Base {
     stage: AppStages.Pack;
-    sesong: Sesong;
-    aktiviteter: Aktivitet[];
-    overnatting: Overnatting;
-    kjønn: Kjønn;
+    valg: Valg;
 }
 
 export type AppStates = Setup | Pack;

@@ -11,6 +11,7 @@ import { Aktivitet } from '../models/aktivitet';
 import { Overnatting } from '../models/overnatting';
 import { Kjønn } from '../models/kjønn';
 import { AppStages, SetAppStateContext } from '../app/appStateContext';
+import LengdeValg from './valg/LengdeValg';
 
 export default function NyListe() {
     const setAppContext = useContext(SetAppStateContext);
@@ -18,15 +19,19 @@ export default function NyListe() {
     const [aktiviteter, setAktiviteter] = useState<Aktivitet[]>([]);
     const [overnatting, setOvernatting] = useState<Overnatting>(Overnatting.DNThytte);
     const [kjønn, setKjønn] = useState<Kjønn>(Kjønn.Mann);
+    const [lengde, setLengde] = useState<number>(3);
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         setAppContext({
             stage: AppStages.Pack,
-            sesong,
-            aktiviteter,
-            overnatting,
-            kjønn,
+            valg: {
+                sesong,
+                aktiviteter,
+                overnatting,
+                kjønn,
+                lengde,
+            },
         });
     };
 
@@ -37,6 +42,7 @@ export default function NyListe() {
             <AktiviteterValg valgteAktiviteter={aktiviteter} setAktiviteter={setAktiviteter} />
             <OvernattingValg overnatting={overnatting} setOvernatting={setOvernatting} />
             <KjønnValg kjønn={kjønn} setKjønn={setKjønn} />
+            <LengdeValg lengde={lengde} setLengde={setLengde} />
             <div className={classes.opprett}>
                 <Button>Opprett liste</Button>
             </div>
