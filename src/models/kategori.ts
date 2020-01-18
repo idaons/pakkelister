@@ -3,4 +3,5 @@ export enum Kategori {
     Toalettsaker,
     TekniskUtstyr,
     Underholdning,
+    Div,
 }

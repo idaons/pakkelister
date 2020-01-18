@@ -12,6 +12,7 @@ export enum Aktivitet {
     Skøyteski,
     Fest,
     Bytur,
+    Fotografi,
 }
 
 export function getAktivitetAsArray(): Aktivitet[] {

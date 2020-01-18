@@ -1,5 +1,5 @@
 import { ListMaker } from '../../models/listmaker';
-import { stringsTilListeElement } from './utils';
+import { overnatting, stringsTilListeElement } from './utils';
 import { Kjønn } from '../../models/kjønn';
 import { Kategori } from '../../models/kategori';
 import { Overnatting } from '../../models/overnatting';
@@ -20,10 +20,6 @@ const fellestoalettSaker = stringsTilListeElement(
 );
 
 const jenteTing = stringsTilListeElement(['Hårstrikk'], Kategori.Toalettsaker);
-
-function overnatting(valg: Valg) {
-    return valg.overnatting !== Overnatting.IkkeOvernatting;
-}
 
 export const toalettSakerRules: ListMaker[] = [
     valg => (overnatting(valg) ? fellestoalettSaker : []),
