@@ -1,5 +1,27 @@
 .pakk {
+  margin: 1em;
+  .input {
+    transition: none
+  }
+
   ul {
     list-style-type: none;
+    padding-left: 1em;
+  }
+}
+
+
+.input {
+  margin-bottom:0.2em;
+
+  label {
+    padding-left: .5rem;
+  }
+
+
+
+  input:checked + label {
+    text-decoration: line-through;
+    color: rgba(136, 136, 136, 0.98);
   }
 }
