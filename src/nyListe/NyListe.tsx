@@ -10,7 +10,7 @@ import { Sesong } from '../models/sesong';
 import { Aktivitet } from '../models/aktivitet';
 import { Overnatting } from '../models/overnatting';
 import { Kjønn } from '../models/kjønn';
-import { AppStages, SetAppStateContext } from '../app/appStateContext';
+import { TrinnEnum, SetAppStateContext } from '../app/appStateContext';
 import LengdeValg from './valg/LengdeValg';
 import { UnmountClosed } from 'react-collapse';
 
@@ -31,7 +31,7 @@ export default function NyListe() {
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         setAppContext({
-            stage: AppStages.Pack,
+            trinn: TrinnEnum.PakkListe,
             valg: {
                 sesong,
                 aktiviteter,

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import NyListe from '../nyListe/NyListe';
 import {
-    AppStages,
+    TrinnEnum,
     AppStateContext,
     AppStates,
     defaultAppState,
@@ -10,11 +10,11 @@ import {
 import { useState } from 'react';
 import Pakk from '../pakk/Pakk';
 
-function Stage(props: { state: AppStates }) {
-    switch (props.state.stage) {
-        case AppStages.Setup:
+function Trinn(props: { state: AppStates }) {
+    switch (props.state.trinn) {
+        case TrinnEnum.LagListe:
             return <NyListe />;
-        case AppStages.Pack:
+        case TrinnEnum.PakkListe:
             return <Pakk />;
         default:
             return <div>Her skulle du ikke vært</div>;
@@ -27,7 +27,7 @@ function App() {
     return (
         <AppStateContext.Provider value={appState}>
             <SetAppStateContext.Provider value={setAppState}>
-                <Stage state={appState} />
+                <Trinn state={appState} />
             </SetAppStateContext.Provider>
         </AppStateContext.Provider>
     );

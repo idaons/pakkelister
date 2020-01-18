@@ -1,29 +1,29 @@
 import { createContext } from 'react';
 import { Valg } from '../models/valg';
 
-export enum AppStages {
-    Setup,
-    Pack,
+export enum TrinnEnum {
+    LagListe,
+    PakkListe,
 }
 
 interface Base {
-    stage: AppStages;
+    trinn: TrinnEnum;
 }
 
-interface Setup extends Base {
-    stage: AppStages.Setup;
+interface LagListe extends Base {
+    trinn: TrinnEnum.LagListe;
 }
 
-interface Pack extends Base {
-    stage: AppStages.Pack;
+interface PakkListe extends Base {
+    trinn: TrinnEnum.PakkListe;
     valg: Valg;
 }
 
-export type AppStates = Setup | Pack;
+export type AppStates = LagListe | PakkListe;
 
 type SetAppState = (appstate: AppStates) => void;
 
-export const defaultAppState: Setup = { stage: AppStages.Setup };
+export const defaultAppState: LagListe = { trinn: TrinnEnum.LagListe };
 
 export const AppStateContext = createContext<AppStates>(defaultAppState);
 

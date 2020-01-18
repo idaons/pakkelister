@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext, useRef } from 'react';
-import { AppStages, AppStateContext } from '../app/appStateContext';
+import { TrinnEnum, AppStateContext } from '../app/appStateContext';
 import { pakkAlleLister } from './listMakers/allRules';
 import { groupArray } from '../utils/groupArray';
 import { Kategori } from '../models/kategori';
@@ -23,7 +23,7 @@ function Checkbox(props: InputProps) {
 function Pakk() {
     const context = useContext(AppStateContext);
 
-    if (context.stage !== AppStages.Pack) {
+    if (context.trinn !== TrinnEnum.PakkListe) {
         return <div>Her havnet du ved en kjempefeil!</div>;
     }
 
