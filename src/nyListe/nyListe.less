@@ -3,13 +3,19 @@
   background-color: #333;
   border-radius: 1rem;
   box-shadow: 0 .5rem 1rem #0004;
+
+  > *:nth-child(even) {
+    background-color: darkslategray;
+  }
+}
+
+.transition {
+  transition: height 300ms;
 }
 
 .valgGruppe {
-  &:nth-child(even) {
-    background-color: darkslategray;
-  }
   padding: 1rem 2rem;
+
   h2 {
     margin: 0 0 0.5rem;
   }
@@ -18,6 +24,7 @@
 .inputGruppe {
   display: flex;
   flex-wrap: wrap;
+
   > * {
     margin: .4rem 2rem .4rem 0;
   }

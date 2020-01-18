@@ -12,7 +12,9 @@
     "build-prod": "parcel build src/index.html"
   },
   "dependencies": {
+    "@types/react-collapse": "^5.0.0",
     "react": "^16.12.0",
+    "react-collapse": "^5.0.1",
     "react-dom": "^16.12.0"
   },
   "devDependencies": {

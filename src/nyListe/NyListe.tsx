@@ -12,6 +12,7 @@ import { Overnatting } from '../models/overnatting';
 import { Kjønn } from '../models/kjønn';
 import { AppStages, SetAppStateContext } from '../app/appStateContext';
 import LengdeValg from './valg/LengdeValg';
+import { UnmountClosed } from 'react-collapse';
 
 export default function NyListe() {
     const setAppContext = useContext(SetAppStateContext);
@@ -46,9 +47,12 @@ export default function NyListe() {
             <h1 className={classes.header}>Ny Liste</h1>
             <SesongValg sesong={sesong} setSesong={setSesong} />
             <OvernattingValg overnatting={overnatting} setOvernatting={setOvernatting} />
-            {overnatting !== Overnatting.IkkeOvernatting && (
+            <UnmountClosed
+                theme={{ collapse: classes.transition }}
+                isOpened={overnatting !== Overnatting.IkkeOvernatting}
+            >
                 <LengdeValg lengde={lengde} setLengde={setLengde} />
-            )}
+            </UnmountClosed>
             <AktiviteterValg valgteAktiviteter={aktiviteter} setAktiviteter={setAktiviteter} />
             <KjønnValg kjønn={kjønn} setKjønn={setKjønn} />
             <div className={classes.opprett}>
