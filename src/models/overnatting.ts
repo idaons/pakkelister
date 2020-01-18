@@ -4,6 +4,7 @@ export enum Overnatting {
     DNThytte,
     Telt,
     HusHotell,
+    IkkeOvernatting,
 }
 
 export function getOvernattingArray(): Overnatting[] {

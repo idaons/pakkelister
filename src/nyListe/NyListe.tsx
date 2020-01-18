@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useContext, useEffect, useState } from 'react';
 import classes from './nyListe.less';
 import SesongValg from './valg/SesongValg';
 import AktiviteterValg from './valg/AktiviteterValg';
@@ -21,6 +21,12 @@ export default function NyListe() {
     const [kjønn, setKjønn] = useState<Kjønn>(Kjønn.Mann);
     const [lengde, setLengde] = useState<number>(3);
 
+    useEffect(() => {
+        if (overnatting === Overnatting.IkkeOvernatting) {
+            setLengde(0);
+        }
+    }, [overnatting]);
+
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         setAppContext({
@@ -39,10 +45,12 @@ export default function NyListe() {
         <form className={classes.wrapperstyle} onSubmit={handleSubmit}>
             <h1 className={classes.header}>Ny Liste</h1>
             <SesongValg sesong={sesong} setSesong={setSesong} />
-            <AktiviteterValg valgteAktiviteter={aktiviteter} setAktiviteter={setAktiviteter} />
             <OvernattingValg overnatting={overnatting} setOvernatting={setOvernatting} />
+            {overnatting !== Overnatting.IkkeOvernatting && (
+                <LengdeValg lengde={lengde} setLengde={setLengde} />
+            )}
+            <AktiviteterValg valgteAktiviteter={aktiviteter} setAktiviteter={setAktiviteter} />
             <KjønnValg kjønn={kjønn} setKjønn={setKjønn} />
-            <LengdeValg lengde={lengde} setLengde={setLengde} />
             <div className={classes.opprett}>
                 <Button>Opprett liste</Button>
             </div>

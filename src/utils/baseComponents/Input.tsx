@@ -1,21 +1,21 @@
-import * as React from "react";
-import { InputHTMLAttributes, useRef } from "react";
-import { guid } from "../guid";
-import classes from "./input.less";
+import * as React from 'react';
+import { InputHTMLAttributes, useRef } from 'react';
+import { guid } from '../guid';
+import classes from './input.less';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+    label: string;
 }
 
 function Input(props: InputProps) {
-  const ref = useRef(guid());
-  const { label, ...rest } = props;
-  return (
-    <div className={classes.input}>
-      <label htmlFor={ref.current}>{label}</label>
-      <input id={ref.current} {...rest} />
-    </div>
-  );
+    const ref = useRef(guid());
+    const { label, ...rest } = props;
+    return (
+        <div className={classes.input}>
+            <input id={ref.current} {...rest} />
+            <label htmlFor={ref.current}>{label}</label>
+        </div>
+    );
 }
 
 export default Input;
