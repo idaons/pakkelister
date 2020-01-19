@@ -4,4 +4,6 @@ export enum Kategori {
     TekniskUtstyr,
     Underholdning,
     Div,
+    Overnatting,
+    Ski,
 }
