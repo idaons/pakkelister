@@ -12,6 +12,8 @@
     "build-prod": "parcel build src/index.html"
   },
   "dependencies": {
+    "@reach/router": "^1.2.1",
+    "@types/reach__router": "^1.2.6",
     "@types/react-collapse": "^5.0.0",
     "react": "^16.12.0",
     "react-collapse": "^5.0.1",
@@ -29,7 +31,7 @@
     "lint-staged": "^9.5.0",
     "parcel-bundler": "^1.12.4",
     "postcss-modules": "^1.4.1",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "typescript": "^3.7.4"
   },
   "husky": {

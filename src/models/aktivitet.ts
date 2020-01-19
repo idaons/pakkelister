@@ -1,4 +1,4 @@
-import { getEnumAsArray, getEnumStrings } from '../utils/enum';
+import { getEnumAsArray } from '../utils/enum';
 
 export enum Aktivitet {
     Klatring,
