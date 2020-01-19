@@ -1,18 +1,18 @@
-import { ListMaker } from '../../models/listmaker';
+import { ItemRule } from '../../models/itemRule';
 import { toalettSakerRules } from './toalettSaker';
 import { Valg } from '../../models/valg';
-import { ListeElement } from '../../models/liste';
+import { Item } from '../../models/liste';
 import { isbreRules } from './isbre';
 import { klærRules } from './klærRules';
 import { divRules } from './div';
 
-export const allRules: ListMaker[] = [
+export const allRules: ItemRule[] = [
     ...toalettSakerRules,
     ...isbreRules,
     ...klærRules,
     ...divRules,
 ];
 
-export function pakkAlleLister(valg: Valg): ListeElement[] {
-    return allRules.flatMap(rule => rule(valg));
+export function pakkAlleLister(valg: Valg): Item[] {
+    return allRules.flatMap(rule => rule(valg)).filter(ting => ting.skalPakkes);
 }

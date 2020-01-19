@@ -1,14 +1,12 @@
-import { ListMaker } from '../../models/listmaker';
-import { stringsTilListeElement } from './utils';
-import { Kjønn } from '../../models/kjønn';
-import { Kategori } from '../../models/kategori';
+import {ItemRule} from '../../models/itemRule';
+import {overnatting} from './utils';
+import {Kategori} from '../../models/kategori';
 
-export const klærRules: ListMaker[] = [
-    valg => [
-        {
-            navn: 'truser',
+export const klærRules: ItemRule[] = [
+    valg => ({
+            skalPakkes: overnatting(valg),
+            navn: 'truse',
             antall: valg.lengde,
             kategori: Kategori.Klær,
-        },
-    ],
+        }),
 ];

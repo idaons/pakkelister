@@ -1,6 +1,7 @@
 import { Kategori } from './kategori';
 
-export interface ListeElement {
+export interface Item {
+    skalPakkes: boolean;
     antall: number;
     navn: string;
     kategori: Kategori;
