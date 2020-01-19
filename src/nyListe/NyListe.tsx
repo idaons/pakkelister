@@ -1,45 +1,30 @@
 import * as React from 'react';
-import { FormEvent, useContext, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import classes from './nyListe.less';
 import SesongValg from './valg/SesongValg';
 import AktiviteterValg from './valg/AktiviteterValg';
 import OvernattingValg from './valg/Overnatting';
 import KjønnValg from './valg/KjønnValg';
-import Button from '../utils/baseComponents/Button';
 import { Sesong } from '../models/sesong';
 import { Aktivitet } from '../models/aktivitet';
 import { Overnatting } from '../models/overnatting';
 import { Kjønn } from '../models/kjønn';
-import { TrinnEnum, SetAppStateContext } from '../app/appStateContext';
 import LengdeValg from './valg/LengdeValg';
 import { UnmountClosed } from 'react-collapse';
+import LinkButton from '../utils/baseComponents/LinkButton';
+import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
 
-export default function NyListe() {
-    const setAppContext = useContext(SetAppStateContext);
-    const [sesong, setSesong] = useState<Sesong>(Sesong.Sommer);
-    const [aktiviteter, setAktiviteter] = useState<Aktivitet[]>([]);
-    const [overnatting, setOvernatting] = useState<Overnatting>(Overnatting.DNThytte);
-    const [kjønn, setKjønn] = useState<Kjønn>(Kjønn.Mann);
-    const [lengde, setLengde] = useState<number>(3);
+export default function NyListe(props: { urlValg: string }) {
+    const urlValg = decodeUrlParams(props.urlValg);
 
-    useEffect(() => {
-        if (overnatting === Overnatting.IkkeOvernatting) {
-            setLengde(0);
-        }
-    }, [overnatting]);
+    const [sesong, setSesong] = useState<Sesong>(urlValg.valg.sesong);
+    const [aktiviteter, setAktiviteter] = useState<Aktivitet[]>(urlValg.valg.aktiviteter);
+    const [overnatting, setOvernatting] = useState<Overnatting>(urlValg.valg.overnatting);
+    const [kjønn, setKjønn] = useState<Kjønn>(urlValg.valg.kjønn);
+    const [lengde, setLengde] = useState<number>(urlValg.valg.lengde);
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        setAppContext({
-            trinn: TrinnEnum.PakkListe,
-            valg: {
-                sesong,
-                aktiviteter,
-                overnatting,
-                kjønn,
-                lengde,
-            },
-        });
     };
 
     return (
@@ -56,7 +41,17 @@ export default function NyListe() {
             <AktiviteterValg valgteAktiviteter={aktiviteter} setAktiviteter={setAktiviteter} />
             <KjønnValg kjønn={kjønn} setKjønn={setKjønn} />
             <div className={classes.opprett}>
-                <Button>Opprett liste</Button>
+                <LinkButton
+                    to={`/pakk/${valgToUrlParams({
+                        sesong,
+                        aktiviteter,
+                        overnatting,
+                        kjønn,
+                        lengde,
+                    })}`}
+                >
+                    Pakk
+                </LinkButton>
             </div>
         </form>
     );

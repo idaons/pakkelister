@@ -3,7 +3,7 @@ export function getEnumAsArray<T>(e: {}): T[] {
     return [...getEnumStrings(e)].map(a => e[a]);
 }
 
-function getEnumStrings(e: {}): string[] {
+export function getEnumStrings(e: {}): string[] {
     return removeNumbers(Object.keys(e));
 }
 
