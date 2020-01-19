@@ -8,9 +8,6 @@ import Checkbox from '../utils/baseComponents/Checkbox';
 import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
 import LinkButton from '../utils/baseComponents/LinkButton';
 
-
-
-
 function Pakk(props: { urlValg: string }) {
     const valg = decodeUrlParams(props.urlValg);
     const [checkedItems, setCheckedItems] = useState<String[]>([]);
@@ -24,7 +21,7 @@ function Pakk(props: { urlValg: string }) {
         );
     }
 
-    const updateCheckedItems = (e : React.ChangeEvent<HTMLInputElement> ) => {
+    const updateCheckedItems = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         console.log(e.target);
         if (e.target.checked) {
@@ -37,35 +34,40 @@ function Pakk(props: { urlValg: string }) {
     const alleElementer = pakkAlleLister(valg.valg);
     const iKategorier = groupArray(alleElementer, it => Kategori[it.kategori]);
     const progress = Math.floor((checkedItems.length * 100) / alleElementer.length);
-    document.documentElement.style.setProperty('--progress', progress+ '%');
+    document.documentElement.style.setProperty('--progress', progress + '%');
 
     return (
         <div className={classes.pakk}>
-            <LinkButton to={'/nyliste/' + valgToUrlParams(valg.valg)}>Tilbake</LinkButton>
+            <LinkButton className={classes.knapp} to={'/nyliste/' + valgToUrlParams(valg.valg)}>
+                Tilbake
+            </LinkButton>
 
             <div className={classes.progress}>
-                 <i className={classes.icon}></i>
-                 <span className={classes.prosent}>{progress}%</span>
+                <i className={classes.icon}></i>
+                <span className={classes.prosent}>{progress}%</span>
             </div>
 
-            <ul>
+            <ul className={classes.kategoriListe}>
                 {iKategorier.map(kategori => (
-                    <div key={kategori.category}>
+                    <li key={kategori.category}>
                         <h2>{kategori.category}</h2>
-                        <ul>
+                        <ul className={classes.tingListe}>
                             {kategori.array.map(element => (
                                 <li key={element.navn}>
                                     <Checkbox
-                                        key={'chk-'+element.navn}
+                                        key={'chk-' + element.navn}
                                         value={element.navn}
-                                        label={(element.antall > 1 ? element.antall + ' ': '') + element.navn}
+                                        label={
+                                            (element.antall > 1 ? element.antall + ' ' : '') +
+                                            element.navn
+                                        }
                                         strikeThrough={true}
                                         onChange={updateCheckedItems}
                                     />
                                 </li>
                             ))}
                         </ul>
-                    </div>
+                    </li>
                 ))}
             </ul>
         </div>

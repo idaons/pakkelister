@@ -1,10 +1,14 @@
 .pakk {
-  margin: 2em;
-
+  padding: 2em;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:  "knapp koffert"
+                        "liste liste";
   ul {
     list-style-type: none;
     padding-left: 0;
-    line-height: 1.5em;
   }
 }
 
@@ -16,11 +20,11 @@
 }
 
 .progress {
+  grid-area: koffert;
   position: relative;
-  height: 98px;
-  width: 130px;
-  margin: 3em 0 3em;
-  display: block;
+  height: 7em;
+  width: 9em;
+  justify-self: end;
 }
 
 .icon {
@@ -40,5 +44,22 @@
   top: 58%;
   transform: translate(-50%, -50%);
   position: absolute;
-  font-size: 24px;
+  font-size: 1.8em;
+}
+
+.tingListe {
+  margin-right: 4em;
+  > li {
+    margin-bottom: .3em;
+  }
+}
+
+.kategoriListe {
+  grid-area: liste;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.knapp {
+  grid-area: knapp;
 }
