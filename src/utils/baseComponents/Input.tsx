@@ -5,13 +5,16 @@ import classes from './input.less';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
+    strikeThrough? : boolean
 }
 
 function Input(props: InputProps) {
     const ref = useRef(guid());
-    const { label, ...rest } = props;
+    const { label, strikeThrough, ...rest } = props;
+
+    const className = strikeThrough ? classes.strikeThrough + " ": "";
     return (
-        <div className={classes.input}>
+        <div className={className + classes.input}>
             <input id={ref.current} {...rest} />
             <label htmlFor={ref.current}>{label}</label>
         </div>

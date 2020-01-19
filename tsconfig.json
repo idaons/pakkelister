@@ -10,7 +10,15 @@
         "target": "es5",
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
-        "jsx": "react"
+        "jsx": "react",
+        "plugins": [{
+            "name": "typescript-plugin-css-modules",
+            "options": {
+                "customMatcher": "\\.(c\\|le)ss$",
+                "postCssOptions": {},
+                "rendererOptions": {}
+            }
+        }]
     },
     "include": [
         "./src/**/*"
