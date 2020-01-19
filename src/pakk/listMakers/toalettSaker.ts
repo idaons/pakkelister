@@ -16,10 +16,10 @@ function lagToalettRule(navn: string): ItemRule {
 export const toalettSakerRules: ItemRule[] = [
     lagToalettRule('Tannbørste'),
     lagToalettRule('Tannkrem'),
+    lagToalettRule('Tanntråd'),
     lagToalettRule('Linsevæske'),
     lagToalettRule('Linsebeholder'),
     lagToalettRule('Briller'),
-    lagToalettRule('Tanntråd'),
     lagToalettRule('Piller'),
     lagToalettRule('Deo'),
     valg => ({
