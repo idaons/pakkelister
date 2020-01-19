@@ -1,6 +1,9 @@
 .pakk {
+  min-height: 100vh;
   padding: 2em;
-  height: 100vh;
+  border: .2em white solid;
+  border-radius: 1rem;
+  background-color: #333;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto 1fr;
@@ -48,13 +51,15 @@
 }
 
 .tingListe {
-  margin-right: 4em;
   > li {
     margin-bottom: .3em;
   }
 }
 
 .kategoriListe {
+  > li {
+    margin-right: 3em;
+  }
   grid-area: liste;
   display: flex;
   flex-flow: row wrap;
