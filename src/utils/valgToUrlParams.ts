@@ -6,7 +6,6 @@ import { Sesong } from '../models/sesong';
 import { defaultValg } from '../nyListe/valg/defaultValg';
 
 export function valgToUrlParams(valg: Valg) {
-    console.log(valg);
     const aktiviteter =
         'aktiviteter=' + valg.aktiviteter.map(aktivitet => `${Aktivitet[aktivitet]}`).join(',');
     const lengde = 'lengde=' + valg.lengde;
@@ -38,6 +37,7 @@ export function decodeUrlParams(url: string): Returns {
             // @ts-ignore
             aktiviteter: paramsObject['aktiviteter']
                 ?.split(',')
+                // @ts-ignore
                 .map(it => Aktivitet[it])
                 .filter(it => it),
             // @ts-ignore
@@ -48,6 +48,7 @@ export function decodeUrlParams(url: string): Returns {
             // @ts-ignore
             overnatting: paramsObject['overnatting']
                 ?.split(',')
+                // @ts-ignore
                 .map(it => Overnatting[it])
                 .filter(it => it),
             // @ts-ignore
