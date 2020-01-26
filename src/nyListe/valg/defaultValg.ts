@@ -5,7 +5,7 @@ import { Kjønn } from '../../models/kjønn';
 
 export const defaultValg: Valg = {
     sesong: Sesong.Sommer,
-    overnatting: Overnatting.IkkeOvernatting,
+    overnatting: [],
     kjønn: Kjønn.Begge,
     lengde: 3,
     aktiviteter: [],

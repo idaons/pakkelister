@@ -19,7 +19,7 @@ export default function NyListe(props: { urlValg: string }) {
 
     const [sesong, setSesong] = useState<Sesong>(urlValg.valg.sesong);
     const [aktiviteter, setAktiviteter] = useState<Aktivitet[]>(urlValg.valg.aktiviteter);
-    const [overnatting, setOvernatting] = useState<Overnatting>(urlValg.valg.overnatting);
+    const [overnatting, setOvernatting] = useState<Overnatting[]>(urlValg.valg.overnatting);
     const [kjønn, setKjønn] = useState<Kjønn>(urlValg.valg.kjønn);
     const [lengde, setLengde] = useState<number>(urlValg.valg.lengde);
 
@@ -34,7 +34,7 @@ export default function NyListe(props: { urlValg: string }) {
             <OvernattingValg overnatting={overnatting} setOvernatting={setOvernatting} />
             <UnmountClosed
                 theme={{ collapse: classes.transition }}
-                isOpened={overnatting !== Overnatting.IkkeOvernatting}
+                isOpened={overnatting.length > 0}
             >
                 <LengdeValg lengde={lengde} setLengde={setLengde} />
             </UnmountClosed>

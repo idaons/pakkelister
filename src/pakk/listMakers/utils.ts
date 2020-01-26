@@ -4,7 +4,7 @@ import { Sesong } from '../../models/sesong';
 import { Aktivitet } from '../../models/aktivitet';
 
 export function overnatting(valg: Valg) {
-    return valg.overnatting !== Overnatting.IkkeOvernatting;
+    return valg.overnatting.length > 0;
 }
 
 export function sikkerhetVinter(valg: Valg) {

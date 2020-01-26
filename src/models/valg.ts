@@ -6,7 +6,7 @@ import { Kjønn } from './kjønn';
 export interface Valg {
     sesong: Sesong;
     aktiviteter: Aktivitet[];
-    overnatting: Overnatting;
+    overnatting: Overnatting[];
     kjønn: Kjønn;
     lengde: number;
 }

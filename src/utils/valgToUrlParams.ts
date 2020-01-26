@@ -6,11 +6,14 @@ import { Sesong } from '../models/sesong';
 import { defaultValg } from '../nyListe/valg/defaultValg';
 
 export function valgToUrlParams(valg: Valg) {
+    console.log(valg);
     const aktiviteter =
         'aktiviteter=' + valg.aktiviteter.map(aktivitet => `${Aktivitet[aktivitet]}`).join(',');
     const lengde = 'lengde=' + valg.lengde;
     const kjønn = 'kjønn=' + Kjønn[valg.kjønn];
-    const overnatting = 'overnatting=' + Overnatting[valg.overnatting];
+    const overnatting =
+        'overnatting=' +
+        valg.overnatting.map(overnatting => `${Overnatting[overnatting]}`).join(',');
     const sesong = 'sesong=' + Sesong[valg.sesong];
     return [aktiviteter, lengde, kjønn, overnatting, sesong].join('&');
 }
@@ -33,20 +36,26 @@ export function decodeUrlParams(url: string): Returns {
 
         const valg: Valg = {
             // @ts-ignore
-            aktiviteter: paramsObject['aktiviteter']?.split(',').map(it => Aktivitet[it]),
+            aktiviteter: paramsObject['aktiviteter']
+                ?.split(',')
+                .map(it => Aktivitet[it])
+                .filter(it => it),
             // @ts-ignore
             lengde:
                 paramsObject['lengde'] !== undefined ? parseInt(paramsObject['lengde']) : undefined,
             // @ts-ignore
             kjønn: Kjønn[paramsObject['kjønn']],
             // @ts-ignore
-            overnatting: Overnatting[paramsObject['overnatting']],
+            overnatting: paramsObject['overnatting']
+                ?.split(',')
+                .map(it => Overnatting[it])
+                .filter(it => it),
             // @ts-ignore
             sesong: Sesong[paramsObject['sesong']],
         };
 
-        // @ts-ignore
         const manglendeParametere = Object.keys(valg).filter(
+            // @ts-ignore
             (it: string) => valg[it] === undefined
         );
         const feilmelding =

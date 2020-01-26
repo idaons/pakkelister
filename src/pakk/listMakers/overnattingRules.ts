@@ -16,7 +16,7 @@ function lagVintersikkerhetRule(navn: string): ItemRule {
 function lagVintersikkerhetOrTeltRule(navn: string): ItemRule {
     return (valg: Valg) => ({
         navn: navn,
-        skalPakkes: sikkerhetVinter(valg) || Overnatting.Telt === valg.overnatting,
+        skalPakkes: sikkerhetVinter(valg) || valg.overnatting.includes(Overnatting.Telt),
         antall: 1,
         kategori: Kategori.Overnatting,
     });
@@ -25,7 +25,7 @@ function lagVintersikkerhetOrTeltRule(navn: string): ItemRule {
 function lagTeltRule(navn: string): ItemRule {
     return (valg: Valg) => ({
         navn: navn,
-        skalPakkes: Overnatting.Telt === valg.overnatting,
+        skalPakkes: valg.overnatting.includes(Overnatting.Telt),
         antall: 1,
         kategori: Kategori.Overnatting,
     });
@@ -34,7 +34,7 @@ function lagTeltRule(navn: string): ItemRule {
 function lagDNTRule(navn: string): ItemRule {
     return (valg: Valg) => ({
         navn: navn,
-        skalPakkes: Overnatting.DNThytte === valg.overnatting,
+        skalPakkes: valg.overnatting.includes(Overnatting.DNThytte),
         antall: 1,
         kategori: Kategori.Overnatting,
     });
@@ -43,7 +43,9 @@ function lagDNTRule(navn: string): ItemRule {
 function lagDNTOrTeltRule(navn: string): ItemRule {
     return (valg: Valg) => ({
         navn: navn,
-        skalPakkes: [Overnatting.DNThytte, Overnatting.Telt].includes(valg.overnatting),
+        skalPakkes: [Overnatting.DNThytte, Overnatting.Telt].some(it =>
+            valg.overnatting.includes(it)
+        ),
         antall: 1,
         kategori: Kategori.Overnatting,
     });
