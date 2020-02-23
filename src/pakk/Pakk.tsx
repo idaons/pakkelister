@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { pakkAlleLister } from './listMakers/allRules';
 import { groupArray } from '../utils/groupArray';
 import { Kategori } from '../models/kategori';
@@ -7,10 +7,13 @@ import classes from './pakk.less';
 import Checkbox from '../utils/baseComponents/Checkbox';
 import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
 import LinkButton from '../utils/baseComponents/LinkButton';
+import Button from "../utils/baseComponents/Button";
+import { AppContext } from "../app/App";
 
-function Pakk(props: { urlValg: string }) {
+function Pakk(props: { urlValg: string, tittel: string }) {
     const valg = decodeUrlParams(props.urlValg);
     const [checkedItems, setCheckedItems] = useState<string[]>([]);
+    const {state, dispatch} = useContext(AppContext);
 
     const tilbakeKnapp = (
         <LinkButton className={classes.knapp} to={'/nyliste/' + valgToUrlParams(valg.valg)}>
@@ -51,13 +54,22 @@ function Pakk(props: { urlValg: string }) {
         }
     };
 
+    const lagreListe = () => {
+        let storageName =  props.tittel.replace(' ', '_');
+        console.log(props.tittel, storageName)
+        localStorage.setItem(storageName+'_valg', JSON.stringify(valg));
+        localStorage.setItem(storageName+'_checkedItems',JSON.stringify(checkedItems))
+    };
+
     const progress = Math.floor((checkedItems.length * 100) / alleElementer.length);
     document.documentElement.style.setProperty('--progress', progress + '%');
 
     return (
         <div className={classes.pakk}>
             {tilbakeKnapp}
-
+            <Button onClick={lagreListe}>
+                {'Lagre "' + state.listeNavn + '"'}
+            </Button>
             <div className={classes.progress}>
                 <i className={classes.icon}></i>
                 <span className={classes.prosent}>{progress}%</span>

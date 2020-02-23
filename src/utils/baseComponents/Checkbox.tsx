@@ -1,10 +1,10 @@
 import * as React from "react";
 import { HTMLProps, InputHTMLAttributes, useRef } from "react";
 import { guid } from "../guid";
-import Input, { InputProps } from "./Input";
+import InputBase, { InputProps } from "./InputBase";
 
 function Checkbox(props: InputProps) {
-  return <Input type="checkbox" {...props} />;
+  return <InputBase type="checkbox" {...props} />;
 }
 
 export default Checkbox;

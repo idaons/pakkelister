@@ -13,6 +13,8 @@ import LengdeValg from './valg/LengdeValg';
 import { UnmountClosed } from 'react-collapse';
 import LinkButton from '../utils/baseComponents/LinkButton';
 import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
+import TextInput from "../utils/baseComponents/TextInput";
+
 
 export default function NyListe(props: { urlValg: string }) {
     const urlValg = decodeUrlParams(props.urlValg);
@@ -22,6 +24,7 @@ export default function NyListe(props: { urlValg: string }) {
     const [overnatting, setOvernatting] = useState<Overnatting[]>(urlValg.valg.overnatting);
     const [kjønn, setKjønn] = useState<Kjønn>(urlValg.valg.kjønn);
     const [lengde, setLengde] = useState<number>(urlValg.valg.lengde);
+    const [tittel, setTittel] = useState<string>("");
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -30,6 +33,7 @@ export default function NyListe(props: { urlValg: string }) {
     return (
         <form className={classes.wrapperstyle} onSubmit={handleSubmit}>
             <h1 className={classes.header}>Ny Liste</h1>
+            <TextInput label="Navn" className={classes.listeNavn} onChange={e =>setTittel(e.target.value)}/>
             <SesongValg sesong={sesong} setSesong={setSesong} />
             <OvernattingValg overnatting={overnatting} setOvernatting={setOvernatting} />
             <UnmountClosed

@@ -1,10 +1,8 @@
 import * as React from "react";
-import { HTMLProps, InputHTMLAttributes, useRef } from "react";
-import { guid } from "../guid";
-import Input, { InputProps } from "./Input";
+import InputBase, { InputProps } from "./InputBase";
 
 function Radio(props: InputProps) {
-  return <Input type="radio" {...props} />;
+  return <InputBase type="radio" {...props} />;
 }
 
 export default Radio;

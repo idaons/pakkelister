@@ -9,7 +9,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     header?: boolean;
 }
 
-function Input(props: InputProps) {
+function InputBase(props: InputProps) {
     const ref = useRef(guid());
     const { label, strikeThrough, header, ...rest } = props;
 
@@ -25,4 +25,4 @@ function Input(props: InputProps) {
     );
 }
 
-export default Input;
+export default InputBase;
