@@ -1,4 +1,4 @@
 import { Valg } from './valg';
 import { Item } from './liste';
 
-export type ItemRule = (valg: Valg) => Item;
+export type ItemsGetter = (valg: Valg) => Item[];
