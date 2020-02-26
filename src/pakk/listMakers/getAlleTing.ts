@@ -8,6 +8,7 @@ import { getDivTing } from './getDivTing';
 import { getOvernattingTing } from './getOvernattingTing';
 import { getSkredTing } from './getSkredTing';
 import { getSkiTing } from './getSkiTing';
+import { getKlatreutstyr } from './getKlatreutstyr';
 
 export const alleLister: ItemsGetter[] = [
     getToalettSaker,
@@ -17,10 +18,27 @@ export const alleLister: ItemsGetter[] = [
     getOvernattingTing,
     getSkredTing,
     getSkiTing,
+    getKlatreutstyr,
 ];
 
 const sortAlphabetically = (item1: Item, item2: Item) => (item1.navn > item2.navn ? 1 : -1);
 
+function removeDuplicates(items: Item[]) {
+    let uniqueItems: Item[] = [];
+    items.forEach(candidate => {
+        let duplicate = uniqueItems.find(
+            it => it.navn === candidate.navn && it.kategori === candidate.kategori
+        );
+        if (!duplicate) {
+            uniqueItems.push(candidate);
+        } else {
+            duplicate.antall =
+                duplicate.antall > candidate.antall ? duplicate.antall : candidate.antall;
+        }
+    });
+    return uniqueItems;
+}
+
 export function getAlleTing(valg: Valg): Item[] {
-    return alleLister.flatMap(rule => rule(valg)).sort(sortAlphabetically);
+    return removeDuplicates(alleLister.flatMap(rule => rule(valg)).sort(sortAlphabetically));
 }
