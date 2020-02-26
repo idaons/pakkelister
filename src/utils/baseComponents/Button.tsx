@@ -1,18 +1,18 @@
-import * as React from "react";
-import { ButtonHTMLAttributes } from "react";
-import classes from "./button.less";
+import * as React from 'react';
+import { ButtonHTMLAttributes } from 'react';
+import classes from './button.less';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: string;
+    children: string;
 }
 
 function Button(props: Props) {
-  const { children, ...rest } = props;
-  return (
-    <button {...rest} className={classes.button}>
-      {children}
-    </button>
-  );
+    const { children, ...rest } = props;
+    return (
+        <button {...rest} className={`${classes.button} ${rest.className}`}>
+            {children}
+        </button>
+    );
 }
 
 export default Button;

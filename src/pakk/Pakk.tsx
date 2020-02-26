@@ -9,6 +9,7 @@ import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
 import LinkButton from '../utils/baseComponents/LinkButton';
 import Button from '../utils/baseComponents/Button';
 import { AppContext } from '../app/App';
+import VisValg from './Valg';
 
 function Pakk(props: { urlValg: string; tittel: string }) {
     const valg = decodeUrlParams(props.urlValg);
@@ -67,7 +68,7 @@ function Pakk(props: { urlValg: string; tittel: string }) {
     return (
         <div className={classes.pakk}>
             {tilbakeKnapp}
-            <Button onClick={lagreListe}>{'Lagre "' + state.listeNavn + '"'}</Button>
+            <VisValg valg={valg.valg} />
             <div className={classes.progress}>
                 <i className={classes.icon}></i>
                 <span className={classes.prosent}>{progress}%</span>
@@ -102,6 +103,10 @@ function Pakk(props: { urlValg: string; tittel: string }) {
                     </li>
                 ))}
             </ul>
+
+            <Button className={classes.lagreknapp} onClick={lagreListe}>
+                {'Lagre "' + state.listeNavn + '"'}
+            </Button>
         </div>
     );
 }

@@ -39,7 +39,7 @@ export function decodeUrlParams(url: string): Returns {
                 ?.split(',')
                 // @ts-ignore
                 .map(it => Aktivitet[it])
-                .filter(it => it),
+                .filter(it => it !== undefined),
             // @ts-ignore
             lengde:
                 paramsObject['lengde'] !== undefined ? parseInt(paramsObject['lengde']) : undefined,
@@ -50,7 +50,7 @@ export function decodeUrlParams(url: string): Returns {
                 ?.split(',')
                 // @ts-ignore
                 .map(it => Overnatting[it])
-                .filter(it => it),
+                .filter(it => it !== undefined),
             // @ts-ignore
             sesong: Sesong[paramsObject['sesong']],
         };
@@ -68,11 +68,11 @@ export function decodeUrlParams(url: string): Returns {
         return {
             feilmelding: feilmelding,
             valg: {
-                aktiviteter: valg.aktiviteter || defaultValg.aktiviteter,
-                lengde: valg.lengde || defaultValg.lengde,
-                kjønn: valg.kjønn || defaultValg.kjønn,
-                overnatting: valg.overnatting || defaultValg.overnatting,
-                sesong: valg.sesong || defaultValg.sesong,
+                aktiviteter: valg.aktiviteter ?? defaultValg.aktiviteter,
+                lengde: valg.lengde ?? defaultValg.lengde,
+                kjønn: valg.kjønn ?? defaultValg.kjønn,
+                overnatting: valg.overnatting ?? defaultValg.overnatting,
+                sesong: valg.sesong ?? defaultValg.sesong,
             },
         };
     } catch (e) {
