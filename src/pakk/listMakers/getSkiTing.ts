@@ -15,18 +15,20 @@ export function getSkiTing(valg: Valg): Item[] {
     const skalPåSki = langrenn || fjellski || randone || skøyteski;
 
     if (skalPåSki) {
-        skiTing.push('Ski', 'Staver', 'Skisko');
+        skiTing.push('Ski', 'Staver', 'Skisko', 'Varme såler');
     }
 
     if (langrenn || fjellski) {
         skiTing.push('Smøring');
     }
 
-    if (randone || fjellski) {
-        skiTing.push('Feller');
+    if (fjellski) {
+        skiTing.push('Kortfeller');
+        skiTing.push('Langfeller');
     }
 
     if (randone) {
+        skiTing.push('Feller');
         skiTing.push('Skarejern', 'Skibriller', 'Hjelm');
     }
 

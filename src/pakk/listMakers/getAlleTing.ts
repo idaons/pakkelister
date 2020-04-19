@@ -9,6 +9,7 @@ import { getOvernattingTing } from './getOvernattingTing';
 import { getSkredTing } from './getSkredTing';
 import { getSkiTing } from './getSkiTing';
 import { getKlatreutstyr } from './getKlatreutstyr';
+import { getFjellturTing } from './getFjellturTing';
 
 export const alleLister: ItemsGetter[] = [
     getToalettSaker,
@@ -19,6 +20,7 @@ export const alleLister: ItemsGetter[] = [
     getSkredTing,
     getSkiTing,
     getKlatreutstyr,
+    getFjellturTing,
 ];
 
 const sortAlphabetically = (item1: Item, item2: Item) => (item1.navn > item2.navn ? 1 : -1);

@@ -16,6 +16,8 @@ export function getKlatreutstyr(valg: Valg): Item[] {
         'Kalkpose',
         'Klatresko',
         'Sikringsutstyr',
+        'Via ferrata kit',
+        'Hjelm',
     ];
 
     return stringArrayToItems(klatreting, Kategori.TekniskUtstyr);

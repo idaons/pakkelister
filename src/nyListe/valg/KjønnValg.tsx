@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ValgStyle from "./ValgStyle";
 import Radio from "../../utils/baseComponents/Radio";
-import {getKjønnArray, Kjønn} from "../../models/kjønn";
+import { getKjønnArray, getKjønnLabel, Kjønn } from '../../models/kjønn';
 
 interface Props {
     kjønn: Kjønn;
@@ -13,7 +13,7 @@ function KjønnValg(props: Props) {
         <ValgStyle name="Kjønn">
             {getKjønnArray().map((k) =>
                 <Radio
-                    label={Kjønn[k]}
+                    label={getKjønnLabel(k)}
                     key={k}
                     value={k}
                     checked={props.kjønn === k}

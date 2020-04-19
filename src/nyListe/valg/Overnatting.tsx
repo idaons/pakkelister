@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ValgStyle from './ValgStyle';
-import { getOvernattingArray, Overnatting } from '../../models/overnatting';
+import { getOvernattingArray, getOvernattingLabel, Overnatting } from '../../models/overnatting';
 import Checkbox from '../../utils/baseComponents/Checkbox';
 import { ChangeEvent } from 'react';
 
@@ -24,7 +24,7 @@ function OvernattingValg(props: Props) {
             {getOvernattingArray().map(overnatting => (
                 <Checkbox
                     key={overnatting}
-                    label={Overnatting[overnatting]}
+                    label={getOvernattingLabel(overnatting)}
                     value={overnatting}
                     checked={props.overnatting.includes(overnatting)}
                     onChange={handleChange}

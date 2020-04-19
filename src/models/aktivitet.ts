@@ -10,7 +10,6 @@ export enum Aktivitet {
     Fjellski,
     Langrenn,
     Skøyteski,
-    Fest,
     Bytur,
     Fotografi,
 }
@@ -37,6 +36,17 @@ export function erVinterAktivitet(aktivitet: Aktivitet) {
     ].includes(aktivitet);
 }
 
+export function skalGåPåTur(aktiviteter: Aktivitet[]) {
+    return [
+        Aktivitet.Randonée,
+        Aktivitet.Fjellski,
+        Aktivitet.Langrenn,
+        Aktivitet.Skøyteski,
+        Aktivitet.Fottur,
+        Aktivitet.Tinderangling,
+    ].some(it => aktiviteter.includes(it));
+}
+
 export function erAnnenAktivitet(aktivitet: Aktivitet) {
-    return [Aktivitet.Fest, Aktivitet.Bytur].includes(aktivitet);
+    return [Aktivitet.Bytur].includes(aktivitet);
 }
