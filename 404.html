@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Not Found</title>
-    <script>
-        var path = window.location.pathname.slice(1);
-        localStorage.setItem('path', path);
-        window.location.href='../';
-    </script>
-</head>
-<body>
-
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Not Found</title>
+        <script>
+            var path = window.location.pathname.slice(1);
+            localStorage.setItem('redirect', path);
+            window.location.href = '../';
+        </script>
+    </head>
+    <body></body>
 </html>
