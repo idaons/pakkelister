@@ -16,11 +16,11 @@ export function getOvernattingTing(valg: Valg): Item[] {
     }
 
     if (valg.overnatting.includes(Overnatting.Telt)) {
-        overnattingTing.push('Telt', 'Primus', 'Kokesaker');
+        overnattingTing.push('Telt', 'Primus', 'Kokesaker', 'Søppelpose');
     }
 
     if (valg.overnatting.includes(Overnatting.DNThytte)) {
-        overnattingTing.push('Lakenpose');
+        overnattingTing.push('Lakenpose', 'Søppelpose');
     }
 
     if ([Overnatting.DNThytte, Overnatting.Telt].some(it => valg.overnatting.includes(it))) {
