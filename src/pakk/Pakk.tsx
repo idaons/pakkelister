@@ -8,7 +8,7 @@ import Checkbox from '../utils/baseComponents/Checkbox';
 import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
 import LinkButton from '../utils/baseComponents/LinkButton';
 import Button from '../utils/baseComponents/Button';
-import { AppContext } from '../app/App';
+import { AppContext, basepath } from '../app/App';
 import VisValg from './Valg';
 
 function Pakk(props: { urlValg: string; tittel: string }) {
@@ -17,7 +17,10 @@ function Pakk(props: { urlValg: string; tittel: string }) {
     const { state, dispatch } = useContext(AppContext);
 
     const tilbakeKnapp = (
-        <LinkButton className={classes.knapp} to={'/nyliste/' + valgToUrlParams(valg.valg)}>
+        <LinkButton
+            className={classes.knapp}
+            to={basepath + '/nyliste/' + valgToUrlParams(valg.valg)}
+        >
             Tilbake
         </LinkButton>
     );
