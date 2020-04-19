@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createContext, useReducer } from 'react';
 import NyListe from '../nyListe/NyListe';
 import Pakk from '../pakk/Pakk';
-import { reducer, IState, Actions } from './Reducer';
+import { Actions, IState, reducer } from './Reducer';
 import { Redirect, Router } from '@reach/router';
 
 interface IContextProps {
@@ -16,16 +16,25 @@ const initialState: IState = {
 
 export const basepath = '/pakkelister';
 
+const HandleRedirect = () => {
+    const redirect = window.localStorage.getItem('redirect');
+
+    window.localStorage.removeItem('redirect');
+
+    return <Redirect from={'/'} to={redirect || `${basepath}/nyliste/urlParams`} />;
+};
+
 export const AppContext = createContext({} as IContextProps);
 
 function App() {
     const [state, dispatch] = useReducer(reducer, initialState);
+
     return (
         <AppContext.Provider value={{ state, dispatch }}>
             <Router>
                 <NyListe path={basepath + '/nyliste/:urlValg'} />
                 <Pakk path={basepath + '/pakk/:urlValg'} />
-                <Redirect default from={'/'} to={basepath + '/nyliste/urlValg'} />
+                <HandleRedirect default />
             </Router>
         </AppContext.Provider>
     );
