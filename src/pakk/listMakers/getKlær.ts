@@ -26,7 +26,7 @@ export function getKlær(valg: Valg): Item[] {
             Vindjakke: 1,
             Vindbukse: 1,
             Ulltrøye: 2,
-            Ullbukse: 1,
+            Stilong: 1,
             Fleece: 1,
             Ullsokker: 3,
             Dunjakke: 1,
@@ -44,7 +44,7 @@ export function getKlær(valg: Valg): Item[] {
             klær = {
                 ...klær,
                 Dunskjørt: 1,
-                UllBH: 1
+                ['Ull-BH']: 1
             }
         }
     }
@@ -87,7 +87,7 @@ export function getKlær(valg: Valg): Item[] {
     if(valg.aktiviteter.includes(Aktivitet.Bytur)){
         klær = {
             ...klær,
-            byOutfit: 1
+            ['By-outfit']: 1
         }
     }
 
@@ -95,8 +95,8 @@ export function getKlær(valg: Valg): Item[] {
     if (valg.aktiviteter.includes(Aktivitet.Jogging)) {
         klær = {
             ...klær,
-            treningstøy: 1,
-            joggesko: 1
+            Treningstøy: 1,
+            Joggesko: 1
         }
     }
 
@@ -112,13 +112,13 @@ export function getKlær(valg: Valg): Item[] {
             ...klær,
             Innesokker: Math.ceil((valg.lengde / 3)),
             Innebukse: 1,
-            InneTskjorte: Math.ceil((valg.lengde / 3))
+            ['Inne-T-skjorter']: Math.ceil((valg.lengde / 3))
         };
 
         if(valg.kjønn !== Kjønn.Mann) {
             klær = {
                 ...klær,
-                BH: 1
+                 ['Inne-BH']: 1
             }
         }
 

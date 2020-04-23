@@ -24,18 +24,18 @@ export function getToalettSaker(valg: Valg): Item[] {
 
     if (valg.kjønn === Kjønn.Kvinne) {
         toalettSaker.push('Hårstrikk');
-        toalettSaker.push('Andre jenteting');
+        toalettSaker.push('Diverse jenteting');
     }
 
     if (valg.sesong === Sesong.Vinter) toalettSaker.push('Kuldekrem');
 
-    if (valg.sesong === Sesong.Sommer) toalettSaker.push('Myggmiddel');
+    if (valg.sesong === Sesong.FjellSommer) toalettSaker.push('Myggmiddel');
 
     if (
         valg.overnatting.includes(Overnatting.Telt) ||
         valg.overnatting.includes(Overnatting.DNThytte)
     )
-        toalettSaker.push('sovekit');
+        toalettSaker.push('Sovekit');
 
     return stringArrayToItems(toalettSaker, Kategori.Toalettsaker);
 }
