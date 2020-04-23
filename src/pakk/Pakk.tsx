@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { getAlleTing } from './listMakers/getAlleTing';
 import { groupArray } from '../utils/groupArray';
 import { Kategori } from '../models/kategori';
@@ -8,16 +8,32 @@ import Checkbox from '../utils/baseComponents/Checkbox';
 import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
 import LinkButton from '../utils/baseComponents/LinkButton';
 import Button from '../utils/baseComponents/Button';
-import { AppContext } from '../app/App';
+import { AppContext, basepath } from '../app/App';
 import VisValg from './Valg';
+
+function getStoredItems(): string[] {
+    const items = window.localStorage.getItem('checkedItems');
+    return items ? JSON.parse(items) : [];
+}
+
+function storeItems(checkedItems: string[]) {
+    window.localStorage.setItem('checkedItems', JSON.stringify(checkedItems));
+}
 
 function Pakk(props: { urlValg: string; tittel: string }) {
     const valg = decodeUrlParams(props.urlValg);
-    const [checkedItems, setCheckedItems] = useState<string[]>([]);
+    const [checkedItems, setCheckedItems] = useState<string[]>(getStoredItems());
     const { state, dispatch } = useContext(AppContext);
 
+    useEffect(() => {
+        storeItems(checkedItems);
+    }, [checkedItems]);
+
     const tilbakeKnapp = (
-        <LinkButton className={classes.knapp} to={'/nyliste/' + valgToUrlParams(valg.valg)}>
+        <LinkButton
+            className={classes.knapp}
+            to={basepath + '/nyliste/' + valgToUrlParams(valg.valg)}
+        >
             Tilbake
         </LinkButton>
     );
