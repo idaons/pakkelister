@@ -3,7 +3,7 @@ import { ButtonHTMLAttributes } from 'react';
 import classes from './button.less';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-    children: string;
+    children: React.ReactNode;
 }
 
 function Button(props: Props) {

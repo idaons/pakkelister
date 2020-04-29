@@ -120,9 +120,12 @@ function Pakk(props: { urlValg: string; tittel: string }) {
                 ))}
             </ul>
 
-            <Button className={classes.lagreknapp} onClick={lagreListe}>
-                {'Lagre "' + state.listeNavn + '"'}
-            </Button>
+            <div className={classes.knapper}>
+                <Button onClick={lagreListe}>Lagre {state.listeNavn}</Button>
+                <Button onClick={() => confirm('Vil du nullstille lista?') && setCheckedItems([])}>
+                    Nullstill
+                </Button>
+            </div>
         </div>
     );
 }
