@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from 'react';
 import { getAlleTing } from './listMakers/getAlleTing';
 import { groupArray } from '../utils/groupArray';
 import { Kategori } from '../models/kategori';
+// @ts-ignore
 import classes from './pakk.less';
 import Checkbox from '../utils/baseComponents/Checkbox';
 import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
@@ -10,20 +11,13 @@ import LinkButton from '../utils/baseComponents/LinkButton';
 import Button from '../utils/baseComponents/Button';
 import { AppContext, basepath } from '../app/App';
 import VisValg from './Valg';
+import { getStoredItems, storeItems } from '~utils/localStorage';
 
-function getStoredItems(): string[] {
-    const items = window.localStorage.getItem('checkedItems');
-    return items ? JSON.parse(items) : [];
-}
-
-function storeItems(checkedItems: string[]) {
-    window.localStorage.setItem('checkedItems', JSON.stringify(checkedItems));
-}
-
-function Pakk(props: { urlValg: string; tittel: string }) {
+function Pakk(props: { urlValg: string }) {
     const valg = decodeUrlParams(props.urlValg);
-    const [checkedItems, setCheckedItems] = useState<string[]>(getStoredItems());
     const { state, dispatch } = useContext(AppContext);
+
+    const [checkedItems, setCheckedItems] = useState<string[]>(getStoredItems(state.listeNavn));
 
     useEffect(() => {
         storeItems(checkedItems);
@@ -72,8 +66,7 @@ function Pakk(props: { urlValg: string; tittel: string }) {
     };
 
     const lagreListe = () => {
-        let storageName = props.tittel.replace(' ', '_');
-        console.log(props.tittel, storageName);
+        let storageName = state.listeNavn.replace(' ', '_');
         localStorage.setItem(storageName + '_valg', JSON.stringify(valg));
         localStorage.setItem(storageName + '_checkedItems', JSON.stringify(checkedItems));
     };

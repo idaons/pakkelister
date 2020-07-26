@@ -21,16 +21,8 @@ export function getDivTing(valg: Valg): Item[] {
             'Antibac',
             'Fyrstikker',
             'Dopapir',
-            'Hoftegnagsårbeskytter',
-            'Treningsklokke',
             'Håndkle'
         );
-
-        if (valg.sesong === Sesong.Vinter) {
-            ting.push('Termos');
-        } else if (valg.sesong === Sesong.FjellSommer) {
-            ting.push('Sitteunderlag');
-        }
     }
 
     if (overnatting(valg) || Sesong.Vinter === valg.sesong) {
@@ -49,10 +41,6 @@ export function getDivTing(valg: Valg): Item[] {
         ting.push('DNT-nøkkel');
     }
 
-    if (valg.sesong === Sesong.Vinter) {
-        ting.push('Varmeposer');
-    }
-
     if (valg.aktiviteter.includes(Aktivitet.Fotografi)) {
         ting.push('Kamera');
     }
@@ -68,10 +56,6 @@ export function getDivTing(valg: Valg): Item[] {
         valg.aktiviteter.includes(Aktivitet.Langrenn)
     ) {
         ting.push('Treningssekk');
-    }
-
-    if (valg.aktiviteter.includes(Aktivitet.Jogging)) {
-        ting.push('Løpebelte');
     }
 
     return stringArrayToItems(ting, Kategori.Div);

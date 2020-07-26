@@ -12,13 +12,6 @@ export function getKlær(valg: Valg): Item[] {
 
     const skalVæreInneBlantFolk = valg.overnatting.includes(Overnatting.HusHotell) || valg.overnatting.includes(Overnatting.FamilieHytte);
 
-    if(skalGåPåTur(valg.aktiviteter)) {
-        klær = {
-            ...klær,
-            Gnagsårsokk: 1,
-        };
-    }
-
 
     if (valg.sesong === Sesong.Vinter) {
         klær = {
@@ -35,9 +28,7 @@ export function getKlær(valg: Valg): Item[] {
             Votter: 1,
             Vindvotter: 1,
             Hals: 2,
-            Brynje: 1,
-            Pulsvarmer: 1,
-            Dampsperresokk: 1
+            Brynje: 1
         };
 
         if(valg.kjønn !== Kjønn.Mann) {
@@ -107,21 +98,41 @@ export function getKlær(valg: Valg): Item[] {
         }
     }
 
-    if(skalVæreInneBlantFolk) {
-        klær = {
-            ...klær,
-            Innesokker: Math.ceil((valg.lengde / 3)),
-            Innebukse: 1,
-            ['Inne-T-skjorter']: Math.ceil((valg.lengde / 3))
-        };
 
-        if(valg.kjønn !== Kjønn.Mann) {
+
+    if(valg.spesielleBehov) {
+
+        if(skalVæreInneBlantFolk) {
             klær = {
                 ...klær,
-                 ['Inne-BH']: 1
+                Innesokker: Math.ceil((valg.lengde / 3)),
+                Innebukse: 1,
+                ['Inne-T-skjorter']: Math.ceil((valg.lengde / 3))
+            };
+
+            if(valg.kjønn !== Kjønn.Mann) {
+                klær = {
+                    ...klær,
+                    ['Inne-BH']: 1
+                }
             }
         }
 
+
+        if (skalGåPåTur(valg.aktiviteter)) {
+            klær = {
+                ...klær,
+                Gnagsårsokk: 1,
+            };
+
+            if (valg.sesong === Sesong.Vinter) {
+                klær = {
+                    ...klær,
+                    Pulsvarmer: 1,
+                    Dampsperresokk: 1
+                };
+            }
+        }
     }
 
     return objektMedAntallTilItems(klær, Kategori.Klær);

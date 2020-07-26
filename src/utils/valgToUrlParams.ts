@@ -14,7 +14,9 @@ export function valgToUrlParams(valg: Valg) {
         'overnatting=' +
         valg.overnatting.map(overnatting => `${Overnatting[overnatting]}`).join(',');
     const sesong = 'sesong=' + Sesong[valg.sesong];
-    return [aktiviteter, lengde, kjønn, overnatting, sesong].join('&');
+    const spesiell = 'spesiell=' + valg.spesielleBehov;
+
+    return [aktiviteter, lengde, kjønn, overnatting, sesong, spesiell].join('&');
 }
 
 interface Returns {
@@ -53,6 +55,7 @@ export function decodeUrlParams(url: string): Returns {
                 .filter(it => it !== undefined),
             // @ts-ignore
             sesong: Sesong[paramsObject['sesong']],
+            spesielleBehov: paramsObject['spesiell'] === 'true',
         };
 
         const manglendeParametere = Object.keys(valg).filter(
@@ -63,7 +66,6 @@ export function decodeUrlParams(url: string): Returns {
             manglendeParametere.length > 0
                 ? `Manglende parametere: ${manglendeParametere}`
                 : undefined;
-        feilmelding && console.error(feilmelding);
 
         return {
             feilmelding: feilmelding,
@@ -73,6 +75,7 @@ export function decodeUrlParams(url: string): Returns {
                 kjønn: valg.kjønn ?? defaultValg.kjønn,
                 overnatting: valg.overnatting ?? defaultValg.overnatting,
                 sesong: valg.sesong ?? defaultValg.sesong,
+                spesielleBehov: valg.spesielleBehov ?? defaultValg.spesielleBehov,
             },
         };
     } catch (e) {

@@ -15,7 +15,10 @@ export function getSkiTing(valg: Valg): Item[] {
     const skalPåSki = langrenn || fjellski || randone || skøyteski;
 
     if (skalPåSki) {
-        skiTing.push('Ski', 'Staver', 'Skisko', 'Varme såler');
+        skiTing.push('Ski', 'Staver', 'Skisko');
+        if (valg.spesielleBehov) {
+            skiTing.push('Varme såler');
+        }
     }
 
     if (langrenn || fjellski) {
