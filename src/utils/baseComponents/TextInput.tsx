@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { InputHTMLAttributes, useRef } from 'react';
 import { guid } from '../guid';
-import classes from "./input.less";
+// @ts-ignore
+import classes from './input.less';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
-    className? : string
+    className?: string;
 }
 
 function TextInput(props: InputProps) {
     const ref = useRef(guid());
     const { label, className, ...rest } = props;
-
 
     return (
         <div className={`${classes.textInput} ${className}`}>

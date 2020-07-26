@@ -11,7 +11,7 @@ interface IContextProps {
 }
 
 const initialState: IState = {
-    listeNavn: 'Ny liste',
+    listeNavn: '',
 };
 
 export const basepath = '/pakkelister';
