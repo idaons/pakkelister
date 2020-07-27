@@ -61,12 +61,11 @@ export default function NyListe(props: { urlValg: string }) {
     };
 
     const onListeValgt = (e: React.MouseEvent<HTMLButtonElement>) => {
-        console.log(e.currentTarget.value);
         setValgtListe(e.currentTarget.value);
 
         // oppdater verdier
         const valg = getStoredValg(e.currentTarget.value);
-        console.log(valg);
+        if (!valg) return;
         setTittel(e.currentTarget.value);
 
         setSesong(valg.sesong);

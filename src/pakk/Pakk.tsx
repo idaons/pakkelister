@@ -17,6 +17,7 @@ import InputBase from '~utils/baseComponents/InputBase';
 function Pakk(props: { urlValg: string }) {
     const { valg, tittel, feilmelding } = decodeUrlParams(props.urlValg);
     const [checkedItems, setCheckedItems] = useState<string[]>(getStoredItems(tittel));
+    const [lagrerListe, setLagrerListe] = useState(false);
 
     useEffect(() => {
         storeItems(checkedItems);
@@ -65,10 +66,14 @@ function Pakk(props: { urlValg: string }) {
     };
 
     const lagreListe = () => {
+        setLagrerListe(true);
         let storageName = tittel.replace(' ', '_');
         localStorage.setItem(storageName + '_valg', JSON.stringify(valg));
         localStorage.setItem(storageName + '_checkedItems', JSON.stringify(checkedItems));
-        window.alert('OK');
+        setTimeout(() => {
+            document.getElementById('lagreknapp')?.blur();
+            setLagrerListe(false);
+        }, 1000);
     };
 
     const progress = Math.floor((checkedItems.length * 100) / alleElementer.length);
@@ -114,7 +119,9 @@ function Pakk(props: { urlValg: string }) {
             </ul>
 
             <div className={classes.knapper}>
-                <Button onClick={lagreListe}>Lagre {tittel}</Button>
+                <Button id="lagreknapp" onClick={lagreListe}>
+                    {lagrerListe ? 'Lagrer...' : `Lagre ${tittel}`}
+                </Button>
                 <Button onClick={() => confirm('Vil du nullstille lista?') && setCheckedItems([])}>
                     Nullstill
                 </Button>
