@@ -1,7 +1,17 @@
 export function getStoredItems(listeNavn?: string): string[] {
+    console.log('listenavn', listeNavn);
     const key = listeNavn ? listeNavn + '_checkedItems' : 'checkedItems';
     const items = window.localStorage.getItem(key);
     return items ? JSON.parse(items) : [];
+}
+
+export function getStoredValg(listeNavn: string) {
+    const key = listeNavn ? listeNavn + '_valg' : 'valg';
+    const items = window.localStorage.getItem(key);
+
+    if (!items) return;
+    const valg = JSON.parse(items);
+    return valg;
 }
 
 export function getStoredListeNavn(): string[] {

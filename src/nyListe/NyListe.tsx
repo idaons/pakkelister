@@ -20,7 +20,7 @@ import { AppContext, basepath } from '../app/App';
 import Button from '~utils/baseComponents/Button';
 import { navigate } from '@reach/router';
 import Autocomplete from '~utils/baseComponents/Autocomplete';
-import { getStoredListeNavn } from '~utils/localStorage';
+import { getStoredListeNavn, getStoredValg } from '~utils/localStorage';
 import Radio from '~utils/baseComponents/Radio';
 
 export default function NyListe(props: { urlValg: string }) {
@@ -55,29 +55,31 @@ export default function NyListe(props: { urlValg: string }) {
     };
 
     const onNyEllerEksisterendeRadioChanged = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target, e.target.value);
         setLagNyListe(!lagNyListe);
         if (e.target.value === 'ny') {
         }
     };
 
-    const onListeValgt = (e: ChangeEvent<HTMLInputElement>) => {
-        setValgtListe(e.target.value);
-        // oppdater listeNavn
-        setTittel(e.target.value);
+    const onListeValgt = (e: React.MouseEvent<HTMLButtonElement>) => {
+        console.log(e.currentTarget.value);
+        setValgtListe(e.currentTarget.value);
+
+        // oppdater verdier
+        const valg = getStoredValg(e.currentTarget.value);
+        console.log(valg);
+        setTittel(e.currentTarget.value);
+
+        setSesong(valg.sesong);
+        setAktiviteter(valg.aktiviteter);
+        setOvernatting(valg.overnatting);
+        setKjønn(valg.kjønn);
+        setLengde(valg.lengde);
+        setSpesielleBehov(valg.spesielleBehov);
+
         dispatch({
             type: 'SET_LISTENAVN',
-            listeNavn: e.target.value,
+            listeNavn: e.currentTarget.value,
         });
-
-        let valg = localStorage.getItem(e.target.value + '_valg');
-    };
-
-    const hentListe = () => {
-        let valg = localStorage.getItem(valgtListe + '_valg');
-        if (valg) {
-            navigate(`${basepath}/pakk/${valgToUrlParams(JSON.parse(valg).valg)}`);
-        } else alert(`Fant ikke lista ${tittel}`);
     };
 
     return (
@@ -85,14 +87,14 @@ export default function NyListe(props: { urlValg: string }) {
             <h1 className={classes.header}>Tid for å pakke</h1>
             <div className={`${classes.inputGruppe} ${classes.valgGruppe}`}>
                 <Radio
-                    label="Lag ny liste"
+                    label="Lag liste"
                     checked={lagNyListe}
                     onChange={onNyEllerEksisterendeRadioChanged}
                     name="nyEllerEksisterende"
                     value="ny"
                 />
                 <Radio
-                    label="Endre eksisterende"
+                    label="Hent eksisterende"
                     checked={!lagNyListe}
                     onChange={onNyEllerEksisterendeRadioChanged}
                     name="nyEllerEksisterende"
@@ -108,16 +110,20 @@ export default function NyListe(props: { urlValg: string }) {
                     onBlur={onBlurTitle}
                 />
             ) : (
-                <div className={classes.hentListeWrapper}>
-                    <Autocomplete
-                        label="Velg eksisterende liste"
-                        className={classes.listeNavn}
-                        listeId="mineListeNavn"
-                        options={getStoredListeNavn()}
-                        onChange={onListeValgt}
-                        value={valgtListe}
-                    />
-                    <Button onClick={hentListe}>Åpne liste</Button>
+                <div className={`${classes.valgGruppe} ${classes.velgListeWrapper}`}>
+                    <label>Velg liste</label>
+                    <div className={classes.inputGruppe}>
+                        {getStoredListeNavn().map(liste => (
+                            <Button
+                                key={liste}
+                                value={liste}
+                                className={classes.listeNavn}
+                                onClick={onListeValgt}
+                            >
+                                {liste}
+                            </Button>
+                        ))}
+                    </div>
                 </div>
             )}
             {(lagNyListe || valgtListe) && (
@@ -141,14 +147,17 @@ export default function NyListe(props: { urlValg: string }) {
                     />
                     <div className={classes.opprett}>
                         <LinkButton
-                            to={`${basepath}/pakk/${valgToUrlParams({
-                                sesong,
-                                aktiviteter,
-                                overnatting,
-                                kjønn,
-                                lengde,
-                                spesielleBehov,
-                            })}`}
+                            to={`${basepath}/pakk/${valgToUrlParams(
+                                {
+                                    sesong,
+                                    aktiviteter,
+                                    overnatting,
+                                    kjønn,
+                                    lengde,
+                                    spesielleBehov,
+                                },
+                                tittel
+                            )}`}
                         >
                             Pakk
                         </LinkButton>
