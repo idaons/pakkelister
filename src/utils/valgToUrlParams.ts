@@ -5,7 +5,7 @@ import { Overnatting } from '../models/overnatting';
 import { Sesong } from '../models/sesong';
 import { defaultValg } from '../nyListe/valg/defaultValg';
 
-export function valgToUrlParams(valg: Valg) {
+export function valgToUrlParams(valg: Valg, tittel: String) {
     const aktiviteter =
         'aktiviteter=' + valg.aktiviteter.map(aktivitet => `${Aktivitet[aktivitet]}`).join(',');
     const lengde = 'lengde=' + valg.lengde;
@@ -15,13 +15,15 @@ export function valgToUrlParams(valg: Valg) {
         valg.overnatting.map(overnatting => `${Overnatting[overnatting]}`).join(',');
     const sesong = 'sesong=' + Sesong[valg.sesong];
     const spesiell = 'spesiell=' + valg.spesielleBehov;
+    const listeNavn = 'tittel=' + tittel;
 
-    return [aktiviteter, lengde, kjønn, overnatting, sesong, spesiell].join('&');
+    return [aktiviteter, lengde, kjønn, overnatting, sesong, spesiell, listeNavn].join('&');
 }
 
 interface Returns {
     valg: Valg;
     feilmelding?: string;
+    tittel: string;
 }
 
 export function decodeUrlParams(url: string): Returns {
@@ -67,6 +69,8 @@ export function decodeUrlParams(url: string): Returns {
                 ? `Manglende parametere: ${manglendeParametere}`
                 : undefined;
 
+        const tittel = paramsObject['tittel'];
+        console.log('listenavndecode', tittel);
         return {
             feilmelding: feilmelding,
             valg: {
@@ -77,11 +81,13 @@ export function decodeUrlParams(url: string): Returns {
                 sesong: valg.sesong ?? defaultValg.sesong,
                 spesielleBehov: valg.spesielleBehov ?? defaultValg.spesielleBehov,
             },
+            tittel: tittel,
         };
     } catch (e) {
         return {
             feilmelding: 'Det skjedde en feil under parsing av url',
             valg: defaultValg,
+            tittel: '',
         };
     }
 }

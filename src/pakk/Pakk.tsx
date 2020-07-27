@@ -12,12 +12,11 @@ import Button from '../utils/baseComponents/Button';
 import { AppContext, basepath } from '../app/App';
 import VisValg from './Valg';
 import { getStoredItems, storeItems } from '~utils/localStorage';
+import InputBase from '~utils/baseComponents/InputBase';
 
 function Pakk(props: { urlValg: string }) {
-    const valg = decodeUrlParams(props.urlValg);
-    const { state, dispatch } = useContext(AppContext);
-
-    const [checkedItems, setCheckedItems] = useState<string[]>(getStoredItems(state.listeNavn));
+    const { valg, tittel, feilmelding } = decodeUrlParams(props.urlValg);
+    const [checkedItems, setCheckedItems] = useState<string[]>(getStoredItems(tittel));
 
     useEffect(() => {
         storeItems(checkedItems);
@@ -26,16 +25,16 @@ function Pakk(props: { urlValg: string }) {
     const tilbakeKnapp = (
         <LinkButton
             className={classes.knapp}
-            to={basepath + '/nyliste/' + valgToUrlParams(valg.valg)}
+            to={basepath + '/lagliste/' + valgToUrlParams(valg, tittel)}
         >
             Tilbake
         </LinkButton>
     );
 
-    if (valg.feilmelding) {
+    if (feilmelding) {
         return (
             <>
-                <p>{valg.feilmelding}</p>
+                <p>{feilmelding}</p>
                 {tilbakeKnapp}
             </>
         );
@@ -50,7 +49,7 @@ function Pakk(props: { urlValg: string }) {
         }
     };
 
-    const alleElementer = getAlleTing(valg.valg);
+    const alleElementer = getAlleTing(valg);
     const iKategorier = groupArray(alleElementer, it => Kategori[it.kategori]);
 
     const updateCatogery = (catogery: string) => () => {
@@ -66,9 +65,10 @@ function Pakk(props: { urlValg: string }) {
     };
 
     const lagreListe = () => {
-        let storageName = state.listeNavn.replace(' ', '_');
+        let storageName = tittel.replace(' ', '_');
         localStorage.setItem(storageName + '_valg', JSON.stringify(valg));
         localStorage.setItem(storageName + '_checkedItems', JSON.stringify(checkedItems));
+        window.alert('OK');
     };
 
     const progress = Math.floor((checkedItems.length * 100) / alleElementer.length);
@@ -77,7 +77,7 @@ function Pakk(props: { urlValg: string }) {
     return (
         <div className={classes.pakk}>
             {tilbakeKnapp}
-            <VisValg valg={valg.valg} />
+            <VisValg valg={valg} />
             <div className={classes.progress}>
                 <i className={classes.icon}></i>
                 <span className={classes.prosent}>{progress}%</span>
@@ -114,7 +114,7 @@ function Pakk(props: { urlValg: string }) {
             </ul>
 
             <div className={classes.knapper}>
-                <Button onClick={lagreListe}>Lagre {state.listeNavn}</Button>
+                <Button onClick={lagreListe}>Lagre {tittel}</Button>
                 <Button onClick={() => confirm('Vil du nullstille lista?') && setCheckedItems([])}>
                     Nullstill
                 </Button>

@@ -21,7 +21,7 @@ const HandleRedirect = () => {
 
     window.localStorage.removeItem('redirect');
 
-    return <Redirect from={'/'} to={redirect || `${basepath}/nyliste/urlParams`} />;
+    return <Redirect from={'/'} to={redirect || `${basepath}/lagliste/urlParams`} />;
 };
 
 export const AppContext = createContext({} as IContextProps);
@@ -32,7 +32,7 @@ function App() {
     return (
         <AppContext.Provider value={{ state, dispatch }}>
             <Router>
-                <NyListe path={basepath + '/nyliste/:urlValg'} />
+                <NyListe path={basepath + '/lagliste/:urlValg'} />
                 <Pakk path={basepath + '/pakk/:urlValg'} />
                 <HandleRedirect default />
             </Router>
