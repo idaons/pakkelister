@@ -70,7 +70,6 @@ export function decodeUrlParams(url: string): Returns {
                 : undefined;
 
         const tittel = paramsObject['tittel'];
-        console.log('listenavndecode', tittel);
         return {
             feilmelding: feilmelding,
             valg: {
