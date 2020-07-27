@@ -14,6 +14,14 @@ export function getStoredValg(listeNavn: string) {
     const valg = JSON.parse(items);
     return valg as Valg;
 }
+export function getStoredEkstraTing(listeNavn: string): string[] {
+    const key = listeNavn + '_ekstraItems';
+    const items = window.localStorage.getItem(key);
+
+    if (!items) return [];
+    const ekstra = JSON.parse(items);
+    return ekstra;
+}
 
 export function getStoredListeNavn(): string[] {
     const items = window.localStorage;

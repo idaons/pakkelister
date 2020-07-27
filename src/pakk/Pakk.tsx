@@ -11,13 +11,14 @@ import LinkButton from '../utils/baseComponents/LinkButton';
 import Button from '../utils/baseComponents/Button';
 import { AppContext, basepath } from '../app/App';
 import VisValg from './Valg';
-import { getStoredItems, storeItems } from '~utils/localStorage';
-import InputBase from '~utils/baseComponents/InputBase';
+import { getStoredEkstraTing, getStoredItems, storeItems } from '~utils/localStorage';
 
 function Pakk(props: { urlValg: string }) {
     const { valg, tittel, feilmelding } = decodeUrlParams(props.urlValg);
     const [checkedItems, setCheckedItems] = useState<string[]>(getStoredItems(tittel));
     const [lagrerListe, setLagrerListe] = useState(false);
+    const [ekstraTing, setEkstraTing] = useState<string[]>(getStoredEkstraTing(tittel));
+    const [currentEkstraVerdi, setCurrentEkstraVerdi] = useState<string>('');
 
     useEffect(() => {
         storeItems(checkedItems);
@@ -50,6 +51,14 @@ function Pakk(props: { urlValg: string }) {
         }
     };
 
+    const leggTilEkstra = () => {
+        if (currentEkstraVerdi === '') {
+            return;
+        }
+        setEkstraTing([...ekstraTing, currentEkstraVerdi]);
+        setCurrentEkstraVerdi('');
+    };
+
     const alleElementer = getAlleTing(valg);
     const iKategorier = groupArray(alleElementer, it => Kategori[it.kategori]);
 
@@ -70,6 +79,7 @@ function Pakk(props: { urlValg: string }) {
         let storageName = tittel.replace(' ', '_');
         localStorage.setItem(storageName + '_valg', JSON.stringify(valg));
         localStorage.setItem(storageName + '_checkedItems', JSON.stringify(checkedItems));
+        localStorage.setItem(storageName + '_ekstraItems', JSON.stringify(ekstraTing));
         setTimeout(() => {
             document.getElementById('lagreknapp')?.blur();
             setLagrerListe(false);
@@ -116,6 +126,31 @@ function Pakk(props: { urlValg: string }) {
                         </ul>
                     </li>
                 ))}
+                <li>
+                    <Checkbox header={true} strikeThrough label="Ekstra" />
+                    <ul className={classes.tingListe}>
+                        <input
+                            className={classes.ekstraValgInput}
+                            type="tekst"
+                            value={currentEkstraVerdi}
+                            onChange={e => setCurrentEkstraVerdi(e.target.value)}
+                        />
+                        <Button className={classes.ekstraValgKnapp} onClick={leggTilEkstra}>
+                            + Legg til
+                        </Button>
+                        {ekstraTing.map(element => (
+                            <li key={element}>
+                                <Checkbox
+                                    value={element}
+                                    label={element}
+                                    checked={checkedItems.includes(element)}
+                                    strikeThrough={true}
+                                    onChange={updateCheckedItems}
+                                />
+                            </li>
+                        ))}
+                    </ul>
+                </li>
             </ul>
 
             <div className={classes.knapper}>
