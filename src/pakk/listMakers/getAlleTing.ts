@@ -10,7 +10,7 @@ import { getSkredTing } from './getSkredTing';
 import { getSkiTing } from './getSkiTing';
 import { getKlatreutstyr } from './getKlatreutstyr';
 import { getFjellturTing } from './getFjellturTing';
-import { getSpesielleTing } from '~pakk/listMakers/getSpesielleTing';
+import { getSpesielleTing } from './getSpesielleTing';
 
 export const alleLister: ItemsGetter[] = [
     getToalettSaker,
