@@ -9,8 +9,20 @@
   grid-template-rows: auto 1fr auto;
   grid-template-areas:  "knapp valg koffert"
                         "liste liste liste"
-                        "knapper knapper knapper"
-;
+                        "knapper knapper knapper";
+
+  @media (max-width: 768px) {
+    grid-template-columns: auto 1fr ;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+    "knapp koffert"
+    "valg valg "
+    "liste liste"
+    "knapper knapper";
+
+
+  }
+
   ul {
     list-style-type: none;
     padding-left: 0;
@@ -21,11 +33,20 @@
   grid-area: valg;
   ul {
     list-style: circle;
-    margin-left: 3rem;
+    margin: 0.5rem 1.5rem;
   }
   display: flex;
   flex-wrap: wrap;
   font-weight: 600;
+  padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    margin-top: 1rem;
+    padding: 0;
+    ul {
+       margin: 0.5rem 1rem;
+    }
+  }
 }
 
 .knapper {
