@@ -139,4 +139,4 @@ module.exports={pakk:"_pakk_3c16c",valg:"_valg_3c16c",knapper:"_knapper_3c16c",p
 },{"react":"n8MK","../nyListe/NyListe":"YRMG","../pakk/Pakk":"xmGx","./Reducer":"liZG","@reach/router":"VJZj"}],"zo2T":[function(require,module,exports) {
 "use strict";var e=a(require("react")),r=a(require("react-dom"));require("./styles.css"),require("./utils/normalize.css");var t=a(require("./app/App"));function a(e){return e&&e.__esModule?e:{default:e}}var u=document.getElementById("app");r.default.render(e.default.createElement(t.default,{name:"pakkeliste"}),u);
 },{"react":"n8MK","react-dom":"NKHc","./styles.css":"Tnu0","./utils/normalize.css":"Tnu0","./app/App":"D7z2"}]},{},["zo2T"], null)
-//# sourceMappingURL=src.66283517.js.map
+//# sourceMappingURL=src.e45994b3.js.map
