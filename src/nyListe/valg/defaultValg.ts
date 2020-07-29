@@ -9,7 +9,7 @@ const erVinter = today.getMonth() >= 10 || today.getMonth() <= 3;
 export const defaultValg: Valg = {
     sesong: erVinter ? Sesong.Vinter : Sesong.FjellSommer,
     overnatting: [],
-    kjønn: Kjønn.Begge,
+    kjønn: Kjønn.VilIkkeOppgi,
     lengde: 3,
     aktiviteter: [],
     spesielleBehov: false,

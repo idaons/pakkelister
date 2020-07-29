@@ -11,7 +11,7 @@ interface Props {
 function LengdeValg(props: Props) {
     return (
         <ValgStyle name="Lengde">
-            {[...new Array(7)].map((_, index) => {
+            {[...new Array(8)].map((_, index) => {
                 if (index === 0) {
                     return null;
                 }

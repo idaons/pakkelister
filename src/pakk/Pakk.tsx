@@ -129,15 +129,17 @@ function Pakk(props: { urlValg: string }) {
                 <li>
                     <Checkbox header={true} strikeThrough label="Ekstra" />
                     <ul className={classes.tingListe}>
-                        <input
-                            className={classes.ekstraValgInput}
-                            type="tekst"
-                            value={currentEkstraVerdi}
-                            onChange={e => setCurrentEkstraVerdi(e.target.value)}
-                        />
-                        <Button className={classes.ekstraValgKnapp} onClick={leggTilEkstra}>
-                            + Legg til
-                        </Button>
+                        <div className={classes.ekstraValgWrapper}>
+                            <input
+                                className={classes.ekstraValgInput}
+                                type="tekst"
+                                value={currentEkstraVerdi}
+                                onChange={e => setCurrentEkstraVerdi(e.target.value)}
+                            />
+                            <Button className={classes.ekstraValgKnapp} onClick={leggTilEkstra}>
+                                + Legg til
+                            </Button>
+                        </div>
                         {ekstraTing.map(element => (
                             <li key={element}>
                                 <Checkbox
