@@ -3,7 +3,6 @@ import {getEnumAsArray} from "../utils/enum";
 export enum Kjønn {
     Mann,
     Kvinne,
-    Begge,
     VilIkkeOppgi
 }
 

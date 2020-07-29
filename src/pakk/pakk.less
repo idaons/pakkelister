@@ -1,3 +1,5 @@
+@import './../app/App.less';
+
 .pakk {
   min-height: 100vh;
   padding: 2em;
@@ -11,7 +13,7 @@
                         "liste liste liste"
                         "knapper knapper knapper";
 
-  @media (max-width: 768px) {
+  @media (max-width: @desktopMinWidth) {
     grid-template-columns: auto 1fr ;
     grid-template-rows: auto 1fr;
     grid-template-areas:
@@ -98,19 +100,41 @@
 }
 
 
-.ekstraValgInput {
-  max-width: 10rem;
+.ekstraValgWrapper {
   margin-bottom: 1rem;
-}
-.ekstraValgKnapp {
-  margin-left: 0.5rem;
-  padding: 0.3rem 0.5rem;
-  border-width: 0.1rem;
+  display: flex;
+
+
+  @media (max-width: @smallMobileMaxWidth) {
+    flex-direction: column;
+  }
+
+  .ekstraValgInput {
+    max-width: 10rem;
+  }
+
+  .ekstraValgKnapp {
+    margin-left: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    border-width: 0.1rem;
+
+    @media (max-width: @smallMobileMaxWidth) {
+      margin-left: 0;
+      margin-top: 0.5rem;
+      width: fit-content;
+    }
+  }
+
+
 }
 
 .kategoriListe {
   > li {
     margin-right: 3em;
+
+    @media (max-width: @smallMobileMaxWidth) {
+      margin-right: 1em;
+    }
   }
   grid-area: liste;
   display: flex;
