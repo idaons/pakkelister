@@ -13,6 +13,7 @@ export function getFjellturTing(valg: Valg): Item[] {
 
     fjellturTing.push('Fjellsko');
     fjellturTing.push('Regntrekk til sekk');
+    fjellturTing.push('Staver');
 
     return stringArrayToItems(fjellturTing, Kategori.TekniskUtstyr);
 }

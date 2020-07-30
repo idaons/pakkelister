@@ -18,8 +18,6 @@ import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
 import TextInput from '../utils/baseComponents/TextInput';
 import { AppContext, basepath } from '../app/App';
 import Button from '~utils/baseComponents/Button';
-import { navigate } from '@reach/router';
-import Autocomplete from '~utils/baseComponents/Autocomplete';
 import { getStoredListeNavn, getStoredValg } from '~utils/localStorage';
 import Radio from '~utils/baseComponents/Radio';
 
