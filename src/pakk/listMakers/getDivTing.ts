@@ -6,6 +6,7 @@ import { Sesong } from '../../models/sesong';
 import { Item } from '../../models/liste';
 import { Kjønn } from '../../models/kjønn';
 import { Overnatting } from '../../models/overnatting';
+import { erLangtur } from '~nyListe/valg/LengdeValg';
 
 export function getDivTing(valg: Valg): Item[] {
     let ting = ['Solbriller', 'Lommebok'];
@@ -55,6 +56,10 @@ export function getDivTing(valg: Valg): Item[] {
         valg.aktiviteter.includes(Aktivitet.Langrenn)
     ) {
         ting.push('Treningssekk');
+    }
+
+    if (erLangtur(valg)) {
+        ting.push('Biotex');
     }
 
     return stringArrayToItems(ting, Kategori.Div);
