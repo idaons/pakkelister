@@ -22,10 +22,9 @@ function Pakk(props: { urlValg: string }) {
 
     const lagreListeMedNavn = () => {
         setLagrerListe(true);
-        let storageName = tittel.replace(' ', '_');
-        localStorage.setItem(storageName + '_valg', JSON.stringify(valg));
-        localStorage.setItem(storageName + '_checkedItems', JSON.stringify(checkedItems));
-        localStorage.setItem(storageName + '_ekstraItems', JSON.stringify(ekstraTing));
+        localStorage.setItem(tittel + '_valg', JSON.stringify(valg));
+        localStorage.setItem(tittel + '_checkedItems', JSON.stringify(checkedItems));
+        localStorage.setItem(tittel + '_ekstraItems', JSON.stringify(ekstraTing));
         setTimeout(() => {
             document.getElementById('lagreknapp')?.blur();
             setLagrerListe(false);
@@ -159,7 +158,7 @@ function Pakk(props: { urlValg: string }) {
                 <p>
                     {lagrerListe
                         ? 'Lagrer...'
-                        : `Pakklisten din ${tittel && `'${tittel}'`} er lagret 🏔🌤️`}
+                        : `Pakklisten ${tittel && `'${tittel}'`} er lagret på enheten din 🏔🌤️`}
                 </p>
                 <Button onClick={() => confirm('Vil du nullstille lista?') && setCheckedItems([])}>
                     Nullstill
