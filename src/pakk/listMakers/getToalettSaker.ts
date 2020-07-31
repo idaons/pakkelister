@@ -6,6 +6,7 @@ import { Kjønn } from '../../models/kjønn';
 import { Sesong } from '../../models/sesong';
 import { Overnatting } from '../../models/overnatting';
 import { skalGåPåTur } from '~models/aktivitet';
+import { erLangtur } from '~nyListe/valg/LengdeValg';
 
 export function getToalettSaker(valg: Valg): Item[] {
     let toalettSaker = ['Solkrem'];
@@ -34,7 +35,7 @@ export function getToalettSaker(valg: Valg): Item[] {
         toalettSaker.push('Diverse jenteting');
     }
 
-    if (valg.kjønn === Kjønn.Mann && valg.lengde > 6) {
+    if (valg.kjønn === Kjønn.Mann && erLangtur(valg)) {
         toalettSaker.push('Barberhøvel');
     }
 
