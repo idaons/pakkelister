@@ -1,13 +1,13 @@
 import { Valg } from '~models/valg';
 
 export function getStoredItems(listeNavn?: string): string[] {
-    const key = listeNavn ? listeNavn + '_checkedItems' : 'checkedItems';
+    const key = listeNavn + '_checkedItems';
     const items = window.localStorage.getItem(key);
     return items ? JSON.parse(items) : [];
 }
 
 export function getStoredValg(listeNavn: string) {
-    const key = listeNavn ? listeNavn + '_valg' : 'valg';
+    const key = listeNavn + '_valg';
     const items = window.localStorage.getItem(key);
 
     if (!items) return;
@@ -37,8 +37,4 @@ export function getStoredListeNavn(): string[] {
 
     // Return unique values
     return keys.filter((a, b) => keys.indexOf(a) === b);
-}
-
-export function storeItems(checkedItems: string[]) {
-    window.localStorage.setItem('checkedItems', JSON.stringify(checkedItems));
 }

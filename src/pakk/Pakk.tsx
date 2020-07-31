@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useContext, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getAlleTing } from './listMakers/getAlleTing';
 import { groupArray } from '../utils/groupArray';
 import { Kategori } from '../models/kategori';
@@ -9,9 +9,9 @@ import Checkbox from '../utils/baseComponents/Checkbox';
 import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
 import LinkButton from '../utils/baseComponents/LinkButton';
 import Button from '../utils/baseComponents/Button';
-import { AppContext, basepath } from '../app/App';
+import { basepath } from '../app/App';
 import VisValg from './Valg';
-import { getStoredEkstraTing, getStoredItems, storeItems } from '~utils/localStorage';
+import { getStoredEkstraTing, getStoredItems } from '~utils/localStorage';
 
 function Pakk(props: { urlValg: string }) {
     const { valg, tittel, feilmelding } = decodeUrlParams(props.urlValg);
@@ -20,9 +20,21 @@ function Pakk(props: { urlValg: string }) {
     const [ekstraTing, setEkstraTing] = useState<string[]>(getStoredEkstraTing(tittel));
     const [currentEkstraVerdi, setCurrentEkstraVerdi] = useState<string>('');
 
+    const lagreListeMedNavn = () => {
+        setLagrerListe(true);
+        let storageName = tittel.replace(' ', '_');
+        localStorage.setItem(storageName + '_valg', JSON.stringify(valg));
+        localStorage.setItem(storageName + '_checkedItems', JSON.stringify(checkedItems));
+        localStorage.setItem(storageName + '_ekstraItems', JSON.stringify(ekstraTing));
+        setTimeout(() => {
+            document.getElementById('lagreknapp')?.blur();
+            setLagrerListe(false);
+        }, 1000);
+    };
+
     useEffect(() => {
-        storeItems(checkedItems);
-    }, [checkedItems]);
+        lagreListeMedNavn();
+    }, [checkedItems, ekstraTing]);
 
     const tilbakeKnapp = (
         <LinkButton
@@ -72,18 +84,6 @@ function Pakk(props: { urlValg: string }) {
         } else {
             setCheckedItems([...filteredCheckedItems, ...currentCatogery]);
         }
-    };
-
-    const lagreListe = () => {
-        setLagrerListe(true);
-        let storageName = tittel.replace(' ', '_');
-        localStorage.setItem(storageName + '_valg', JSON.stringify(valg));
-        localStorage.setItem(storageName + '_checkedItems', JSON.stringify(checkedItems));
-        localStorage.setItem(storageName + '_ekstraItems', JSON.stringify(ekstraTing));
-        setTimeout(() => {
-            document.getElementById('lagreknapp')?.blur();
-            setLagrerListe(false);
-        }, 1000);
     };
 
     const progress = Math.floor((checkedItems.length * 100) / alleElementer.length);
@@ -156,9 +156,11 @@ function Pakk(props: { urlValg: string }) {
             </ul>
 
             <div className={classes.knapper}>
-                <Button id="lagreknapp" onClick={lagreListe}>
-                    {lagrerListe ? 'Lagrer...' : `Lagre ${tittel}`}
-                </Button>
+                <p>
+                    {lagrerListe
+                        ? 'Lagrer...'
+                        : `Pakklisten din ${tittel && `'${tittel}'`} er lagret 🏔🌤️`}
+                </p>
                 <Button onClick={() => confirm('Vil du nullstille lista?') && setCheckedItems([])}>
                     Nullstill
                 </Button>
