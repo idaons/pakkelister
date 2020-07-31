@@ -9,7 +9,10 @@ export function getSpesielleTing(valg: Valg): Item[] {
     let ting: string[] = [];
 
     if (skalGåPåTur(valg.aktiviteter)) {
-        ting.push('Hoftegnagsårbeskytter', 'Treningsklokke');
+        ting.push('Treningsklokke');
+        if (valg.spesielleBehov) {
+            ting.push('Hoftegnagsårbeskytter');
+        }
         if (valg.sesong === Sesong.Vinter) {
             ting.push('Termos');
             ting.push('Varmeposer');

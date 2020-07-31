@@ -5,13 +5,20 @@ import { Valg } from '../../models/valg';
 import { Kjønn } from '../../models/kjønn';
 import { Sesong } from '../../models/sesong';
 import { Overnatting } from '../../models/overnatting';
+import { skalGåPåTur } from '~models/aktivitet';
 
 export function getToalettSaker(valg: Valg): Item[] {
-    if (!overnatting(valg)) {
-        return [];
+    let toalettSaker = ['Solkrem'];
+
+    if (skalGåPåTur(valg.aktiviteter)) {
+        toalettSaker.push('Sportsteip');
     }
 
-    let toalettSaker = [
+    if (!overnatting(valg)) {
+        return stringArrayToItems(toalettSaker, Kategori.Toalettsaker);
+    }
+
+    toalettSaker.push(
         'Tannbørste',
         'Tannkrem',
         'Tanntråd',
@@ -19,12 +26,16 @@ export function getToalettSaker(valg: Valg): Item[] {
         'Linsebeholder',
         'Briller',
         'Piller',
-        'Deo',
-    ];
+        'Deo'
+    );
 
     if (valg.kjønn === Kjønn.Kvinne) {
         toalettSaker.push('Hårstrikk');
         toalettSaker.push('Diverse jenteting');
+    }
+
+    if (valg.kjønn === Kjønn.Mann && valg.lengde > 6) {
+        toalettSaker.push('Barberhøvel');
     }
 
     if (valg.sesong === Sesong.FjellSommer) toalettSaker.push('Myggmiddel');
