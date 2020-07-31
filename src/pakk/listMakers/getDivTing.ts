@@ -8,7 +8,7 @@ import { Kjønn } from '../../models/kjønn';
 import { Overnatting } from '../../models/overnatting';
 
 export function getDivTing(valg: Valg): Item[] {
-    let ting = ['Solbriller', 'Solkrem', 'Lommebok'];
+    let ting = ['Solbriller', 'Lommebok'];
 
     if (skalGåPåTur(valg.aktiviteter)) {
         ting.push(
@@ -17,7 +17,6 @@ export function getDivTing(valg: Valg): Item[] {
             'Førstehjelp',
             'Kart',
             'Mat',
-            'Sportsteip',
             'Antibac',
             'Fyrstikker',
             'Dopapir',
