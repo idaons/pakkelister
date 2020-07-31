@@ -1,6 +1,6 @@
 import { Kategori } from '../../models/kategori';
 import { Valg } from '../../models/valg';
-import { Overnatting } from '../../models/overnatting';
+import { Overnatting, overnattingUte } from '../../models/overnatting';
 import { sikkerhetVinter, stringArrayToItems } from './utils';
 import { Item } from '../../models/liste';
 
@@ -11,12 +11,20 @@ export function getOvernattingTing(valg: Valg): Item[] {
         overnattingTing.push('Vindsekk');
     }
 
-    if (sikkerhetVinter(valg) || valg.overnatting.includes(Overnatting.Telt)) {
+    if (sikkerhetVinter(valg) || overnattingUte(valg)) {
         overnattingTing.push('Liggeunderlag', 'Sovepose');
     }
 
+    if (overnattingUte(valg)) {
+        overnattingTing.push('Primus', 'Kokesaker', 'Søppelpose');
+    }
+
     if (valg.overnatting.includes(Overnatting.Telt)) {
-        overnattingTing.push('Telt', 'Primus', 'Kokesaker', 'Søppelpose');
+        overnattingTing.push('Telt');
+    }
+
+    if (valg.overnatting.includes(Overnatting.Hengekøye)) {
+        overnattingTing.push('Hengekøye', 'Hengekøyeoppheng', 'Tarp', 'Myggnetting');
     }
 
     if (valg.overnatting.includes(Overnatting.DNThytte)) {

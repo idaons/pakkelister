@@ -1,8 +1,10 @@
 import { getEnumAsArray } from '../utils/enum';
+import { Valg } from '~models/valg';
 
 export enum Overnatting {
     DNThytte,
     Telt,
+    Hengekøye,
     HusHotell,
     FamilieHytte,
 }
@@ -27,4 +29,8 @@ export function getOvernattingLabel(o: Overnatting) {
 
 export function getOvernattingArray(): Overnatting[] {
     return getEnumAsArray(Overnatting);
+}
+
+export function overnattingUte(valg: Valg): boolean {
+    return [Overnatting.Hengekøye, Overnatting.Telt].some(o => valg.overnatting.includes(o));
 }
