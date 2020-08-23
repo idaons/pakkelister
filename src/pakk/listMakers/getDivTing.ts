@@ -6,7 +6,7 @@ import { Sesong } from '../../models/sesong';
 import { Item } from '../../models/liste';
 import { Kjønn } from '../../models/kjønn';
 import { Overnatting } from '../../models/overnatting';
-import { erLangtur } from '~nyListe/valg/LengdeValg';
+import { erLangtur } from '~lagListe/valg/LengdeValg';
 
 export function getDivTing(valg: Valg): Item[] {
     let ting = ['Solbriller', 'Lommebok'];

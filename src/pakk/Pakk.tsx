@@ -12,33 +12,39 @@ import Button from '../utils/baseComponents/Button';
 import { basepath } from '../app/App';
 import VisValg from './Valg';
 import { getStoredEkstraTing, getStoredItems } from '~utils/localStorage';
+import { RouteComponentProps, WindowLocation } from '@reach/router';
 
-function Pakk(props: { urlValg: string }) {
-    const { valg, tittel, feilmelding } = decodeUrlParams(props.urlValg);
-    const [checkedItems, setCheckedItems] = useState<string[]>(getStoredItems(tittel));
+interface Props extends RouteComponentProps {
+    urlValg?: string;
+    location?: WindowLocation;
+}
+
+function Pakk(props: Props) {
+    const { valg, currentListe, feilmelding } = decodeUrlParams(props.urlValg || '');
+    const [checkedItems, setCheckedItems] = useState<string[]>(getStoredItems(currentListe));
     const [lagrerListe, setLagrerListe] = useState(false);
-    const [ekstraTing, setEkstraTing] = useState<string[]>(getStoredEkstraTing(tittel));
+    const [ekstraTing, setEkstraTing] = useState<string[]>(getStoredEkstraTing(currentListe));
     const [currentEkstraVerdi, setCurrentEkstraVerdi] = useState<string>('');
 
-    const lagreListeMedNavn = () => {
+    useEffect(() => {
         setLagrerListe(true);
-        localStorage.setItem(tittel + '_valg', JSON.stringify(valg));
-        localStorage.setItem(tittel + '_checkedItems', JSON.stringify(checkedItems));
-        localStorage.setItem(tittel + '_ekstraItems', JSON.stringify(ekstraTing));
-        setTimeout(() => {
+        localStorage.setItem(currentListe + '_valg', JSON.stringify(valg));
+        localStorage.setItem(currentListe + '_checkedItems', JSON.stringify(checkedItems));
+        localStorage.setItem(currentListe + '_ekstraItems', JSON.stringify(ekstraTing));
+        const timer = setTimeout(() => {
             document.getElementById('lagreknapp')?.blur();
             setLagrerListe(false);
         }, 1000);
-    };
 
-    useEffect(() => {
-        lagreListeMedNavn();
+        return () => {
+            clearTimeout(timer);
+        };
     }, [checkedItems, ekstraTing]);
 
     const tilbakeKnapp = (
         <LinkButton
             className={classes.knapp}
-            to={basepath + '/lagliste/' + valgToUrlParams(valg, tittel)}
+            to={basepath + '/' + valgToUrlParams(valg, currentListe)}
         >
             Tilbake
         </LinkButton>
@@ -158,7 +164,8 @@ function Pakk(props: { urlValg: string }) {
                 <p>
                     {lagrerListe
                         ? 'Lagrer...'
-                        : `Pakklisten ${tittel && `'${tittel}'`} er lagret på enheten din 🏔🌤️`}
+                        : `Pakklisten ${currentListe &&
+                              `'${currentListe}'`} er lagret på enheten din 🏔🌤️`}
                 </p>
                 <Button onClick={() => confirm('Vil du nullstille lista?') && setCheckedItems([])}>
                     Nullstill

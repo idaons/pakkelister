@@ -1,42 +1,23 @@
 import * as React from 'react';
-import { createContext, useReducer } from 'react';
-import NyListe from '../nyListe/NyListe';
+import LagListe from '../lagListe/LagListe';
 import Pakk from '../pakk/Pakk';
-import { Actions, IState, reducer } from './Reducer';
 import { Redirect, Router } from '@reach/router';
-
-interface IContextProps {
-    state: IState;
-    dispatch: React.Dispatch<Actions>;
-}
-
-const initialState: IState = {
-    listeNavn: '',
-};
 
 export const basepath = '/pakkelister';
 
-const HandleRedirect = () => {
+const HandleRedirect = (props: { default: boolean }) => {
     const redirect = window.localStorage.getItem('redirect');
-
     window.localStorage.removeItem('redirect');
-
-    return <Redirect from={'/'} to={redirect || `${basepath}/lagliste/urlParams`} />;
+    return <Redirect noThrow from={'/'} to={redirect || `${basepath}/urlParams`} />;
 };
 
-export const AppContext = createContext({} as IContextProps);
-
 function App() {
-    const [state, dispatch] = useReducer(reducer, initialState);
-
     return (
-        <AppContext.Provider value={{ state, dispatch }}>
-            <Router>
-                <NyListe path={basepath + '/lagliste/:urlValg'} />
-                <Pakk path={basepath + '/pakk/:urlValg'} />
-                <HandleRedirect default />
-            </Router>
-        </AppContext.Provider>
+        <Router>
+            <LagListe path={basepath + '/:urlValg'} />
+            <Pakk path={basepath + '/pakk/:urlValg'} />
+            <HandleRedirect default />
+        </Router>
     );
 }
 export default App;
