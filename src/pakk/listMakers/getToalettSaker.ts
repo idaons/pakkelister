@@ -6,7 +6,7 @@ import { Kjønn } from '../../models/kjønn';
 import { Sesong } from '../../models/sesong';
 import { Overnatting } from '../../models/overnatting';
 import { skalGåPåTur } from '~models/aktivitet';
-import { erLangtur } from '~nyListe/valg/LengdeValg';
+import { erLangtur } from '~lagListe/valg/LengdeValg';
 
 export function getToalettSaker(valg: Valg): Item[] {
     let toalettSaker = ['Solkrem'];

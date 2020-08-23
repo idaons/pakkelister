@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { ChangeEvent, FormEvent, useContext, useEffect, useReducer, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 // @ts-ignore
-import classes from './nyListe.less';
+import classes from './LagListe.less';
 import SesongValg from './valg/SesongValg';
 import AktiviteterValg from './valg/AktiviteterValg';
 import OvernattingValg from './valg/Overnatting';
@@ -16,22 +16,27 @@ import { UnmountClosed } from 'react-collapse';
 import LinkButton from '../utils/baseComponents/LinkButton';
 import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
 import TextInput from '../utils/baseComponents/TextInput';
-import { AppContext, basepath } from '../app/App';
+import { basepath } from '../app/App';
 import Button from '~utils/baseComponents/Button';
 import { getStoredListeNavn, getStoredValg } from '~utils/localStorage';
 import Radio from '~utils/baseComponents/Radio';
+import { navigate, RouteComponentProps } from '@reach/router';
+import { defaultValg } from '~lagListe/valg/defaultValg';
 
-export default function NyListe(props: { urlValg: string }) {
-    const urlValg = decodeUrlParams(props.urlValg);
-    const { state, dispatch } = useContext(AppContext);
+interface Props extends RouteComponentProps {
+    urlValg?: string;
+}
+
+export default function LagListe(props: Props) {
+    const urlValg = decodeUrlParams(props.urlValg || '');
     const [sesong, setSesong] = useState<Sesong>(urlValg.valg.sesong);
     const [aktiviteter, setAktiviteter] = useState<Aktivitet[]>(urlValg.valg.aktiviteter);
     const [overnatting, setOvernatting] = useState<Overnatting[]>(urlValg.valg.overnatting);
     const [kjønn, setKjønn] = useState<Kjønn>(urlValg.valg.kjønn);
     const [lengde, setLengde] = useState<number>(urlValg.valg.lengde);
-    const [tittel, setTittel] = useState<string>(state.listeNavn);
+    const [tittel, setTittel] = useState<string>(urlValg.currentListe);
     const [valgtListe, setValgtListe] = useState<string>('');
-    const [lagNyListe, setLagNyListe] = useState<boolean>(true);
+    const [endreEksisterende, setEndreEksisterende] = useState<boolean>(!!urlValg.currentListe);
     const [spesielleBehov, setSpesielleBehov] = useState<boolean>(urlValg.valg.spesielleBehov);
 
     const handleSubmit = (e: FormEvent) => {
@@ -39,23 +44,49 @@ export default function NyListe(props: { urlValg: string }) {
     };
 
     useEffect(() => {
-        if (lagNyListe) {
+        if (endreEksisterende) {
+            const listeKnapp = document.getElementById('knapp_' + tittel);
+            if (listeKnapp) {
+                listeKnapp.click();
+                listeKnapp.focus();
+            }
+        }
+    }, []);
+
+    useEffect(() => {
+        const nyUrl = `${basepath}/${valgToUrlParams(
+            {
+                sesong,
+                aktiviteter,
+                overnatting,
+                kjønn,
+                lengde,
+                spesielleBehov,
+            },
+            tittel
+        )}`;
+        navigate(nyUrl);
+    }, [sesong, aktiviteter, overnatting, kjønn, lengde, spesielleBehov, tittel]);
+
+    useEffect(() => {
+        if (!endreEksisterende) {
             setValgtListe('');
         } else {
         }
-    }, [lagNyListe]);
-
-    const onBlurTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch({
-            type: 'SET_LISTENAVN',
-            listeNavn: e.currentTarget.value,
-        });
-    };
+    }, [endreEksisterende]);
 
     const onNyEllerEksisterendeRadioChanged = (e: ChangeEvent<HTMLInputElement>) => {
-        setLagNyListe(!lagNyListe);
-        if (e.target.value === 'ny') {
-        }
+        setEndreEksisterende(!endreEksisterende);
+
+        // Nullstill verdier
+        const valg = defaultValg;
+        setTittel('');
+        setSesong(valg.sesong);
+        setAktiviteter(valg.aktiviteter);
+        setOvernatting(valg.overnatting);
+        setKjønn(valg.kjønn);
+        setLengde(valg.lengde);
+        setSpesielleBehov(valg.spesielleBehov);
     };
 
     const onListeValgt = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -72,11 +103,6 @@ export default function NyListe(props: { urlValg: string }) {
         setKjønn(valg.kjønn);
         setLengde(valg.lengde);
         setSpesielleBehov(valg.spesielleBehov);
-
-        dispatch({
-            type: 'SET_LISTENAVN',
-            listeNavn: e.currentTarget.value,
-        });
     };
 
     return (
@@ -85,34 +111,27 @@ export default function NyListe(props: { urlValg: string }) {
             <div className={`${classes.inputGruppe} ${classes.valgGruppe}`}>
                 <Radio
                     label="Lag liste"
-                    checked={lagNyListe}
+                    checked={!endreEksisterende}
                     onChange={onNyEllerEksisterendeRadioChanged}
                     name="nyEllerEksisterende"
                     value="ny"
                 />
                 <Radio
-                    label="Hent eksisterende"
-                    checked={!lagNyListe}
+                    label="Endre eksisterende"
+                    checked={endreEksisterende}
                     onChange={onNyEllerEksisterendeRadioChanged}
                     name="nyEllerEksisterende"
                     value="eksisterende"
                 />
             </div>
-            {lagNyListe ? (
-                <TextInput
-                    label="Navn på liste"
-                    className={classes.listeNavn}
-                    onChange={e => setTittel(e.target.value)}
-                    value={tittel}
-                    onBlur={onBlurTitle}
-                />
-            ) : (
+            {endreEksisterende ? (
                 <div className={`${classes.valgGruppe} ${classes.velgListeWrapper}`}>
                     <label>Velg liste</label>
                     <div className={classes.inputGruppe}>
                         {getStoredListeNavn().map(liste => (
                             <Button
                                 key={liste}
+                                id={'knapp_' + liste}
                                 value={liste}
                                 className={classes.listeNavn}
                                 onClick={onListeValgt}
@@ -122,8 +141,15 @@ export default function NyListe(props: { urlValg: string }) {
                         ))}
                     </div>
                 </div>
+            ) : (
+                <TextInput
+                    label="Navn på liste"
+                    className={classes.listeNavn}
+                    onChange={e => setTittel(e.target.value)}
+                    value={tittel}
+                />
             )}
-            {(lagNyListe || valgtListe) && (
+            {(!endreEksisterende || valgtListe) && (
                 <>
                     <SesongValg sesong={sesong} setSesong={setSesong} />
                     <OvernattingValg overnatting={overnatting} setOvernatting={setOvernatting} />

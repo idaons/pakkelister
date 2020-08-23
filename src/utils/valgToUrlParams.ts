@@ -3,9 +3,9 @@ import { Aktivitet } from '../models/aktivitet';
 import { Kjønn } from '../models/kjønn';
 import { Overnatting } from '../models/overnatting';
 import { Sesong } from '../models/sesong';
-import { defaultValg } from '../nyListe/valg/defaultValg';
+import { defaultValg } from '../lagListe/valg/defaultValg';
 
-export function valgToUrlParams(valg: Valg, tittel: String) {
+export function valgToUrlParams(valg: Valg, liste: String) {
     const aktiviteter =
         'aktiviteter=' + valg.aktiviteter.map(aktivitet => `${Aktivitet[aktivitet]}`).join(',');
     const lengde = 'lengde=' + valg.lengde;
@@ -15,15 +15,15 @@ export function valgToUrlParams(valg: Valg, tittel: String) {
         valg.overnatting.map(overnatting => `${Overnatting[overnatting]}`).join(',');
     const sesong = 'sesong=' + Sesong[valg.sesong];
     const spesiell = 'spesiell=' + valg.spesielleBehov;
-    const listeNavn = 'tittel=' + tittel;
+    const currentListe = 'liste=' + liste;
 
-    return [aktiviteter, lengde, kjønn, overnatting, sesong, spesiell, listeNavn].join('&');
+    return [aktiviteter, lengde, kjønn, overnatting, sesong, spesiell, currentListe].join('&');
 }
 
 interface Returns {
     valg: Valg;
     feilmelding?: string;
-    tittel: string;
+    currentListe: string;
 }
 
 export function decodeUrlParams(url: string): Returns {
@@ -69,7 +69,7 @@ export function decodeUrlParams(url: string): Returns {
                 ? `Manglende parametere: ${manglendeParametere}`
                 : undefined;
 
-        const tittel = paramsObject['tittel'];
+        const liste = paramsObject['liste'];
         return {
             feilmelding: feilmelding,
             valg: {
@@ -80,13 +80,13 @@ export function decodeUrlParams(url: string): Returns {
                 sesong: valg.sesong ?? defaultValg.sesong,
                 spesielleBehov: valg.spesielleBehov ?? defaultValg.spesielleBehov,
             },
-            tittel: tittel,
+            currentListe: liste,
         };
     } catch (e) {
         return {
             feilmelding: 'Det skjedde en feil under parsing av url',
             valg: defaultValg,
-            tittel: '',
+            currentListe: '',
         };
     }
 }
