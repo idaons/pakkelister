@@ -2,8 +2,9 @@ import { Kategori } from '../../models/kategori';
 import { Aktivitet, skalGåPåTur } from '../../models/aktivitet';
 import { Valg } from '../../models/valg';
 import { Item } from '../../models/liste';
-import { stringArrayToItems, TingMedAntall } from './utils';
+import { stringArrayToItems } from './utils';
 import { Sesong } from '~models/sesong';
+import { Overnatting } from '~models/overnatting';
 
 export function getSpesielleTing(valg: Valg): Item[] {
     let ting: string[] = [];
@@ -23,6 +24,10 @@ export function getSpesielleTing(valg: Valg): Item[] {
 
     if (valg.aktiviteter.includes(Aktivitet.Jogging)) {
         ting.push('Løpebelte');
+    }
+
+    if (valg.overnatting.includes(Overnatting.FamilieHytte)) {
+        ting.push('Hodetelefoner');
     }
 
     return stringArrayToItems(ting, Kategori.Div);
