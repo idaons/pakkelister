@@ -11,9 +11,7 @@
     "clean": "rm dist/bundle.js",
     "start": "parcel src/index.html",
     "type-check": "tsc",
-    "build-prod": "parcel build src/index.html --public-url ./ && cp src/404.html dist/404.html",
-    "predeploy": "cross-env rm -rf dist && npm run build-prod",
-    "deploy": "cross-env gh-pages -d dist"
+    "build-prod": "parcel build src/index.html --public-url ./ && cp src/404.html dist/404.html"
   },
   "dependencies": {
     "@reach/router": "^1.2.1",
@@ -30,8 +28,6 @@
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
     "autoprefixer": "^9.7.3",
-    "cross-env": "^7.0.2",
-    "gh-pages": "^2.2.0",
     "husky": "^3.1.0",
     "less": "^3.10.3",
     "lint-staged": "^9.5.0",
