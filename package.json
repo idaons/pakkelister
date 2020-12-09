@@ -14,28 +14,28 @@
     "build-prod": "parcel build src/index.html --public-url ./ && cp src/404.html dist/404.html"
   },
   "dependencies": {
-    "@reach/router": "^1.2.1",
-    "@types/reach__router": "^1.2.6",
-    "@types/react-collapse": "^5.0.0",
-    "react": "^16.12.0",
-    "react-collapse": "^5.0.1",
-    "react-dom": "^16.12.0"
+    "@reach/router": "^1.3.4",
+    "react": "^17.0.1",
+    "react-collapse": "^5.1.0",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "@babel/preset-react": "^7.7.4",
-    "@types/react": "^16.9.17",
-    "@types/react-dom": "^16.9.4",
-    "autoprefixer": "^9.7.3",
-    "husky": "^3.1.0",
-    "less": "^3.10.3",
-    "lint-staged": "^9.5.0",
+    "@types/reach__router": "^1.3.6",
+    "@types/react-collapse": "^5.0.0",
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "autoprefixer": "^10.1.0",
+    "husky": "^4.3.5",
+    "less": "^3.12.2",
+    "lint-staged": "^10.5.3",
     "parcel-bundler": "^1.12.4",
-    "postcss-modules": "^1.4.1",
-    "prettier": "^1.19.1",
-    "typescript": "^3.7.4",
-    "typescript-plugin-css-modules": "^2.1.2"
+    "postcss-modules": "^4.0.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.2",
+    "typescript-plugin-css-modules": "^3.0.1"
   },
   "husky": {
     "hooks": {
