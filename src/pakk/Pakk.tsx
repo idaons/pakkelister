@@ -13,6 +13,7 @@ import { basepath } from '../app/App';
 import VisValg from './Valg';
 import { getStoredEkstraTing, getStoredItems } from '~utils/localStorage';
 import { RouteComponentProps, WindowLocation } from '@reach/router';
+import Søppelkasse from '~ikoner/Søppelkasse';
 
 interface Props extends RouteComponentProps {
     urlValg?: string;
@@ -64,8 +65,13 @@ function Pakk(props: Props) {
         if (e.target.checked) {
             setCheckedItems([...checkedItems, value]);
         } else {
-            setCheckedItems(checkedItems.filter(a => a !== value));
+            setCheckedItems(checkedItems.filter((a) => a !== value));
         }
+    };
+
+    const removeEkstraItem = (value: string) => {
+        const tmp = ekstraTing.filter((item) => item !== value);
+        setEkstraTing(tmp);
     };
 
     const leggTilEkstra = () => {
@@ -77,13 +83,13 @@ function Pakk(props: Props) {
     };
 
     const alleElementer = getAlleTing(valg);
-    const iKategorier = groupArray(alleElementer, it => Kategori[it.kategori]);
+    const iKategorier = groupArray(alleElementer, (it) => Kategori[it.kategori]);
 
     const updateCatogery = (catogery: string) => () => {
         const currentCatogery =
-            iKategorier.find(it => it.category === catogery)?.array.map(it => it.navn) || [];
-        const allChecked = currentCatogery.every(it => checkedItems.includes(it));
-        const filteredCheckedItems = checkedItems.filter(it => !currentCatogery?.includes(it));
+            iKategorier.find((it) => it.category === catogery)?.array.map((it) => it.navn) || [];
+        const allChecked = currentCatogery.every((it) => checkedItems.includes(it));
+        const filteredCheckedItems = checkedItems.filter((it) => !currentCatogery?.includes(it));
         if (allChecked) {
             setCheckedItems(filteredCheckedItems);
         } else {
@@ -104,17 +110,17 @@ function Pakk(props: Props) {
             </div>
 
             <ul className={classes.kategoriListe}>
-                {iKategorier.map(kategori => (
+                {iKategorier.map((kategori) => (
                     <li key={kategori.category}>
                         <Checkbox
-                            checked={kategori.array.every(it => checkedItems.includes(it.navn))}
+                            checked={kategori.array.every((it) => checkedItems.includes(it.navn))}
                             header={true}
                             strikeThrough
                             label={kategori.category}
                             onChange={updateCatogery(kategori.category)}
                         />
                         <ul className={classes.tingListe}>
-                            {kategori.array.map(element => (
+                            {kategori.array.map((element) => (
                                 <li key={element.navn}>
                                     <Checkbox
                                         value={element.navn}
@@ -139,13 +145,13 @@ function Pakk(props: Props) {
                                 className={classes.ekstraValgInput}
                                 type="tekst"
                                 value={currentEkstraVerdi}
-                                onChange={e => setCurrentEkstraVerdi(e.target.value)}
+                                onChange={(e) => setCurrentEkstraVerdi(e.target.value)}
                             />
                             <Button className={classes.ekstraValgKnapp} onClick={leggTilEkstra}>
                                 + Legg til
                             </Button>
                         </div>
-                        {ekstraTing.map(element => (
+                        {ekstraTing.map((element) => (
                             <li key={element}>
                                 <Checkbox
                                     value={element}
@@ -154,6 +160,13 @@ function Pakk(props: Props) {
                                     strikeThrough={true}
                                     onChange={updateCheckedItems}
                                 />
+                                <button
+                                    aria-label="Slett"
+                                    className={classes.removeEkstra}
+                                    onClick={() => removeEkstraItem(element)}
+                                >
+                                    <Søppelkasse width="1rem" />
+                                </button>
                             </li>
                         ))}
                     </ul>
@@ -164,8 +177,9 @@ function Pakk(props: Props) {
                 <p>
                     {lagrerListe
                         ? 'Lagrer...'
-                        : `Pakklisten ${currentListe &&
-                              `'${currentListe}'`} er lagret på enheten din 🏔🌤️`}
+                        : `Pakklisten ${
+                              currentListe && `'${currentListe}'`
+                          } er lagret på enheten din 🏔🌤️`}
                 </p>
                 <Button onClick={() => confirm('Vil du nullstille lista?') && setCheckedItems([])}>
                     Nullstill
