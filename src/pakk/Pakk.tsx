@@ -13,7 +13,7 @@ import { basepath } from '../app/App';
 import VisValg from './Valg';
 import { getStoredEkstraTing, getStoredItems } from '~utils/localStorage';
 import { RouteComponentProps, WindowLocation } from '@reach/router';
-import Søppelkasse from '~ikoner/Søppelkasse';
+import Soppelkasse from '~ikoner/Soppelkasse';
 
 interface Props extends RouteComponentProps {
     urlValg?: string;
@@ -165,7 +165,7 @@ function Pakk(props: Props) {
                                     className={classes.removeEkstra}
                                     onClick={() => removeEkstraItem(element)}
                                 >
-                                    <Søppelkasse width="1rem" />
+                                    <Soppelkasse width="1rem" />
                                 </button>
                             </li>
                         ))}
