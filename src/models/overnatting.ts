@@ -32,5 +32,9 @@ export function getOvernattingArray(): Overnatting[] {
 }
 
 export function overnattingUte(valg: Valg): boolean {
-    return [Overnatting.Hengekøye, Overnatting.Telt].some(o => valg.overnatting.includes(o));
+    return [Overnatting.Hengekøye, Overnatting.Telt].some((o) => valg.overnatting.includes(o));
+}
+
+export function overnattingBareHus(valg: Valg): boolean {
+    return valg.overnatting.length === 1 && valg.overnatting.includes(Overnatting.HusHotell);
 }

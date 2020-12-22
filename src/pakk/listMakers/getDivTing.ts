@@ -5,7 +5,7 @@ import { Valg } from '../../models/valg';
 import { Sesong } from '../../models/sesong';
 import { Item } from '../../models/liste';
 import { Kjønn } from '../../models/kjønn';
-import { Overnatting } from '../../models/overnatting';
+import { Overnatting, overnattingBareHus } from '../../models/overnatting';
 import { erLangtur } from '~lagListe/valg/LengdeValg';
 
 export function getDivTing(valg: Valg): Item[] {
@@ -25,20 +25,20 @@ export function getDivTing(valg: Valg): Item[] {
         );
     }
 
-    if (overnatting(valg) || Sesong.Vinter === valg.sesong) {
-        ting.push('Hodelykt');
-    }
-
     if (overnatting(valg)) {
-        ting.push('Ladekabler', 'Bok', 'Powerbank');
-    }
+        ting.push('Ladekabler', 'Bok');
 
-    if (valg.overnatting.includes(Overnatting.FamilieHytte)) {
-        ting.push('Hyttenøkkel');
-    }
+        if (!overnattingBareHus(valg)) {
+            ting.push('Hodelykt', 'Powerbank');
+        }
 
-    if (valg.overnatting.includes(Overnatting.DNThytte)) {
-        ting.push('DNT-nøkkel');
+        if (valg.overnatting.includes(Overnatting.FamilieHytte)) {
+            ting.push('Hyttenøkkel');
+        }
+
+        if (valg.overnatting.includes(Overnatting.DNThytte)) {
+            ting.push('DNT-nøkkel');
+        }
     }
 
     if (valg.aktiviteter.includes(Aktivitet.Fotografi)) {
