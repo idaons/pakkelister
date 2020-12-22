@@ -4,7 +4,6 @@ import { Item } from '../../models/liste';
 import { Valg } from '../../models/valg';
 import { Kjønn } from '../../models/kjønn';
 import { Sesong } from '../../models/sesong';
-import { Overnatting } from '../../models/overnatting';
 import { skalGåPåTur } from '~models/aktivitet';
 import { erLangtur } from '~lagListe/valg/LengdeValg';
 
@@ -44,11 +43,7 @@ export function getToalettSaker(valg: Valg): Item[] {
     if (valg.spesielleBehov) {
         if (valg.sesong === Sesong.Vinter) toalettSaker.push('Kuldekrem');
 
-        if (
-            valg.overnatting.includes(Overnatting.Telt) ||
-            valg.overnatting.includes(Overnatting.DNThytte)
-        )
-            toalettSaker.push('Sovekit');
+        if (valg.sesong !== Sesong.Vinter) toalettSaker.push('Sovekit');
     }
 
     return stringArrayToItems(toalettSaker, Kategori.Toalettsaker);

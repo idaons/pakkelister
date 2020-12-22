@@ -44,7 +44,8 @@ export function skalGåPåTur(aktiviteter: Aktivitet[]) {
         Aktivitet.Skøyteski,
         Aktivitet.Fottur,
         Aktivitet.Tinderangling,
-    ].some(it => aktiviteter.includes(it));
+        Aktivitet.Klatring,
+    ].some((it) => aktiviteter.includes(it));
 }
 
 export function erAnnenAktivitet(aktivitet: Aktivitet) {
