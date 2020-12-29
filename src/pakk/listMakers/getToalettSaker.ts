@@ -42,8 +42,8 @@ export function getToalettSaker(valg: Valg): Item[] {
 
     if (valg.spesielleBehov) {
         if (valg.sesong === Sesong.Vinter) toalettSaker.push('Kuldekrem');
-
-        if (valg.sesong !== Sesong.Vinter) toalettSaker.push('Sovekit');
+        
+        toalettSaker.push('Sovekit');
     }
 
     return stringArrayToItems(toalettSaker, Kategori.Toalettsaker);
