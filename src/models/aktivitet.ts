@@ -12,6 +12,7 @@ export enum Aktivitet {
     Skøyteski,
     Bytur,
     Fotografi,
+    Kajakk,
 }
 
 export function getAktivitetAsArray(): Aktivitet[] {
@@ -24,6 +25,7 @@ export function erSommerAktivitet(aktivitet: Aktivitet) {
         Aktivitet.Fottur,
         Aktivitet.Tinderangling,
         Aktivitet.Jogging,
+        Aktivitet.Kajakk,
     ].includes(aktivitet);
 }
 
