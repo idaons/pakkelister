@@ -9,7 +9,16 @@ export function getKajakkTing(valg: Valg): Item[] {
         return [];
     }
 
-    const kajakkTing = ['Våtdrakt', 'Våtsko', 'Tørt skift', 'Pakkposer'];
+    const kajakkTing = [
+        'Våtdrakt',
+        'Våtsko',
+        'Tørt skift',
+        'Pakkposer',
+        'Padleåre',
+        'Kajakk',
+        'Redningsvest',
+        'Spruttrekk',
+    ];
 
     return stringArrayToItems(kajakkTing, Kategori.TekniskUtstyr);
 }
