@@ -97,7 +97,19 @@ function Pakk(props: Props) {
         }
     };
 
-    const progress = Math.floor((checkedItems.length * 100) / alleElementer.length);
+    const onEkstraChecked = () => {
+        const allChecked = ekstraTing.every((it) => checkedItems.includes(it));
+        const filteredCheckedItems = checkedItems.filter((it) => !ekstraTing?.includes(it));
+        if (allChecked) {
+            setCheckedItems(filteredCheckedItems);
+        } else {
+            setCheckedItems([...filteredCheckedItems, ...ekstraTing]);
+        }
+    };
+
+    const progress = Math.floor(
+        (checkedItems.length * 100) / (alleElementer.length + ekstraTing.length)
+    );
     document.documentElement.style.setProperty('--progress', progress + '%');
 
     return (
@@ -138,7 +150,13 @@ function Pakk(props: Props) {
                     </li>
                 ))}
                 <li>
-                    <Checkbox header={true} strikeThrough label="Ekstra" />
+                    <Checkbox
+                        header={true}
+                        strikeThrough
+                        label="Ekstra"
+                        checked={ekstraTing.every((it) => checkedItems.includes(it))}
+                        onChange={onEkstraChecked}
+                    />
                     <ul className={classes.tingListe}>
                         <div className={classes.ekstraValgWrapper}>
                             <input
