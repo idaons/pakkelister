@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ReactNode } from 'react';
-import classes from '../LagListe.less';
+import * as classes from '../LagListe.less';
 
 interface Props {
     name: string;

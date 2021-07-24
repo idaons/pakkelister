@@ -4,16 +4,16 @@ import { getAlleTing } from './listMakers/getAlleTing';
 import { groupArray } from '../utils/groupArray';
 import { Kategori } from '../models/kategori';
 // @ts-ignore
-import classes from './pakk.less';
+import * as classes from './pakk.less';
 import Checkbox from '../utils/baseComponents/Checkbox';
 import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
 import LinkButton from '../utils/baseComponents/LinkButton';
 import Button from '../utils/baseComponents/Button';
 import { basepath } from '../app/App';
 import VisValg from './Valg';
-import { getStoredEkstraTing, getStoredItems } from '~utils/localStorage';
+import { getStoredEkstraTing, getStoredItems } from '../utils/localStorage';
 import { RouteComponentProps, WindowLocation } from '@reach/router';
-import Soppelkasse from '~ikoner/Soppelkasse';
+import Soppelkasse from '../ikoner/Soppelkasse';
 
 interface Props extends RouteComponentProps {
     urlValg?: string;
