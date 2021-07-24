@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Valg } from '../models/valg';
-import classes from './pakk.less';
+import * as classes from './pakk.less';
 import { getSesongLabel } from '../models/sesong';
 import { getKjønnLabel, Kjønn } from '../models/kjønn';
 import { overnatting } from './listMakers/utils';

@@ -24,7 +24,8 @@
           "rendererOptions": {}
         }
       }
-    ]
+    ],
+    "allowSyntheticDefaultImports": true
   },
   "include": ["./src/**/*"]
 }

@@ -4,8 +4,8 @@ import { Item } from '../../models/liste';
 import { Valg } from '../../models/valg';
 import { Kjønn } from '../../models/kjønn';
 import { Sesong } from '../../models/sesong';
-import { skalGåPåTur } from '~models/aktivitet';
-import { erLangtur } from '~lagListe/valg/LengdeValg';
+import { skalGåPåTur } from '../../models/aktivitet';
+import { erLangtur } from '../../lagListe/valg/LengdeValg';
 
 export function getToalettSaker(valg: Valg): Item[] {
     let toalettSaker = ['Solkrem'];

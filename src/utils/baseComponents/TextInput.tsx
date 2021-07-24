@@ -2,7 +2,7 @@ import * as React from 'react';
 import { InputHTMLAttributes, useRef } from 'react';
 import { guid } from '../guid';
 // @ts-ignore
-import classes from './input.less';
+import * as classes from './input.less';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 // @ts-ignore
-import classes from './LagListe.less';
+import * as classes from './LagListe.less';
 import SesongValg from './valg/SesongValg';
 import AktiviteterValg from './valg/AktiviteterValg';
 import OvernattingValg from './valg/Overnatting';
@@ -17,11 +17,11 @@ import LinkButton from '../utils/baseComponents/LinkButton';
 import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
 import TextInput from '../utils/baseComponents/TextInput';
 import { basepath } from '../app/App';
-import Button from '~utils/baseComponents/Button';
-import { getStoredListeNavn, getStoredValg } from '~utils/localStorage';
-import Radio from '~utils/baseComponents/Radio';
+import Button from '../utils/baseComponents/Button';
+import { getStoredListeNavn, getStoredValg } from '../utils/localStorage';
+import Radio from '../utils/baseComponents/Radio';
 import { navigate, RouteComponentProps } from '@reach/router';
-import { defaultValg } from '~lagListe/valg/defaultValg';
+import { defaultValg } from '../lagListe/valg/defaultValg';
 
 interface Props extends RouteComponentProps {
     urlValg?: string;

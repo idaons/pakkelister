@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ButtonHTMLAttributes } from 'react';
-import classes from './button.less';
+import * as classes from './button.less';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode;

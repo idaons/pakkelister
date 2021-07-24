@@ -2,11 +2,10 @@ import { overnatting, stringArrayToItems } from './utils';
 import { Kategori } from '../../models/kategori';
 import { Aktivitet, skalGåPåTur } from '../../models/aktivitet';
 import { Valg } from '../../models/valg';
-import { Sesong } from '../../models/sesong';
 import { Item } from '../../models/liste';
 import { Kjønn } from '../../models/kjønn';
 import { Overnatting, overnattingBareHus } from '../../models/overnatting';
-import { erLangtur } from '~lagListe/valg/LengdeValg';
+import { erLangtur } from '../../lagListe/valg/LengdeValg';
 
 export function getDivTing(valg: Valg): Item[] {
     let ting = ['Solbriller', 'Lommebok'];

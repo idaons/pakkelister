@@ -2,7 +2,7 @@ import * as React from 'react';
 import ValgStyle from './ValgStyle';
 import Radio from '../../utils/baseComponents/Radio';
 import { Sesong } from '../../models/sesong';
-import { Valg } from '~models/valg';
+import { Valg } from '../models/valg';
 
 interface Props {
     lengde: number;

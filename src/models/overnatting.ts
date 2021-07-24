@@ -1,5 +1,5 @@
 import { getEnumAsArray } from '../utils/enum';
-import { Valg } from '~models/valg';
+import { Valg } from '../models/valg';
 
 export enum Overnatting {
     DNThytte,
