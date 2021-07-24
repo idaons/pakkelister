@@ -1,6 +1,7 @@
 name: Deploy to gh-pages
 
-on:
+on: 
+  workflow_dispatch:
   push:
     branches:
       - main
