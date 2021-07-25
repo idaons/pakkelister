@@ -4,7 +4,7 @@ import * as classes from "./LagListe.less";
 import SesongValg from './valg/SesongValg';
 import AktiviteterValg from './valg/AktiviteterValg';
 import OvernattingValg from './valg/Overnatting';
-import KjønnValg from './valg/KjønnValg';
+import KjonnValg from './valg/KjonnValg';
 import CustomValg from './valg/CustomValg';
 import { Sesong } from '../models/sesong';
 import { Aktivitet } from '../models/aktivitet';
@@ -162,7 +162,7 @@ export default function LagListe(props: Props) {
                         valgteAktiviteter={aktiviteter}
                         setAktiviteter={setAktiviteter}
                     />
-                    <KjønnValg kjønn={kjønn} setKjønn={setKjønn} />
+                    <KjonnValg kjønn={kjønn} setKjønn={setKjønn} />
                     <CustomValg
                         spesielleBehov={spesielleBehov}
                         setSpesielleBehov={setSpesielleBehov}

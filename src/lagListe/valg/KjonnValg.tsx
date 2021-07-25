@@ -8,7 +8,7 @@ interface Props {
     setKjønn: (kjønn: Kjønn) => void;
 }
 
-function KjønnValg(props: Props) {
+function KjonnValg(props: Props) {
     return (
         <ValgStyle name="Kjønn">
             {getKjønnArray().map((k) =>
@@ -24,4 +24,4 @@ function KjønnValg(props: Props) {
     );
 }
 
-export default KjønnValg;
+export default KjonnValg;
