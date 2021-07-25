@@ -9,7 +9,7 @@ import CustomValg from './valg/CustomValg';
 import { Sesong } from '../models/sesong';
 import { Aktivitet } from '../models/aktivitet';
 import { Overnatting } from '../models/overnatting';
-import { Kjønn } from '../models/kjønn';
+import { Kjonn } from '../models/kjonn';
 import LengdeValg from './valg/LengdeValg';
 import { UnmountClosed } from 'react-collapse';
 import LinkButton from '../utils/baseComponents/LinkButton';
@@ -31,7 +31,7 @@ export default function LagListe(props: Props) {
     const [sesong, setSesong] = useState<Sesong>(urlValg.valg.sesong);
     const [aktiviteter, setAktiviteter] = useState<Aktivitet[]>(urlValg.valg.aktiviteter);
     const [overnatting, setOvernatting] = useState<Overnatting[]>(urlValg.valg.overnatting);
-    const [kjønn, setKjønn] = useState<Kjønn>(urlValg.valg.kjønn);
+    const [kjønn, setKjønn] = useState<Kjonn>(urlValg.valg.kjønn);
     const [lengde, setLengde] = useState<number>(urlValg.valg.lengde);
     const [tittel, setTittel] = useState<string>(urlValg.currentListe);
     const [valgtListe, setValgtListe] = useState<string>('');

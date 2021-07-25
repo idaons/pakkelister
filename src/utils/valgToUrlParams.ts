@@ -1,6 +1,6 @@
 import { Valg } from '../models/valg';
 import { Aktivitet } from '../models/aktivitet';
-import { Kjønn } from '../models/kjønn';
+import { Kjonn } from '../models/kjonn';
 import { Overnatting } from '../models/overnatting';
 import { Sesong } from '../models/sesong';
 import { defaultValg } from '../lagListe/valg/defaultValg';
@@ -9,7 +9,7 @@ export function valgToUrlParams(valg: Valg, liste: String) {
     const aktiviteter =
         'aktiviteter=' + valg.aktiviteter.map(aktivitet => `${Aktivitet[aktivitet]}`).join(',');
     const lengde = 'lengde=' + valg.lengde;
-    const kjønn = 'kjønn=' + Kjønn[valg.kjønn];
+    const kjønn = 'kjønn=' + Kjonn[valg.kjønn];
     const overnatting =
         'overnatting=' +
         valg.overnatting.map(overnatting => `${Overnatting[overnatting]}`).join(',');
@@ -48,7 +48,7 @@ export function decodeUrlParams(url: string): Returns {
             lengde:
                 paramsObject['lengde'] !== undefined ? parseInt(paramsObject['lengde']) : undefined,
             // @ts-ignore
-            kjønn: Kjønn[paramsObject['kjønn']],
+            kjønn: Kjonn[paramsObject['kjønn']],
             // @ts-ignore
             overnatting: paramsObject['overnatting']
                 ?.split(',')

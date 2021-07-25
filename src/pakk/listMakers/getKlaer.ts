@@ -4,10 +4,10 @@ import { Valg } from '../../models/valg';
 import { Sesong } from '../../models/sesong';
 import { Item } from '../../models/liste';
 import { Overnatting } from '../../models/overnatting';
-import { Kjønn } from '../../models/kjønn';
+import { Kjonn } from '../../models/kjonn';
 import { Aktivitet, skalGåPåTur } from '../../models/aktivitet';
 
-export function getKlær(valg: Valg): Item[] {
+export function getKlaer(valg: Valg): Item[] {
     let klær: TingMedAntall = {};
 
     const skalVæreInneBlantFolk =
@@ -32,7 +32,7 @@ export function getKlær(valg: Valg): Item[] {
             Brynje: 1,
         };
 
-        if (valg.kjønn !== Kjønn.Mann) {
+        if (valg.kjønn !== Kjonn.Mann) {
             klær = {
                 ...klær,
                 Dunskjørt: 1,
@@ -51,7 +51,7 @@ export function getKlær(valg: Valg): Item[] {
             Caps: 1,
         };
 
-        if (valg.kjønn !== Kjønn.Mann) {
+        if (valg.kjønn !== Kjonn.Mann) {
             klær = {
                 ...klær,
                 sportsBH: 1,
@@ -106,7 +106,7 @@ export function getKlær(valg: Valg): Item[] {
                 ['Inne-T-skjorter']: Math.ceil(valg.lengde / 3),
             };
 
-            if (valg.kjønn !== Kjønn.Mann) {
+            if (valg.kjønn !== Kjonn.Mann) {
                 klær = {
                     ...klær,
                     ['Inne-BH']: 1,

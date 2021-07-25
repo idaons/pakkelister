@@ -1,11 +1,11 @@
 import * as React from 'react';
 import ValgStyle from "./ValgStyle";
 import Radio from "../../utils/baseComponents/Radio";
-import { getKjønnArray, getKjønnLabel, Kjønn } from '../../models/kjønn';
+import { getKjønnArray, getKjønnLabel, Kjonn } from '../../models/kjonn';
 
 interface Props {
-    kjønn: Kjønn;
-    setKjønn: (kjønn: Kjønn) => void;
+    kjønn: Kjonn;
+    setKjønn: (kjønn: Kjonn) => void;
 }
 
 function KjonnValg(props: Props) {
