@@ -5,4 +5,4 @@ import './utils/normalize.css';
 import App from './app/App';
 
 var mountNode = document.getElementById('app');
-ReactDOM.render(<App name="pakkeliste" />, mountNode);
+ReactDOM.render(<App />, mountNode);

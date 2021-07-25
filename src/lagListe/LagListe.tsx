@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-// @ts-ignore
-import * as classes from './LagListe.less';
+import * as classes from "./LagListe.less";
 import SesongValg from './valg/SesongValg';
 import AktiviteterValg from './valg/AktiviteterValg';
 import OvernattingValg from './valg/Overnatting';
