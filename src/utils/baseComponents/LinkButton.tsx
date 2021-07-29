@@ -1,22 +1,28 @@
 import * as React from 'react';
-// @ts-ignore
-import * as classes from './button.less';
-import { Link } from '@reach/router';
+import {Link} from '@reach/router';
+import {HTMLAttributes} from "react";
+import styled from "styled-components";
+import {buttonStyles} from "./Button";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLLinkElement> {
     children: string;
     to: string;
     className?: string;
+    style?: React.CSSProperties;
 }
 
+const StyledLink = styled(Link)`
+  margin: 1rem 0;
+  text-decoration: none;
+  ${buttonStyles};
+`;
+
 function LinkButton(props: Props) {
-    const { children } = props;
+    const {children, className, style, to} = props;
     return (
-        <div className={`${classes.linkButtonWrapper} ${props.className}`}>
-            <Link to={props.to} className={`${classes.linkButtonStyling} ${classes.button}`}>
-                {children}
-            </Link>
-        </div>
+        <StyledLink to={to} className={className} style={style}>
+            {children}
+        </StyledLink>
     );
 }
 

@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import { getAlleTing } from './listMakers/getAlleTing';
 import { groupArray } from '../utils/groupArray';
 import { Kategori } from '../models/kategori';
-// @ts-ignore
-import * as classes from './pakk.less';
 import Checkbox from '../utils/baseComponents/Checkbox';
 import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
 import LinkButton from '../utils/baseComponents/LinkButton';
@@ -14,11 +12,107 @@ import VisValg from './Valg';
 import { getStoredEkstraTing, getStoredItems } from '../utils/localStorage';
 import { RouteComponentProps, WindowLocation } from '@reach/router';
 import Soppelkasse from '../ikoner/Soppelkasse';
+import styled from "styled-components";
+import Progress from "./Progress";
+import {desktopMinWidth, smallMobileMaxWidth} from "../app/commonStyles";
 
 interface Props extends RouteComponentProps {
     urlValg?: string;
     location?: WindowLocation;
 }
+
+const Style = styled.div`
+  min-height: 100vh;
+  padding: 2em;
+  border: .2em white solid;
+  border-radius: 1rem;
+  background-color: #333;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  align-items: start;
+  grid-template-areas:  "knapp valg koffert"
+                        "liste liste liste"
+                        "knapper knapper knapper";
+
+  @media (max-width: ${desktopMinWidth}) {
+    grid-template-columns: auto 1fr ;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+    "knapp koffert"
+    "valg valg "
+    "liste liste"
+    "knapper knapper";
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+`;
+
+const KategoriListe = styled.ul`
+  > li {
+    margin-right: 3em;
+
+    @media (max-width: ${smallMobileMaxWidth}) {
+      margin-right: 1em;
+    }
+  }
+  grid-area: liste;
+  display: flex;
+  flex-flow: row wrap;
+`;
+
+const TingListe = styled.ul`
+  > li {
+    margin-bottom: .3em;
+  }
+`;
+
+const EkstravalgWrapper = styled.div`
+  margin-bottom: 1rem;
+  display: flex;
+
+
+  @media (max-width: ${smallMobileMaxWidth}) {
+    flex-direction: column;
+  }
+
+  input {
+    max-width: 10rem;
+  }
+
+  button{
+    margin-left: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    border-width: 0.1rem;
+
+    @media (max-width: ${smallMobileMaxWidth}) {
+      margin-left: 0;
+      margin-top: 0.5rem;
+      width: fit-content;
+    }
+  }
+`;
+
+const SlettKnapp = styled.button`
+  margin-left: 0.4rem;
+  border: none;
+  background-color: transparent;
+
+  &:hover,&:focus {
+    transform: scale(1.4);
+  }
+`;
+
+const Bunnknapper = styled.div`
+  grid-area: knapper;
+  margin-top: 2rem;
+  > * {
+    margin-right: .5rem;
+  }
+`;
 
 function Pakk(props: Props) {
     const { valg, currentListe, feilmelding } = decodeUrlParams(props.urlValg || '');
@@ -44,7 +138,7 @@ function Pakk(props: Props) {
 
     const tilbakeKnapp = (
         <LinkButton
-            className={classes.knapp}
+            style={{gridArea: 'knapp'}}
             to={basepath + '/' + valgToUrlParams(valg, currentListe)}
         >
             Tilbake
@@ -110,18 +204,13 @@ function Pakk(props: Props) {
     const progress = Math.floor(
         (checkedItems.length * 100) / (alleElementer.length + ekstraTing.length)
     );
-    document.documentElement.style.setProperty('--progress', progress + '%');
 
     return (
-        <div className={classes.pakk}>
+        <Style>
             {tilbakeKnapp}
             <VisValg valg={valg} />
-            <div className={classes.progress}>
-                <i className={classes.icon}></i>
-                <span className={classes.prosent}>{progress}%</span>
-            </div>
-
-            <ul className={classes.kategoriListe}>
+            <Progress progress={progress} />
+            <KategoriListe>
                 {iKategorier.map((kategori) => (
                     <li key={kategori.category}>
                         <Checkbox
@@ -131,7 +220,7 @@ function Pakk(props: Props) {
                             label={kategori.category}
                             onChange={updateCatogery(kategori.category)}
                         />
-                        <ul className={classes.tingListe}>
+                        <TingListe>
                             {kategori.array.map((element) => (
                                 <li key={element.navn}>
                                     <Checkbox
@@ -146,7 +235,7 @@ function Pakk(props: Props) {
                                     />
                                 </li>
                             ))}
-                        </ul>
+                        </TingListe>
                     </li>
                 ))}
                 <li>
@@ -157,18 +246,17 @@ function Pakk(props: Props) {
                         checked={ekstraTing.every((it) => checkedItems.includes(it))}
                         onChange={onEkstraChecked}
                     />
-                    <ul className={classes.tingListe}>
-                        <div className={classes.ekstraValgWrapper}>
+                    <TingListe>
+                        <EkstravalgWrapper>
                             <input
-                                className={classes.ekstraValgInput}
                                 type="tekst"
                                 value={currentEkstraVerdi}
                                 onChange={(e) => setCurrentEkstraVerdi(e.target.value)}
                             />
-                            <Button className={classes.ekstraValgKnapp} onClick={leggTilEkstra}>
+                            <Button onClick={leggTilEkstra}>
                                 + Legg til
                             </Button>
-                        </div>
+                        </EkstravalgWrapper>
                         {ekstraTing.map((element) => (
                             <li key={element}>
                                 <Checkbox
@@ -178,20 +266,19 @@ function Pakk(props: Props) {
                                     strikeThrough={true}
                                     onChange={updateCheckedItems}
                                 />
-                                <button
+                                <SlettKnapp
                                     aria-label="Slett"
-                                    className={classes.removeEkstra}
                                     onClick={() => removeEkstraItem(element)}
                                 >
                                     <Soppelkasse width="1rem" />
-                                </button>
+                                </SlettKnapp>
                             </li>
                         ))}
-                    </ul>
+                    </TingListe>
                 </li>
-            </ul>
+            </KategoriListe>
 
-            <div className={classes.knapper}>
+            <Bunnknapper>
                 <p>
                     {lagrerListe
                         ? 'Lagrer...'
@@ -202,8 +289,8 @@ function Pakk(props: Props) {
                 <Button onClick={() => confirm('Vil du nullstille lista?') && setCheckedItems([])}>
                     Nullstill
                 </Button>
-            </div>
-        </div>
+            </Bunnknapper>
+        </Style>
     );
 }
 

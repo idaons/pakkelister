@@ -1,18 +1,29 @@
 import * as React from 'react';
-import { ButtonHTMLAttributes } from 'react';
-import * as classes from './button.less';
+import {ButtonHTMLAttributes} from 'react';
+import styled, {css} from "styled-components";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode;
 }
 
-function Button(props: Props) {
-    const { children, ...rest } = props;
-    return (
-        <button {...rest} className={`${classes.button} ${rest.className}`}>
-            {children}
-        </button>
-    );
-}
+export const buttonStyles = css`
+  border: .2rem white solid;
+  background-color: transparent;
+  color: white;
+  padding: .5rem;
+  border-radius: .3rem;
+  transition: .2s;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 0 0 .1rem #333, 0 0 0 .3rem white;
+  }
+`;
+
+const Style = styled.button`
+  ${buttonStyles}
+`;
+
+const Button = (props: Props) => <Style {...props}/>;
 
 export default Button;

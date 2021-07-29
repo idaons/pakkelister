@@ -1,19 +1,39 @@
 import * as React from 'react';
 import { Valg } from '../models/valg';
-import * as style from './pakk.less';
 import { getSesongLabel } from '../models/sesong';
 import { getKjønnLabel, Kjonn } from '../models/kjonn';
 import { overnatting } from './listMakers/utils';
 import { Aktivitet } from '../models/aktivitet';
 import { getOvernattingLabel } from '../models/overnatting';
+import styled from "styled-components";
 
 interface Props {
     valg: Valg;
 }
 
+const Style = styled.div`
+  grid-area: valg;
+  ul {
+    list-style: circle;
+    margin: 0.5rem 1.5rem;
+  }
+  display: flex;
+  flex-wrap: wrap;
+  font-weight: 600;
+  padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    margin-top: 1rem;
+    padding: 0;
+    ul {
+      margin: 0.5rem 1rem;
+    }
+  }
+`;
+
 function VisValg(props: Props) {
     return (
-        <div className={style.valg}>
+        <Style>
             <ul>
                 <li>{getSesongLabel(props.valg.sesong)}</li>
                 <li>{getKjønnLabel(props.valg.kjønn)}</li>
@@ -29,7 +49,7 @@ function VisValg(props: Props) {
                     <li key={overnatting}>{getOvernattingLabel(overnatting)}</li>
                 ))}
             </ul>
-        </div>
+        </Style>
     );
 }
 
