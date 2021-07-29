@@ -6,10 +6,12 @@ import * as React from "react";
 import { smallMobileMaxWidth } from "../app/commonStyles";
 import { useState } from "react";
 import { TingListe } from "./KategoriMarkup";
+import TextInput from "../utils/baseComponents/TextInput";
 
 const EkstravalgWrapper = styled.div`
   margin-bottom: 1rem;
   display: flex;
+  align-items: flex-end;
 
   @media (max-width: ${smallMobileMaxWidth}) {
     flex-direction: column;
@@ -21,8 +23,6 @@ const EkstravalgWrapper = styled.div`
 
   button {
     margin-left: 0.5rem;
-    padding: 0.3rem 0.5rem;
-    border-width: 0.1rem;
 
     @media (max-width: ${smallMobileMaxWidth}) {
       margin-left: 0;
@@ -94,8 +94,8 @@ function ExtraItems(props: Props) {
       />
       <TingListe>
         <EkstravalgWrapper>
-          <input
-            type="text"
+          <TextInput
+            label="Ekstra ting"
             value={currentEkstraVerdi}
             onChange={(e) => setCurrentEkstraVerdi(e.target.value)}
           />
