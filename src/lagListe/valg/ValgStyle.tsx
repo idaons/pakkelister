@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ReactNode } from 'react';
-import * as classes from '../LagListe.less';
+import {InputGruppe, Valggruppe} from "../LagListe";
 
 interface Props {
     name: string;
@@ -9,10 +9,10 @@ interface Props {
 
 function ValgStyle(props: Props) {
     return (
-        <div className={classes.valgGruppe}>
+        <Valggruppe>
             <h2>{props.name}</h2>
-            <div className={classes.inputGruppe}>{props.children}</div>
-        </div>
+            <InputGruppe>{props.children}</InputGruppe>
+        </Valggruppe>
     );
 }
 

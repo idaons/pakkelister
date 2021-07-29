@@ -1,30 +1,75 @@
 import * as React from 'react';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import * as classes from "./LagListe.less";
+import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import SesongValg from './valg/SesongValg';
 import AktiviteterValg from './valg/AktiviteterValg';
 import OvernattingValg from './valg/Overnatting';
 import KjonnValg from './valg/KjonnValg';
 import CustomValg from './valg/CustomValg';
-import { Sesong } from '../models/sesong';
-import { Aktivitet } from '../models/aktivitet';
-import { Overnatting } from '../models/overnatting';
-import { Kjonn } from '../models/kjonn';
+import {Sesong} from '../models/sesong';
+import {Aktivitet} from '../models/aktivitet';
+import {Overnatting} from '../models/overnatting';
+import {Kjonn} from '../models/kjonn';
 import LengdeValg from './valg/LengdeValg';
-import { UnmountClosed } from 'react-collapse';
+import {UnmountClosed} from 'react-collapse';
 import LinkButton from '../utils/baseComponents/LinkButton';
-import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
+import {decodeUrlParams, valgToUrlParams} from '../utils/valgToUrlParams';
 import TextInput from '../utils/baseComponents/TextInput';
-import { basepath } from '../app/App';
+import {basepath} from '../app/App';
 import Button from '../utils/baseComponents/Button';
-import { getStoredListeNavn, getStoredValg } from '../utils/localStorage';
+import {getStoredListeNavn, getStoredValg} from '../utils/localStorage';
 import Radio from '../utils/baseComponents/Radio';
-import { navigate, RouteComponentProps } from '@reach/router';
-import { defaultValg } from '../lagListe/valg/defaultValg';
+import {navigate, RouteComponentProps} from '@reach/router';
+import {defaultValg} from '../lagListe/valg/defaultValg';
+import styled from "styled-components";
 
 interface Props extends RouteComponentProps {
     urlValg?: string;
 }
+
+const StyledForm = styled.form`
+  border: .2em white solid;
+  border-radius: 1rem;
+  overflow: hidden;
+  min-height: 100vh;
+  background-color: #333;
+  box-shadow: 0 .5rem 1rem #0004;
+
+  > *:nth-child(even) {
+    background-color: darkslategray;
+  }
+`;
+
+const StyledH1 = styled.h1`
+  padding: 2rem 2rem 0;
+  font-size: 2.5rem;
+  margin: 0 0 .6em;
+`;
+
+export const Valggruppe = styled.div`
+  padding: 1rem 2rem;
+  transition: background-color .5s;
+
+  h2 {
+    margin: 0 0 0.5rem;
+  }
+
+  button {
+    margin-top: 1rem;
+  }
+`;
+
+export const InputGruppe = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+
+  > * {
+    margin: .4rem 2rem .4rem 0;
+  }
+`;
+
+const Opprett = styled.div`
+  padding: 2rem;
+`;
 
 export default function LagListe(props: Props) {
     const urlValg = decodeUrlParams(props.urlValg || '');
@@ -105,69 +150,70 @@ export default function LagListe(props: Props) {
     };
 
     return (
-        <form className={classes.wrapperstyle} onSubmit={handleSubmit}>
-            <h1 className={classes.header}>Tid for å pakke</h1>
-            <div className={`${classes.inputGruppe} ${classes.valgGruppe}`}>
-                <Radio
-                    label="Lag liste"
-                    checked={!endreEksisterende}
-                    onChange={onNyEllerEksisterendeRadioChanged}
-                    name="nyEllerEksisterende"
-                    value="ny"
-                />
-                <Radio
-                    label="Endre eksisterende"
-                    checked={endreEksisterende}
-                    onChange={onNyEllerEksisterendeRadioChanged}
-                    name="nyEllerEksisterende"
-                    value="eksisterende"
-                />
-            </div>
+        <StyledForm onSubmit={handleSubmit}>
+            <StyledH1>Tid for å pakke</StyledH1>
+            <Valggruppe>
+                <InputGruppe>
+                    <Radio
+                        label="Lag liste"
+                        checked={!endreEksisterende}
+                        onChange={onNyEllerEksisterendeRadioChanged}
+                        name="nyEllerEksisterende"
+                        value="ny"
+                    />
+                    <Radio
+                        label="Endre eksisterende"
+                        checked={endreEksisterende}
+                        onChange={onNyEllerEksisterendeRadioChanged}
+                        name="nyEllerEksisterende"
+                        value="eksisterende"
+                    />
+                </InputGruppe>
+            </Valggruppe>
             {endreEksisterende ? (
-                <div className={`${classes.valgGruppe} ${classes.velgListeWrapper}`}>
+                <Valggruppe>
                     <label>Velg liste</label>
-                    <div className={classes.inputGruppe}>
+                    <InputGruppe>
                         {getStoredListeNavn().map(liste => (
                             <Button
                                 key={liste}
                                 id={'knapp_' + liste}
                                 value={liste}
-                                className={classes.listeNavn}
                                 onClick={onListeValgt}
                             >
                                 {liste}
                             </Button>
                         ))}
-                    </div>
-                </div>
+                    </InputGruppe>
+                </Valggruppe>
             ) : (
-                <TextInput
-                    label="Navn på liste"
-                    className={classes.listeNavn}
-                    onChange={e => setTittel(e.target.value)}
-                    value={tittel}
-                />
+                <Valggruppe>
+                    <TextInput
+                        label="Navn på liste"
+                        onChange={e => setTittel(e.target.value)}
+                        value={tittel}
+                    />
+                </Valggruppe>
             )}
             {(!endreEksisterende || valgtListe) && (
                 <>
-                    <SesongValg sesong={sesong} setSesong={setSesong} />
-                    <OvernattingValg overnatting={overnatting} setOvernatting={setOvernatting} />
+                    <SesongValg sesong={sesong} setSesong={setSesong}/>
+                    <OvernattingValg overnatting={overnatting} setOvernatting={setOvernatting}/>
                     <UnmountClosed
-                        theme={{ collapse: classes.transition }}
                         isOpened={overnatting.length > 0}
                     >
-                        <LengdeValg lengde={lengde} setLengde={setLengde} />
+                        <LengdeValg lengde={lengde} setLengde={setLengde}/>
                     </UnmountClosed>
                     <AktiviteterValg
                         valgteAktiviteter={aktiviteter}
                         setAktiviteter={setAktiviteter}
                     />
-                    <KjonnValg kjønn={kjønn} setKjønn={setKjønn} />
+                    <KjonnValg kjønn={kjønn} setKjønn={setKjønn}/>
                     <CustomValg
                         spesielleBehov={spesielleBehov}
                         setSpesielleBehov={setSpesielleBehov}
                     />
-                    <div className={classes.opprett}>
+                    <Opprett>
                         <LinkButton
                             to={`${basepath}/pakk/${valgToUrlParams(
                                 {
@@ -183,9 +229,9 @@ export default function LagListe(props: Props) {
                         >
                             Pakk
                         </LinkButton>
-                    </div>
+                    </Opprett>
                 </>
             )}
-        </form>
+        </StyledForm>
     );
 }
