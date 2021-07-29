@@ -1,7 +1,7 @@
-import { Kategori } from './kategori';
+import { Kategori } from "./kategori";
 
 export interface Item {
-    antall: number;
-    navn: string;
-    kategori: Kategori;
+  antall: number;
+  navn: string;
+  kategori: Kategori;
 }

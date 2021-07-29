@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { Valg } from '../models/valg';
-import { getSesongLabel } from '../models/sesong';
-import { getKjønnLabel, Kjonn } from '../models/kjonn';
-import { overnatting } from './listMakers/utils';
-import { Aktivitet } from '../models/aktivitet';
-import { getOvernattingLabel } from '../models/overnatting';
+import * as React from "react";
+import { Valg } from "../models/valg";
+import { getSesongLabel } from "../models/sesong";
+import { getKjønnLabel, Kjonn } from "../models/kjonn";
+import { overnatting } from "./listMakers/utils";
+import { Aktivitet } from "../models/aktivitet";
+import { getOvernattingLabel } from "../models/overnatting";
 import styled from "styled-components";
 
 interface Props {
-    valg: Valg;
+  valg: Valg;
 }
 
 const Style = styled.div`
@@ -32,25 +32,25 @@ const Style = styled.div`
 `;
 
 function VisValg(props: Props) {
-    return (
-        <Style>
-            <ul>
-                <li>{getSesongLabel(props.valg.sesong)}</li>
-                <li>{getKjønnLabel(props.valg.kjønn)}</li>
-                {overnatting(props.valg) && <li>{props.valg.lengde} dager</li>}
-            </ul>
-            <ul>
-                {props.valg.aktiviteter.map(aktivitet => (
-                    <li key={aktivitet}>{Aktivitet[aktivitet]}</li>
-                ))}
-            </ul>
-            <ul>
-                {props.valg.overnatting.map(overnatting => (
-                    <li key={overnatting}>{getOvernattingLabel(overnatting)}</li>
-                ))}
-            </ul>
-        </Style>
-    );
+  return (
+    <Style>
+      <ul>
+        <li>{getSesongLabel(props.valg.sesong)}</li>
+        <li>{getKjønnLabel(props.valg.kjønn)}</li>
+        {overnatting(props.valg) && <li>{props.valg.lengde} dager</li>}
+      </ul>
+      <ul>
+        {props.valg.aktiviteter.map((aktivitet) => (
+          <li key={aktivitet}>{Aktivitet[aktivitet]}</li>
+        ))}
+      </ul>
+      <ul>
+        {props.valg.overnatting.map((overnatting) => (
+          <li key={overnatting}>{getOvernattingLabel(overnatting)}</li>
+        ))}
+      </ul>
+    </Style>
+  );
 }
 
 export default VisValg;

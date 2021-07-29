@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { InputHTMLAttributes, useRef } from 'react';
-import { guid } from '../guid';
+import * as React from "react";
+import { InputHTMLAttributes, useRef } from "react";
+import { guid } from "../guid";
 import styled from "styled-components";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-    label: string;
-    className?: string;
+  label: string;
+  className?: string;
 }
 
 const Style = styled.div`
@@ -18,8 +18,8 @@ const Style = styled.div`
     background-color: inherit;
     color: inherit;
     border: currentColor solid;
-    padding: .5em .75em;
-    border-radius: .25em;
+    padding: 0.5em 0.75em;
+    border-radius: 0.25em;
   }
 
   label {
@@ -28,15 +28,15 @@ const Style = styled.div`
 `;
 
 function TextInput(props: InputProps) {
-    const ref = useRef(guid());
-    const { label, className, ...rest } = props;
+  const ref = useRef(guid());
+  const { label, className, ...rest } = props;
 
-    return (
-        <Style className={className}>
-            <label htmlFor={ref.current}>{label}</label>
-            <input type="text" id={ref.current} {...rest} />
-        </Style>
-    );
+  return (
+    <Style className={className}>
+      <label htmlFor={ref.current}>{label}</label>
+      <input type="text" id={ref.current} {...rest} />
+    </Style>
+  );
 }
 
 export default TextInput;

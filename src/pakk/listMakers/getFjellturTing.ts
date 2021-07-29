@@ -1,23 +1,27 @@
-import { Aktivitet } from '../../models/aktivitet';
-import { Valg } from '../../models/valg';
-import { Item } from '../../models/liste';
-import { stringArrayToItems } from './utils';
-import { Kategori } from '../../models/kategori';
+import { Aktivitet } from "../../models/aktivitet";
+import { Valg } from "../../models/valg";
+import { Item } from "../../models/liste";
+import { stringArrayToItems } from "./utils";
+import { Kategori } from "../../models/kategori";
 
 export function getFjellturTing(valg: Valg): Item[] {
-    let fjellturTing: string[] = [];
+  let fjellturTing: string[] = [];
 
-    if (![Aktivitet.Fottur, Aktivitet.Tinderangling].some(it => valg.aktiviteter.includes(it))) {
-        return [];
-    }
+  if (
+    ![Aktivitet.Fottur, Aktivitet.Tinderangling].some((it) =>
+      valg.aktiviteter.includes(it)
+    )
+  ) {
+    return [];
+  }
 
-    fjellturTing.push('Fjellsko');
-    fjellturTing.push('Regntrekk til sekk');
-    fjellturTing.push('Staver');
+  fjellturTing.push("Fjellsko");
+  fjellturTing.push("Regntrekk til sekk");
+  fjellturTing.push("Staver");
 
-    if (valg.spesielleBehov) {
-        fjellturTing.push('Gamasjer');
-    }
+  if (valg.spesielleBehov) {
+    fjellturTing.push("Gamasjer");
+  }
 
-    return stringArrayToItems(fjellturTing, Kategori.TekniskUtstyr);
+  return stringArrayToItems(fjellturTing, Kategori.TekniskUtstyr);
 }
