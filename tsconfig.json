@@ -12,16 +12,6 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "jsx": "react",
-    "plugins": [
-      {
-        "name": "typescript-plugin-css-modules",
-        "options": {
-          "customMatcher": "\\.(c\\|le)ss$",
-          "postCssOptions": {},
-          "rendererOptions": {}
-        }
-      }
-    ],
     "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*",  "./externals.d.ts"]
