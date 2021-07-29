@@ -5,6 +5,7 @@ export interface ArrayGroup<T> {
 
 export interface GroupedArray<T> extends Array<ArrayGroup<T>> {}
 
+/* Tar et array og putter ting i grupper basert på gruppekategorier */
 export function groupArray<T>(
     array: T[],
     getGroupCategoryForElement: (element: T) => string
