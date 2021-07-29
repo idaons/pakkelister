@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Valg } from '../models/valg';
-import classes from './pakk.less';
+import * as style from './pakk.less';
 import { getSesongLabel } from '../models/sesong';
-import { getKjønnLabel, Kjønn } from '../models/kjønn';
+import { getKjønnLabel, Kjonn } from '../models/kjonn';
 import { overnatting } from './listMakers/utils';
 import { Aktivitet } from '../models/aktivitet';
 import { getOvernattingLabel } from '../models/overnatting';
@@ -13,7 +13,7 @@ interface Props {
 
 function VisValg(props: Props) {
     return (
-        <div className={classes.valg}>
+        <div className={style.valg}>
             <ul>
                 <li>{getSesongLabel(props.valg.sesong)}</li>
                 <li>{getKjønnLabel(props.valg.kjønn)}</li>

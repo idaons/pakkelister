@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "paths": {
-      "~*": ["./*"]
-    },
     "outDir": "./dist/",
     "sourceMap": true,
     "strict": true,
@@ -24,7 +21,8 @@
           "rendererOptions": {}
         }
       }
-    ]
+    ],
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["./src/**/*"]
+  "include": ["src/**/*",  "./externals.d.ts"]
 }

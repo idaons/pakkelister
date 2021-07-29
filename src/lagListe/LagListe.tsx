@@ -1,27 +1,26 @@
 import * as React from 'react';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-// @ts-ignore
-import classes from './LagListe.less';
+import * as classes from "./LagListe.less";
 import SesongValg from './valg/SesongValg';
 import AktiviteterValg from './valg/AktiviteterValg';
 import OvernattingValg from './valg/Overnatting';
-import KjønnValg from './valg/KjønnValg';
+import KjonnValg from './valg/KjonnValg';
 import CustomValg from './valg/CustomValg';
 import { Sesong } from '../models/sesong';
 import { Aktivitet } from '../models/aktivitet';
 import { Overnatting } from '../models/overnatting';
-import { Kjønn } from '../models/kjønn';
+import { Kjonn } from '../models/kjonn';
 import LengdeValg from './valg/LengdeValg';
 import { UnmountClosed } from 'react-collapse';
 import LinkButton from '../utils/baseComponents/LinkButton';
 import { decodeUrlParams, valgToUrlParams } from '../utils/valgToUrlParams';
 import TextInput from '../utils/baseComponents/TextInput';
 import { basepath } from '../app/App';
-import Button from '~utils/baseComponents/Button';
-import { getStoredListeNavn, getStoredValg } from '~utils/localStorage';
-import Radio from '~utils/baseComponents/Radio';
+import Button from '../utils/baseComponents/Button';
+import { getStoredListeNavn, getStoredValg } from '../utils/localStorage';
+import Radio from '../utils/baseComponents/Radio';
 import { navigate, RouteComponentProps } from '@reach/router';
-import { defaultValg } from '~lagListe/valg/defaultValg';
+import { defaultValg } from '../lagListe/valg/defaultValg';
 
 interface Props extends RouteComponentProps {
     urlValg?: string;
@@ -32,7 +31,7 @@ export default function LagListe(props: Props) {
     const [sesong, setSesong] = useState<Sesong>(urlValg.valg.sesong);
     const [aktiviteter, setAktiviteter] = useState<Aktivitet[]>(urlValg.valg.aktiviteter);
     const [overnatting, setOvernatting] = useState<Overnatting[]>(urlValg.valg.overnatting);
-    const [kjønn, setKjønn] = useState<Kjønn>(urlValg.valg.kjønn);
+    const [kjønn, setKjønn] = useState<Kjonn>(urlValg.valg.kjønn);
     const [lengde, setLengde] = useState<number>(urlValg.valg.lengde);
     const [tittel, setTittel] = useState<string>(urlValg.currentListe);
     const [valgtListe, setValgtListe] = useState<string>('');
@@ -163,7 +162,7 @@ export default function LagListe(props: Props) {
                         valgteAktiviteter={aktiviteter}
                         setAktiviteter={setAktiviteter}
                     />
-                    <KjønnValg kjønn={kjønn} setKjønn={setKjønn} />
+                    <KjonnValg kjønn={kjønn} setKjønn={setKjønn} />
                     <CustomValg
                         spesielleBehov={spesielleBehov}
                         setSpesielleBehov={setSpesielleBehov}

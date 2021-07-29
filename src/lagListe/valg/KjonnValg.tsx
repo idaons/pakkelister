@@ -1,14 +1,14 @@
 import * as React from 'react';
 import ValgStyle from "./ValgStyle";
 import Radio from "../../utils/baseComponents/Radio";
-import { getKjønnArray, getKjønnLabel, Kjønn } from '../../models/kjønn';
+import { getKjønnArray, getKjønnLabel, Kjonn } from '../../models/kjonn';
 
 interface Props {
-    kjønn: Kjønn;
-    setKjønn: (kjønn: Kjønn) => void;
+    kjønn: Kjonn;
+    setKjønn: (kjønn: Kjonn) => void;
 }
 
-function KjønnValg(props: Props) {
+function KjonnValg(props: Props) {
     return (
         <ValgStyle name="Kjønn">
             {getKjønnArray().map((k) =>
@@ -24,4 +24,4 @@ function KjønnValg(props: Props) {
     );
 }
 
-export default KjønnValg;
+export default KjonnValg;

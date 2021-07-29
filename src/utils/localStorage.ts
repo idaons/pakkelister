@@ -1,4 +1,4 @@
-import { Valg } from '~models/valg';
+import { Valg } from '../models/valg';
 
 export function getStoredItems(listeNavn?: string): string[] {
     const key = listeNavn + '_checkedItems';

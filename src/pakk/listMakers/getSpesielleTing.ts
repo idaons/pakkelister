@@ -3,8 +3,8 @@ import { Aktivitet, skalGåPåTur } from '../../models/aktivitet';
 import { Valg } from '../../models/valg';
 import { Item } from '../../models/liste';
 import { stringArrayToItems } from './utils';
-import { Sesong } from '~models/sesong';
-import { Overnatting } from '~models/overnatting';
+import { Sesong } from '../../models/sesong';
+import { Overnatting } from '../../models/overnatting';
 
 export function getSpesielleTing(valg: Valg): Item[] {
     let ting: string[] = [];

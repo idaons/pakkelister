@@ -1,6 +1,6 @@
 import * as React from 'react';
 // @ts-ignore
-import classes from './button.less';
+import * as classes from './button.less';
 import { Link } from '@reach/router';
 
 interface Props {

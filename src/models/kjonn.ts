@@ -1,23 +1,23 @@
 import {getEnumAsArray} from "../utils/enum";
 
-export enum Kjønn {
+export enum Kjonn {
     Mann,
     Kvinne,
     VilIkkeOppgi
 }
 
-export function getKjønnLabel(k : Kjønn) {
+export function getKjønnLabel(k : Kjonn) {
     let label = "";
     switch (k) {
-        case Kjønn.VilIkkeOppgi :
+        case Kjonn.VilIkkeOppgi :
             label = "Vil ikke oppgi";
             break;
         default:
-            label = Kjønn[k];
+            label = Kjonn[k];
     }
     return label;
 }
 
-export function getKjønnArray(): Kjønn[] {
-    return getEnumAsArray(Kjønn);
+export function getKjønnArray(): Kjonn[] {
+    return getEnumAsArray(Kjonn);
 }

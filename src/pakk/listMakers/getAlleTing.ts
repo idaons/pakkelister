@@ -3,7 +3,7 @@ import { getToalettSaker } from './getToalettSaker';
 import { Valg } from '../../models/valg';
 import { Item } from '../../models/liste';
 import { getIsbreTing } from './getIsbreTing';
-import { getKlær } from './getKlær';
+import { getKlaer } from './getKlaer';
 import { getDivTing } from './getDivTing';
 import { getOvernattingTing } from './getOvernattingTing';
 import { getSkredTing } from './getSkredTing';
@@ -11,12 +11,12 @@ import { getSkiTing } from './getSkiTing';
 import { getKlatreutstyr } from './getKlatreutstyr';
 import { getFjellturTing } from './getFjellturTing';
 import { getSpesielleTing } from './getSpesielleTing';
-import { getKajakkTing } from '~pakk/listMakers/getKajakkTing';
+import { getKajakkTing } from '../../pakk/listMakers/getKajakkTing';
 
 export const alleLister: ItemsGetter[] = [
     getToalettSaker,
     getIsbreTing,
-    getKlær,
+    getKlaer,
     getDivTing,
     getOvernattingTing,
     getSkredTing,
