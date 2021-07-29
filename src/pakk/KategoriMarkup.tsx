@@ -21,18 +21,18 @@ export const TingListe = styled.ul`
 
 function KategoriMarkup(props: Props) {
   const updateCatogery = () => {
-    const allChecked = props.kategori.array.every((it) =>
+    const allChecked = props.kategori.items.every((it) =>
       props.checkedItems.includes(it.navn)
     );
     const filteredCheckedItems = props.checkedItems.filter(
-      (it) => !props.kategori.array?.some((item) => item.navn === it)
+      (it) => !props.kategori.items?.some((item) => item.navn === it)
     );
     if (allChecked) {
       props.setCheckedItems(filteredCheckedItems);
     } else {
       props.setCheckedItems([
         ...filteredCheckedItems,
-        ...props.kategori.array.map((it) => it.navn),
+        ...props.kategori.items.map((it) => it.navn),
       ]);
     }
   };
@@ -40,7 +40,7 @@ function KategoriMarkup(props: Props) {
   return (
     <>
       <Checkbox
-        checked={props.kategori.array.every((it) =>
+        checked={props.kategori.items.every((it) =>
           props.checkedItems.includes(it.navn)
         )}
         header={true}
@@ -49,7 +49,7 @@ function KategoriMarkup(props: Props) {
         onChange={updateCatogery}
       />
       <TingListe>
-        {props.kategori.array.map((element) => (
+        {props.kategori.items.map((element) => (
           <li key={element.navn}>
             <Checkbox
               value={element.navn}

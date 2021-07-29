@@ -1,26 +1,38 @@
 export interface ArrayGroup<T> {
   category: string;
-  array: T[];
+  items: T[];
 }
 
 export interface GroupedArray<T> extends Array<ArrayGroup<T>> {}
 
-/* Tar et array og putter ting i grupper basert på gruppekategorier */
+/* Tar et array og putter ting i grupper basert på gruppekategorier
+ *
+ * Feks
+ *
+ * const myArray = ['Apple', 'Aubergine', 'Lemon'];
+ *
+ * const inGroups = groupArray(myArray, item => item[0]);
+ *
+ * console.log(inGroups);
+ *
+ * // [{category: 'A', array: ['Apple', 'Aubergine']}, {category: 'L', array: ['Lemon']}]
+ *
+ *  */
 export function groupArray<T>(
-  array: T[],
+  items: T[],
   getGroupCategoryForElement: (element: T) => string
 ): GroupedArray<T> {
-  return array.reduce((acc: GroupedArray<T>, arrayEntry) => {
+  return items.reduce((acc: GroupedArray<T>, arrayEntry) => {
     const currentCategory = getGroupCategoryForElement(arrayEntry);
     const categoryIndex = acc.findIndex(
       (group) => group.category === currentCategory
     );
     if (categoryIndex >= 0) {
-      acc[categoryIndex].array.push(arrayEntry);
+      acc[categoryIndex].items.push(arrayEntry);
     } else {
       acc.push({
         category: currentCategory,
-        array: [arrayEntry],
+        items: [arrayEntry],
       });
     }
     return acc;
