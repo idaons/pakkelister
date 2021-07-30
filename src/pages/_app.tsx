@@ -35,13 +35,7 @@ function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Pakkelister</title>
-        <link
-          href="https://www.nav.no/dekoratoren/media/favicon.ico"
-          rel="icon"
-          type="image/x-icon"
-        />
       </Head>
-      Next
       <GlobalStyles />
       <Component {...pageProps} />
     </>
