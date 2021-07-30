@@ -103,8 +103,7 @@ function Pakk() {
     return (
       <>
         <pre>{JSON.stringify(valg, null, 2)}</pre>
-        <pre>{JSON.stringify(query.get("kjønn"), null, 2)}</pre>
-        <pre>{JSON.stringify(query.get("sesong"), null, 2)}</pre>
+        <pre>{query}</pre>
         <p>{feilmelding}</p>
         {tilbakeKnapp}
       </>

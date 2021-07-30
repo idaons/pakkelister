@@ -38,30 +38,44 @@ interface Returns {
   currentListe: string;
 }
 
-export function decodeUrlParams(params: URLSearchParams): Returns {
-  console.log(params);
+export function decodeUrlParams(search: string): Returns {
   try {
+    const paramsArray = search.split("&").map((param) => param.split("="));
+    const paramsObject: { [name: string]: string } = paramsArray.reduce(
+      (acc, param) => ({
+        ...acc,
+        [param[0]]: param[1],
+      }),
+      {}
+    );
+
     const valg: Valg = {
-      aktiviteter:
-        params
-          .get("aktiviteter")
-          ?.split(",")
-          .map((it) => Aktivitet[it])
-          .filter((it) => it !== undefined) || [],
+      // @ts-ignore
+      aktiviteter: paramsObject["aktiviteter"]
+        ?.split(",")
+        // @ts-ignore
+        .map((it) => Aktivitet[it])
+        .filter((it) => it !== undefined),
+      // @ts-ignore
       lengde:
-        params.get("lengde") !== undefined ? parseInt(params["lengde"]) : NaN,
-      kjønn: Kjonn[params.get("kjønn") || 0],
-      overnatting:
-        (params
-          .get("overnatting")
-          ?.split(",")
-          .map((it) => Overnatting[it])
-          .filter((it) => it !== undefined) as Overnatting[]) || [],
-      sesong: Sesong[params.get("sesong") || 0],
-      spesielleBehov: params.get("spesiell") === "true",
+        paramsObject["lengde"] !== undefined
+          ? parseInt(paramsObject["lengde"])
+          : undefined,
+      // @ts-ignore
+      kjønn: Kjonn[paramsObject["kjønn"]],
+      // @ts-ignore
+      overnatting: paramsObject["overnatting"]
+        ?.split(",")
+        // @ts-ignore
+        .map((it) => Overnatting[it])
+        .filter((it) => it !== undefined),
+      // @ts-ignore
+      sesong: Sesong[paramsObject["sesong"]],
+      spesielleBehov: paramsObject["spesiell"] === "true",
     };
 
     const manglendeParametere = Object.keys(valg).filter(
+      // @ts-ignore
       (it: string) => valg[it] === undefined
     );
     const feilmelding =
@@ -69,9 +83,7 @@ export function decodeUrlParams(params: URLSearchParams): Returns {
         ? `Manglende parametere: ${manglendeParametere}`
         : undefined;
 
-    const liste = params["liste"];
-
-    console.log(liste, valg, feilmelding, manglendeParametere);
+    const liste = paramsObject["liste"];
     return {
       feilmelding: feilmelding,
       valg: {
@@ -86,8 +98,7 @@ export function decodeUrlParams(params: URLSearchParams): Returns {
     };
   } catch (e) {
     return {
-      error: e,
-      feilmelding: "Det skjedde en feil under parsing av params",
+      feilmelding: "Det skjedde en feil under parsing av search",
       valg: defaultValg,
       currentListe: "",
     };
