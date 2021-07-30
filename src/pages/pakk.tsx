@@ -14,6 +14,7 @@ import Bunnknapper from "../pakk/Bunnknapper";
 import ExtraItems from "../pakk/ExtraItems";
 import KategoriMarkup from "../pakk/KategoriMarkup";
 import { useRouter } from "next/router";
+import { useUrlQuery } from "../utils/useUrlQuery";
 
 const Style = styled.div`
   min-height: 100vh;
@@ -56,19 +57,8 @@ export const KategoriListe = styled.ul`
   padding-left: 0;
 `;
 
-function useQuery() {
-  const [query, setQuery] = useState<Record<string, string>>({});
-  const router = useRouter();
-
-  useEffect(() => {
-    setQuery(router.query as Record<string, string>);
-  }, [router.query]);
-
-  return query;
-}
-
 function Pakk() {
-  const query = useQuery();
+  const query = useUrlQuery();
   const { valg, currentListe, feilmelding } = decodeUrlParams(
     query as Record<string, string>
   );

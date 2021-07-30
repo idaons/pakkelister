@@ -38,24 +38,27 @@ interface Returns {
   currentListe: string;
 }
 
-export function decodeUrlParams(params: Record<string, string>): Returns {
+export function decodeUrlParams(params: URLSearchParams): Returns {
   console.log(params);
   try {
     const valg: Valg = {
-      aktiviteter: params["aktiviteter"]
-        ?.split(",")
-        .map((it) => Aktivitet[it])
-        .filter((it) => it !== undefined),
-      // @ts-ignore
+      aktiviteter:
+        params
+          .get("aktiviteter")
+          ?.split(",")
+          .map((it) => Aktivitet[it])
+          .filter((it) => it !== undefined) || [],
       lengde:
-        params["lengde"] !== undefined ? parseInt(params["lengde"]) : undefined,
-      kjønn: Kjonn[params["kjønn"]],
-      overnatting: params["overnatting"]
-        ?.split(",")
-        .map((it) => Overnatting[it])
-        .filter((it) => it !== undefined),
-      sesong: Sesong[params["sesong"]],
-      spesielleBehov: params["spesiell"] === "true",
+        params.get("lengde") !== undefined ? parseInt(params["lengde"]) : NaN,
+      kjønn: Kjonn[params.get("kjønn") || ""],
+      overnatting:
+        (params
+          .get("overnatting")
+          ?.split(",")
+          .map((it) => Overnatting[it])
+          .filter((it) => it !== undefined) as Overnatting[]) || [],
+      sesong: Sesong[params.get("sesong") || ""],
+      spesielleBehov: params.get("spesiell") === "true",
     };
 
     const manglendeParametere = Object.keys(valg).filter(
