@@ -46,14 +46,17 @@ export function decodeUrlParams(params: Record<string, string>): Returns {
           ?.split(",")
           .map((it) => Aktivitet[it])
           .filter((it) => it !== undefined) || [],
-      lengde: params.lengde !== undefined ? parseInt(params.lengde) : NaN,
-      kjønn: Kjonn[params.kjønn || 0],
+      lengde:
+        params.lengde !== undefined
+          ? parseInt(params.lengde)
+          : defaultValg.lengde,
+      kjønn: Kjonn[params.kjønn],
       overnatting:
         (params.overnatting
           ?.split(",")
           .map((it) => Overnatting[it])
           .filter((it) => it !== undefined) as Overnatting[]) || [],
-      sesong: Sesong[params.sesong || 0],
+      sesong: Sesong[params.sesong],
       spesielleBehov: params.spesiell === "true",
     };
 
