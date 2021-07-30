@@ -36,7 +36,7 @@ function App({ Component, pageProps }: AppProps) {
         <title>Pakkelister</title>
       </Head>
       <GlobalStyles />
-      Debug 6
+      Debug 7
       <Component {...pageProps} />
     </>
   );
