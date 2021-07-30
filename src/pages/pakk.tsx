@@ -99,6 +99,8 @@ function Pakk() {
     </LinkButton>
   );
 
+  console.log(valg, feilmelding, router.query);
+
   if (feilmelding) {
     return (
       <>
