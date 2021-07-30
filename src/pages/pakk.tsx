@@ -97,13 +97,9 @@ function Pakk() {
     </LinkButton>
   );
 
-  console.log(valg, feilmelding, query);
-
   if (feilmelding) {
     return (
       <>
-        <pre>{JSON.stringify(valg, null, 2)}</pre>
-        <pre>{JSON.stringify(query, null, 2)}</pre>
         <p>{feilmelding}</p>
         {tilbakeKnapp}
       </>

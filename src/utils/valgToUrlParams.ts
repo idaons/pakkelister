@@ -39,7 +39,6 @@ interface Returns {
 }
 
 export function decodeUrlParams(params: Record<string, string>): Returns {
-  console.log(params);
   try {
     const valg: Valg = {
       aktiviteter:
