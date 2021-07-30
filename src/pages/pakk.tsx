@@ -13,7 +13,7 @@ import { desktopMinWidth, smallMobileMaxWidth } from "../commonStyles";
 import Bunnknapper from "../pakk/Bunnknapper";
 import ExtraItems from "../pakk/ExtraItems";
 import KategoriMarkup from "../pakk/KategoriMarkup";
-import { useUrlQuery } from "../utils/useUrlQuery";
+import { useRouter } from "next/router";
 
 const Style = styled.div`
   min-height: 100vh;
@@ -57,7 +57,7 @@ export const KategoriListe = styled.ul`
 `;
 
 function Pakk() {
-  const query = useUrlQuery();
+  const query = useRouter().query as Record<string, string>;
   const { valg, currentListe, feilmelding } = decodeUrlParams(query);
   const [checkedItems, setCheckedItems] = useState<string[]>(
     getStoredItems(currentListe)
@@ -103,8 +103,7 @@ function Pakk() {
     return (
       <>
         <pre>{JSON.stringify(valg, null, 2)}</pre>
-        <pre>{JSON.stringify(query.get("kjønn"), null, 2)}</pre>
-        <pre>{JSON.stringify(query.get("sesong"), null, 2)}</pre>
+        <pre>{JSON.stringify(query, null, 2)}</pre>
         <p>{feilmelding}</p>
         {tilbakeKnapp}
       </>

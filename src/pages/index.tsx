@@ -19,7 +19,7 @@ import { getStoredListeNavn, getStoredValg } from "../utils/localStorage";
 import Radio from "../utils/baseComponents/Radio";
 import { defaultValg } from "../lagListe/valg/defaultValg";
 import styled from "styled-components";
-import { useUrlQuery } from "../utils/useUrlQuery";
+import { useRouter } from "next/router";
 
 const StyledForm = styled.form`
   border: 0.2em white solid;
@@ -67,7 +67,7 @@ const Opprett = styled.div`
 `;
 
 export default function Index() {
-  const query = useUrlQuery();
+  const query = useRouter().query as Record<string, string>;
   const urlValg = decodeUrlParams(query);
   const [sesong, setSesong] = useState<Sesong>(urlValg.valg.sesong);
   const [aktiviteter, setAktiviteter] = useState<Aktivitet[]>(

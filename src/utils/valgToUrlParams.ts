@@ -38,27 +38,24 @@ interface Returns {
   currentListe: string;
 }
 
-export function decodeUrlParams(params: URLSearchParams): Returns {
+export function decodeUrlParams(params: Record<string, string>): Returns {
   console.log(params);
   try {
     const valg: Valg = {
       aktiviteter:
-        params
-          .get("aktiviteter")
+        params.aktiviteter
           ?.split(",")
           .map((it) => Aktivitet[it])
           .filter((it) => it !== undefined) || [],
-      lengde:
-        params.get("lengde") !== undefined ? parseInt(params["lengde"]) : NaN,
-      kjønn: Kjonn[params.get("kjønn") || 0],
+      lengde: params.lengde !== undefined ? parseInt(params.lengde) : NaN,
+      kjønn: Kjonn[params.kjønn || 0],
       overnatting:
-        (params
-          .get("overnatting")
+        (params.overnatting
           ?.split(",")
           .map((it) => Overnatting[it])
           .filter((it) => it !== undefined) as Overnatting[]) || [],
-      sesong: Sesong[params.get("sesong") || 0],
-      spesielleBehov: params.get("spesiell") === "true",
+      sesong: Sesong[params.sesong || 0],
+      spesielleBehov: params.spesiell === "true",
     };
 
     const manglendeParametere = Object.keys(valg).filter(
@@ -69,9 +66,8 @@ export function decodeUrlParams(params: URLSearchParams): Returns {
         ? `Manglende parametere: ${manglendeParametere}`
         : undefined;
 
-    const liste = params["liste"];
+    const liste = params.liste;
 
-    console.log(liste, valg, feilmelding, manglendeParametere);
     return {
       feilmelding: feilmelding,
       valg: {
