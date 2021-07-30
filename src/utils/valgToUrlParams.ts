@@ -50,14 +50,14 @@ export function decodeUrlParams(params: URLSearchParams): Returns {
           .filter((it) => it !== undefined) || [],
       lengde:
         params.get("lengde") !== undefined ? parseInt(params["lengde"]) : NaN,
-      kjønn: Kjonn[params.get("kjønn") || ""],
+      kjønn: Kjonn[params.get("kjønn") || 0],
       overnatting:
         (params
           .get("overnatting")
           ?.split(",")
           .map((it) => Overnatting[it])
           .filter((it) => it !== undefined) as Overnatting[]) || [],
-      sesong: Sesong[params.get("sesong") || ""],
+      sesong: Sesong[params.get("sesong") || 0],
       spesielleBehov: params.get("spesiell") === "true",
     };
 
