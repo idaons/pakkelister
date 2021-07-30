@@ -1,12 +1,14 @@
 import { Valg } from "../models/valg";
 
 export function getStoredItems(listeNavn?: string): string[] {
+  if (typeof window === "undefined") return [];
   const key = listeNavn + "_checkedItems";
   const items = window.localStorage.getItem(key);
   return items ? JSON.parse(items) : [];
 }
 
 export function getStoredValg(listeNavn: string) {
+  if (typeof window === "undefined") return;
   const key = listeNavn + "_valg";
   const items = window.localStorage.getItem(key);
 
@@ -15,6 +17,7 @@ export function getStoredValg(listeNavn: string) {
   return valg as Valg;
 }
 export function getStoredEkstraTing(listeNavn: string): string[] {
+  if (typeof window === "undefined") return [];
   const key = listeNavn + "_ekstraItems";
   const items = window.localStorage.getItem(key);
 
@@ -24,6 +27,7 @@ export function getStoredEkstraTing(listeNavn: string): string[] {
 }
 
 export function getStoredListeNavn(): string[] {
+  if (typeof window === "undefined") return [];
   const items = window.localStorage;
   let keys: string[] = [];
   for (let i = 0; i < items.length; i++) {

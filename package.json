@@ -7,36 +7,30 @@
   "license": "ISC",
   "homepage": "https://idaons.github.io/pakkelister/",
   "scripts": {
-    "clean": "rm dist/bundle.js",
-    "start": "parcel serve ./src/index.html",
     "type-check": "tsc",
-    "build-prod": "parcel build src/index.html --public-url ./ && cp src/404.html dist/404.html ",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dev": "next dev",
+    "build": "next build && next export",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@reach/router": "^1.3.4",
+    "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-styled-components": "^1.13.2",
+    "next": "^11.0.1",
     "react": "^17.0.2",
     "react-collapse": "^5.1.0",
     "react-dom": "^17.0.2",
-    "styled-components": "^5.3.0"
+    "styled-components": "^5.3.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.8",
-    "@babel/preset-env": "^7.14.8",
-    "@babel/preset-react": "^7.14.5",
-    "@babel/preset-typescript": "^7.14.5",
-    "@parcel/transformer-less": "^2.0.0-nightly.778",
-    "@parcel/transformer-typescript-tsc": "^2.0.0-nightly.778",
-    "@parcel/validator-typescript": "^2.0.0-nightly.778",
-    "@types/styled-components": "^5.1.11",
-    "@types/reach__router": "^1.3.9",
     "@types/react": "^17.0.14",
     "@types/react-collapse": "^5.0.1",
     "@types/react-dom": "^17.0.9",
-    "autoprefixer": "^10.3.1",
+    "@types/styled-components": "^5.1.11",
     "husky": "^6.0.0",
     "lint-staged": "^11.1.0",
-    "parcel": "^2.0.0-beta.3.1",
     "prettier": "^2.3.2",
     "typescript": "^4.3.5"
   },

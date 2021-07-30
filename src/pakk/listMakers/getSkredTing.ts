@@ -1,4 +1,3 @@
-import { ItemsGetter } from "../../models/itemsGetter";
 import { Kategori } from "../../models/kategori";
 import { Aktivitet } from "../../models/aktivitet";
 import { Valg } from "../../models/valg";

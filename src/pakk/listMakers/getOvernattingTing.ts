@@ -5,7 +5,7 @@ import { sikkerhetVinter, stringArrayToItems } from "./utils";
 import { Item } from "../../models/liste";
 
 export function getOvernattingTing(valg: Valg): Item[] {
-  let overnattingTing = [];
+  let overnattingTing: string[] = [];
 
   if (sikkerhetVinter(valg)) {
     overnattingTing.push("Vindsekk");

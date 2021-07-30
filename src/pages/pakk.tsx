@@ -1,25 +1,20 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { getAlleTing } from "./listMakers/getAlleTing";
+import { getAlleTing } from "../pakk/listMakers/getAlleTing";
 import { groupArray } from "../utils/groupArray";
 import { Kategori } from "../models/kategori";
 import { decodeUrlParams, valgToUrlParams } from "../utils/valgToUrlParams";
 import LinkButton from "../utils/baseComponents/LinkButton";
-import { basepath } from "../app/App";
-import VisValg from "./Valg";
+import VisValg from "../pakk/Valg";
 import { getStoredEkstraTing, getStoredItems } from "../utils/localStorage";
-import { RouteComponentProps, WindowLocation } from "@reach/router";
 import styled from "styled-components";
-import Progress from "./Progress";
-import { desktopMinWidth, smallMobileMaxWidth } from "../app/commonStyles";
-import Bunnknapper from "./Bunnknapper";
-import ExtraItems from "./ExtraItems";
-import KategoriMarkup from "./KategoriMarkup";
-
-interface Props extends RouteComponentProps {
-  urlValg?: string;
-  location?: WindowLocation;
-}
+import Progress from "../pakk/Progress";
+import { desktopMinWidth, smallMobileMaxWidth } from "../commonStyles";
+import Bunnknapper from "../pakk/Bunnknapper";
+import ExtraItems from "../pakk/ExtraItems";
+import KategoriMarkup from "../pakk/KategoriMarkup";
+import { basepath } from "./_app";
+import { useRouter } from "next/router";
 
 const Style = styled.div`
   min-height: 100vh;
@@ -62,9 +57,10 @@ export const KategoriListe = styled.ul`
   padding-left: 0;
 `;
 
-function Pakk(props: Props) {
+function Pakk() {
+  const router = useRouter();
   const { valg, currentListe, feilmelding } = decodeUrlParams(
-    props.urlValg || ""
+    router.query as Record<string, string>
   );
   const [checkedItems, setCheckedItems] = useState<string[]>(
     getStoredItems(currentListe)
@@ -76,12 +72,12 @@ function Pakk(props: Props) {
 
   useEffect(() => {
     setLagrerListe(true);
-    localStorage.setItem(currentListe + "_valg", JSON.stringify(valg));
-    localStorage.setItem(
+    window.localStorage.setItem(currentListe + "_valg", JSON.stringify(valg));
+    window.localStorage.setItem(
       currentListe + "_checkedItems",
       JSON.stringify(checkedItems)
     );
-    localStorage.setItem(
+    window.localStorage.setItem(
       currentListe + "_ekstraItems",
       JSON.stringify(ekstraTing)
     );
@@ -98,7 +94,7 @@ function Pakk(props: Props) {
   const tilbakeKnapp = (
     <LinkButton
       style={{ gridArea: "knapp" }}
-      to={basepath + "/" + valgToUrlParams(valg, currentListe)}
+      href={basepath + "?" + valgToUrlParams(valg, currentListe)}
     >
       Tilbake
     </LinkButton>

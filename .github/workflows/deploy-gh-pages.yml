@@ -17,11 +17,11 @@ jobs:
       - name: npm install 🚛
         run: npm install
       - name: Build 🔧
-        run: npm run build-prod
+        run: npm run build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: dist
+          FOLDER: out
           CLEAN: true

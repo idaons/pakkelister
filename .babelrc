@@ -1,12 +1,14 @@
 {
-  "presets": [
+  "presets": ["next/babel"],
+  "plugins": [
+    "macros",
     [
-      "@babel/preset-env",
+      "styled-components",
       {
-        "modules": false
+        "ssr": true,
+        "displayName": true,
+        "preprocess": false
       }
-    ],
-    "@babel/preset-typescript",
-    "@babel/preset-react"
+    ]
   ]
 }

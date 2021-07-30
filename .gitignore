@@ -5,9 +5,9 @@
 
 
 # production
-/dist
+/out
 
 # misc
 .idea/
 .cache/
-.parcel-cache/
+.next/

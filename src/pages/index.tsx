@@ -1,30 +1,26 @@
 import * as React from "react";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import SesongValg from "./valg/SesongValg";
-import AktiviteterValg from "./valg/AktiviteterValg";
-import OvernattingValg from "./valg/Overnatting";
-import KjonnValg from "./valg/KjonnValg";
-import CustomValg from "./valg/CustomValg";
+import SesongValg from "../lagListe/valg/SesongValg";
+import AktiviteterValg from "../lagListe/valg/AktiviteterValg";
+import OvernattingValg from "../lagListe/valg/Overnatting";
+import KjonnValg from "../lagListe/valg/KjonnValg";
+import CustomValg from "../lagListe/valg/CustomValg";
 import { Sesong } from "../models/sesong";
 import { Aktivitet } from "../models/aktivitet";
 import { Overnatting } from "../models/overnatting";
 import { Kjonn } from "../models/kjonn";
-import LengdeValg from "./valg/LengdeValg";
+import LengdeValg from "../lagListe/valg/LengdeValg";
 import { UnmountClosed } from "react-collapse";
 import LinkButton from "../utils/baseComponents/LinkButton";
 import { decodeUrlParams, valgToUrlParams } from "../utils/valgToUrlParams";
 import TextInput from "../utils/baseComponents/TextInput";
-import { basepath } from "../app/App";
 import Button from "../utils/baseComponents/Button";
 import { getStoredListeNavn, getStoredValg } from "../utils/localStorage";
 import Radio from "../utils/baseComponents/Radio";
-import { navigate, RouteComponentProps } from "@reach/router";
 import { defaultValg } from "../lagListe/valg/defaultValg";
 import styled from "styled-components";
-
-interface Props extends RouteComponentProps {
-  urlValg?: string;
-}
+import { basepath } from "./_app";
+import { useRouter } from "next/router";
 
 const StyledForm = styled.form`
   border: 0.2em white solid;
@@ -71,8 +67,9 @@ const Opprett = styled.div`
   padding: 2rem;
 `;
 
-export default function LagListe(props: Props) {
-  const urlValg = decodeUrlParams(props.urlValg || "");
+export default function Index() {
+  const router = useRouter();
+  const urlValg = decodeUrlParams(router.query as Record<string, string>);
   const [sesong, setSesong] = useState<Sesong>(urlValg.valg.sesong);
   const [aktiviteter, setAktiviteter] = useState<Aktivitet[]>(
     urlValg.valg.aktiviteter
@@ -104,21 +101,6 @@ export default function LagListe(props: Props) {
       }
     }
   }, []);
-
-  useEffect(() => {
-    const nyUrl = `${basepath}/${valgToUrlParams(
-      {
-        sesong,
-        aktiviteter,
-        overnatting,
-        kjønn,
-        lengde,
-        spesielleBehov,
-      },
-      tittel
-    )}`;
-    navigate(nyUrl);
-  }, [sesong, aktiviteter, overnatting, kjønn, lengde, spesielleBehov, tittel]);
 
   useEffect(() => {
     if (!endreEksisterende) {
@@ -226,7 +208,7 @@ export default function LagListe(props: Props) {
           />
           <Opprett>
             <LinkButton
-              to={`${basepath}/pakk/${valgToUrlParams(
+              href={`${basepath}pakk?${valgToUrlParams(
                 {
                   sesong,
                   aktiviteter,
