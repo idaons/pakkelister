@@ -56,10 +56,21 @@ export const KategoriListe = styled.ul`
   padding-left: 0;
 `;
 
-function Pakk() {
+function useQuery() {
+  const [query, setQuery] = useState<Record<string, string>>({});
   const router = useRouter();
+
+  useEffect(() => {
+    setQuery(router.query as Record<string, string>);
+  }, [router.query]);
+
+  return query;
+}
+
+function Pakk() {
+  const query = useQuery();
   const { valg, currentListe, feilmelding } = decodeUrlParams(
-    router.query as Record<string, string>
+    query as Record<string, string>
   );
   const [checkedItems, setCheckedItems] = useState<string[]>(
     getStoredItems(currentListe)
@@ -99,13 +110,13 @@ function Pakk() {
     </LinkButton>
   );
 
-  console.log(valg, feilmelding, router.query);
+  console.log(valg, feilmelding, query);
 
   if (feilmelding) {
     return (
       <>
         <pre>{JSON.stringify(valg, null, 2)}</pre>
-        <pre>{JSON.stringify(router.query, null, 2)}</pre>
+        <pre>{JSON.stringify(query, null, 2)}</pre>
         <p>{feilmelding}</p>
         {tilbakeKnapp}
       </>
