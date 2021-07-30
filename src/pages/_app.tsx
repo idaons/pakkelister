@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import Head from "next/head";
 import { AppProps } from "next/app";
-import "../styles.css";
-import "../normalize.css";
+import "../normalize";
 import { useRouter } from "next/router";
+import GlobalStyles from "../GlobalStyles";
 
 export const basepath = "/";
 const home = `${basepath}?urlParams`;
@@ -42,6 +42,7 @@ function App({ Component, pageProps }: AppProps) {
         />
       </Head>
       Next
+      <GlobalStyles />
       <Component {...pageProps} />
     </>
   );
