@@ -5,8 +5,7 @@ import "../normalize";
 import { useRouter } from "next/router";
 import GlobalStyles from "../GlobalStyles";
 
-export const basepath = "/";
-const home = `${basepath}?urlParams`;
+const home = `$/?urlParams`;
 
 // @ts-ignore
 const HandleRedirect = () => {

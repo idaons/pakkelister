@@ -19,7 +19,6 @@ import { getStoredListeNavn, getStoredValg } from "../utils/localStorage";
 import Radio from "../utils/baseComponents/Radio";
 import { defaultValg } from "../lagListe/valg/defaultValg";
 import styled from "styled-components";
-import { basepath } from "./_app";
 import { useRouter } from "next/router";
 
 const StyledForm = styled.form`
@@ -208,7 +207,7 @@ export default function Index() {
           />
           <Opprett>
             <LinkButton
-              href={`${basepath}pakk?${valgToUrlParams(
+              href={`/pakk?${valgToUrlParams(
                 {
                   sesong,
                   aktiviteter,

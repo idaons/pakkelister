@@ -13,7 +13,6 @@ import { desktopMinWidth, smallMobileMaxWidth } from "../commonStyles";
 import Bunnknapper from "../pakk/Bunnknapper";
 import ExtraItems from "../pakk/ExtraItems";
 import KategoriMarkup from "../pakk/KategoriMarkup";
-import { basepath } from "./_app";
 import { useRouter } from "next/router";
 
 const Style = styled.div`
@@ -94,7 +93,7 @@ function Pakk() {
   const tilbakeKnapp = (
     <LinkButton
       style={{ gridArea: "knapp" }}
-      href={basepath + "?" + valgToUrlParams(valg, currentListe)}
+      href={"/?" + valgToUrlParams(valg, currentListe)}
     >
       Tilbake
     </LinkButton>
