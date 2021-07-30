@@ -41,6 +41,7 @@ function App({ Component, pageProps }: AppProps) {
           type="image/x-icon"
         />
       </Head>
+      Next
       <Component {...pageProps} />
     </>
   );
