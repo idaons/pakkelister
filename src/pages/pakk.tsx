@@ -72,12 +72,12 @@ function Pakk() {
 
   useEffect(() => {
     setLagrerListe(true);
-    localStorage.setItem(currentListe + "_valg", JSON.stringify(valg));
-    localStorage.setItem(
+    window.localStorage.setItem(currentListe + "_valg", JSON.stringify(valg));
+    window.localStorage.setItem(
       currentListe + "_checkedItems",
       JSON.stringify(checkedItems)
     );
-    localStorage.setItem(
+    window.localStorage.setItem(
       currentListe + "_ekstraItems",
       JSON.stringify(ekstraTing)
     );

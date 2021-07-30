@@ -5,7 +5,7 @@
 
 
 # production
-/dist
+/out
 
 # misc
 .idea/

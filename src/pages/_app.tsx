@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 export const basepath = "/";
 const home = `${basepath}?urlParams`;
 
+// @ts-ignore
 const HandleRedirect = () => {
   const firstRedirect = useRef(true);
   const router = useRouter();

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Valg } from "../models/valg";
 import { getSesongLabel } from "../models/sesong";
-import { getKjønnLabel, Kjonn } from "../models/kjonn";
+import { getKjønnLabel } from "../models/kjonn";
 import { overnatting } from "./listMakers/utils";
 import { Aktivitet } from "../models/aktivitet";
 import { getOvernattingLabel } from "../models/overnatting";
