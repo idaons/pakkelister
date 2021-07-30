@@ -104,6 +104,8 @@ function Pakk() {
   if (feilmelding) {
     return (
       <>
+        <pre>{JSON.stringify(valg, null, 2)}</pre>
+        <pre>{JSON.stringify(router.query, null, 2)}</pre>
         <p>{feilmelding}</p>
         {tilbakeKnapp}
       </>
