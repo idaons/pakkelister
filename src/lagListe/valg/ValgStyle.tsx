@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ReactNode } from "react";
-import { InputGruppe, Valggruppe } from "../LagListe";
+import { InputGruppe, Valggruppe } from "../../pages";
 
 interface Props {
   name: string;

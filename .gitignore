@@ -10,4 +10,4 @@
 # misc
 .idea/
 .cache/
-.parcel-cache/
+.next/

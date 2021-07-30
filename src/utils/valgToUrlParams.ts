@@ -33,48 +33,31 @@ export function valgToUrlParams(valg: Valg, liste: String) {
 
 interface Returns {
   valg: Valg;
+  error?: Error;
   feilmelding?: string;
   currentListe: string;
 }
 
-export function decodeUrlParams(url: string): Returns {
+export function decodeUrlParams(params: Record<string, string>): Returns {
   try {
-    const paramsArray = url.split("&").map((param) => param.split("="));
-    const paramsObject: { [name: string]: string } = paramsArray.reduce(
-      (acc, param) => ({
-        ...acc,
-        [param[0]]: param[1],
-      }),
-      {}
-    );
-
     const valg: Valg = {
-      // @ts-ignore
-      aktiviteter: paramsObject["aktiviteter"]
+      aktiviteter: params["aktiviteter"]
         ?.split(",")
-        // @ts-ignore
         .map((it) => Aktivitet[it])
         .filter((it) => it !== undefined),
       // @ts-ignore
       lengde:
-        paramsObject["lengde"] !== undefined
-          ? parseInt(paramsObject["lengde"])
-          : undefined,
-      // @ts-ignore
-      kjønn: Kjonn[paramsObject["kjønn"]],
-      // @ts-ignore
-      overnatting: paramsObject["overnatting"]
+        params["lengde"] !== undefined ? parseInt(params["lengde"]) : undefined,
+      kjønn: Kjonn[params["kjønn"]],
+      overnatting: params["overnatting"]
         ?.split(",")
-        // @ts-ignore
         .map((it) => Overnatting[it])
         .filter((it) => it !== undefined),
-      // @ts-ignore
-      sesong: Sesong[paramsObject["sesong"]],
-      spesielleBehov: paramsObject["spesiell"] === "true",
+      sesong: Sesong[params["sesong"]],
+      spesielleBehov: params["spesiell"] === "true",
     };
 
     const manglendeParametere = Object.keys(valg).filter(
-      // @ts-ignore
       (it: string) => valg[it] === undefined
     );
     const feilmelding =
@@ -82,7 +65,7 @@ export function decodeUrlParams(url: string): Returns {
         ? `Manglende parametere: ${manglendeParametere}`
         : undefined;
 
-    const liste = paramsObject["liste"];
+    const liste = params["liste"];
     return {
       feilmelding: feilmelding,
       valg: {
@@ -97,7 +80,8 @@ export function decodeUrlParams(url: string): Returns {
     };
   } catch (e) {
     return {
-      feilmelding: "Det skjedde en feil under parsing av url",
+      error: e,
+      feilmelding: "Det skjedde en feil under parsing av params",
       valg: defaultValg,
       currentListe: "",
     };
