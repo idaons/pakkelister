@@ -19,7 +19,6 @@ import { getStoredListeNavn, getStoredValg } from "../utils/localStorage";
 import Radio from "../utils/baseComponents/Radio";
 import { defaultValg } from "../lagListe/valg/defaultValg";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import { useUrlQuery } from "../utils/useUrlQuery";
 
 const StyledForm = styled.form`

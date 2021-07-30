@@ -13,7 +13,6 @@ import { desktopMinWidth, smallMobileMaxWidth } from "../commonStyles";
 import Bunnknapper from "../pakk/Bunnknapper";
 import ExtraItems from "../pakk/ExtraItems";
 import KategoriMarkup from "../pakk/KategoriMarkup";
-import { useRouter } from "next/router";
 import { useUrlQuery } from "../utils/useUrlQuery";
 
 const Style = styled.div`
@@ -59,9 +58,7 @@ export const KategoriListe = styled.ul`
 
 function Pakk() {
   const query = useUrlQuery();
-  const { valg, currentListe, feilmelding } = decodeUrlParams(
-    query as Record<string, string>
-  );
+  const { valg, currentListe, feilmelding } = decodeUrlParams(query);
   const [checkedItems, setCheckedItems] = useState<string[]>(
     getStoredItems(currentListe)
   );
