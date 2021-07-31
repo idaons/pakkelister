@@ -16,7 +16,7 @@ export function getStoredValg(listeNavn: string) {
   const valg = JSON.parse(items);
   return valg as Valg;
 }
-export function getStoredEkstraTing(listeNavn: string): string[] {
+export function getStoredEkstraTing(listeNavn?: string): string[] {
   if (typeof window === "undefined") return [];
   const key = listeNavn + "_ekstraItems";
   const items = window.localStorage.getItem(key);
