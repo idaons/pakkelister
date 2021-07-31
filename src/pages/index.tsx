@@ -1,20 +1,16 @@
 import * as React from "react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useReducer, useState } from "react";
 import SesongValg from "../lagListe/valg/SesongValg";
 import AktiviteterValg from "../lagListe/valg/AktiviteterValg";
 import OvernattingValg from "../lagListe/valg/Overnatting";
 import KjonnValg from "../lagListe/valg/KjonnValg";
 import CustomValg from "../lagListe/valg/CustomValg";
-import { Sesong } from "../models/sesong";
-import { Aktivitet } from "../models/aktivitet";
-import { Overnatting } from "../models/overnatting";
-import { Kjonn } from "../models/kjonn";
 import LengdeValg from "../lagListe/valg/LengdeValg";
 import { UnmountClosed } from "react-collapse";
 import LinkButton from "../utils/baseComponents/LinkButton";
 import {
-  useDecodeUrlParamsToValg,
   encodeValgToUrlParams,
+  useDecodeUrlParamsToValg,
 } from "../utils/encodeValgToUrlParams";
 import TextInput from "../utils/baseComponents/TextInput";
 import Button from "../utils/baseComponents/Button";
@@ -22,6 +18,7 @@ import Radio from "../utils/baseComponents/Radio";
 import { defaultValg } from "../lagListe/valg/defaultValg";
 import styled from "styled-components";
 import { PakkeAppLocalStorage } from "../utils/localStorage";
+import { Valg } from "../models/valg";
 
 const StyledForm = styled.form`
   border: 0.2em white solid;
@@ -68,19 +65,15 @@ const Opprett = styled.div`
   padding: 2rem;
 `;
 
+function reducer(state: Valg, update: Partial<Valg>): Valg {
+  return {
+    ...state,
+    ...update,
+  };
+}
+
 export default function Index() {
-  const [sesong, setSesong] = useState<Sesong>(defaultValg.sesong);
-  const [aktiviteter, setAktiviteter] = useState<Aktivitet[]>(
-    defaultValg.aktiviteter
-  );
-  const [overnatting, setOvernatting] = useState<Overnatting[]>(
-    defaultValg.overnatting
-  );
-  const [kjønn, setKjønn] = useState<Kjonn>(defaultValg.kjønn);
-  const [lengde, setLengde] = useState<number>(defaultValg.lengde);
-  const [spesielleBehov, setSpesielleBehov] = useState<boolean>(
-    defaultValg.spesielleBehov
-  );
+  const [valg, updateValg] = useReducer(reducer, defaultValg);
 
   const [listeNavn, setListeNavn] = useState<string | undefined>("");
   const [valgtListe, setValgtListe] = useState<string>("");
@@ -88,12 +81,7 @@ export default function Index() {
 
   const urlParams = useDecodeUrlParamsToValg();
   useEffect(() => {
-    setSesong(urlParams.valg.sesong);
-    setAktiviteter(urlParams.valg.aktiviteter);
-    setOvernatting(urlParams.valg.overnatting);
-    setKjønn(urlParams.valg.kjønn);
-    setLengde(urlParams.valg.lengde);
-    setSpesielleBehov(urlParams.valg.spesielleBehov);
+    updateValg(urlParams.valg);
     setListeNavn(urlParams.listeNavn);
   }, [urlParams.key]);
 
@@ -119,14 +107,8 @@ export default function Index() {
     setEndreEksisterende(!endreEksisterende);
 
     // Nullstill verdier
-    const valg = defaultValg;
     setListeNavn("");
-    setSesong(valg.sesong);
-    setAktiviteter(valg.aktiviteter);
-    setOvernatting(valg.overnatting);
-    setKjønn(valg.kjønn);
-    setLengde(valg.lengde);
-    setSpesielleBehov(valg.spesielleBehov);
+    updateValg(defaultValg);
   };
 
   const onListeValgt = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -137,12 +119,7 @@ export default function Index() {
     if (!valg) return;
     setListeNavn(e.currentTarget.value);
 
-    setSesong(valg.sesong);
-    setAktiviteter(valg.aktiviteter);
-    setOvernatting(valg.overnatting);
-    setKjønn(valg.kjønn);
-    setLengde(valg.lengde);
-    setSpesielleBehov(valg.spesielleBehov);
+    updateValg(valg);
   };
 
   return (
@@ -151,14 +128,14 @@ export default function Index() {
       <Valggruppe>
         <InputGruppe>
           <Radio
-            label="Lag liste"
+            label="Lag ny liste"
             checked={!endreEksisterende}
             onChange={onNyEllerEksisterendeRadioChanged}
             name="nyEllerEksisterende"
             value="ny"
           />
           <Radio
-            label="Endre eksisterende"
+            label="Endre gammel liste"
             checked={endreEksisterende}
             onChange={onNyEllerEksisterendeRadioChanged}
             name="nyEllerEksisterende"
@@ -170,16 +147,19 @@ export default function Index() {
         <Valggruppe>
           <label>Velg liste</label>
           <InputGruppe>
-            {PakkeAppLocalStorage.getLists().map((liste) => (
-              <Button
-                key={liste.listeNavn}
-                id={"knapp_" + liste.listeNavn}
-                value={liste.listeNavn}
-                onClick={onListeValgt}
-              >
-                {liste.listeNavn || "Liste"}
-              </Button>
-            ))}
+            {PakkeAppLocalStorage.getLists().map(
+              (liste) =>
+                liste.listeNavn && (
+                  <Button
+                    key={liste.listeNavn}
+                    id={"knapp_" + liste.listeNavn}
+                    value={liste.listeNavn}
+                    onClick={onListeValgt}
+                  >
+                    {liste.listeNavn}
+                  </Button>
+                )
+            )}
           </InputGruppe>
         </Valggruppe>
       ) : (
@@ -193,36 +173,37 @@ export default function Index() {
       )}
       {(!endreEksisterende || valgtListe) && (
         <>
-          <SesongValg sesong={sesong} setSesong={setSesong} />
-          <OvernattingValg
-            overnatting={overnatting}
-            setOvernatting={setOvernatting}
+          <SesongValg
+            sesong={valg.sesong}
+            setSesong={(sesong) => updateValg({ sesong })}
           />
-          <UnmountClosed isOpened={overnatting.length > 0}>
-            <LengdeValg lengde={lengde} setLengde={setLengde} />
+          <OvernattingValg
+            overnatting={valg.overnatting}
+            setOvernatting={(overnatting) => updateValg({ overnatting })}
+          />
+          <UnmountClosed isOpened={valg.overnatting.length > 0}>
+            <LengdeValg
+              lengde={valg.lengde}
+              setLengde={(lengde) => updateValg({ lengde })}
+            />
           </UnmountClosed>
           <AktiviteterValg
-            valgteAktiviteter={aktiviteter}
-            setAktiviteter={setAktiviteter}
+            valgteAktiviteter={valg.aktiviteter}
+            setAktiviteter={(aktiviteter) => updateValg({ aktiviteter })}
           />
-          <KjonnValg kjønn={kjønn} setKjønn={setKjønn} />
+          <KjonnValg
+            kjønn={valg.kjønn}
+            setKjønn={(kjønn) => updateValg({ kjønn })}
+          />
           <CustomValg
-            spesielleBehov={spesielleBehov}
-            setSpesielleBehov={setSpesielleBehov}
+            spesielleBehov={valg.spesielleBehov}
+            setSpesielleBehov={(spesielleBehov) =>
+              updateValg({ spesielleBehov })
+            }
           />
           <Opprett>
             <LinkButton
-              href={`/pakk?${encodeValgToUrlParams(
-                {
-                  sesong,
-                  aktiviteter,
-                  overnatting,
-                  kjønn,
-                  lengde,
-                  spesielleBehov,
-                },
-                listeNavn
-              )}`}
+              href={`/pakk?${encodeValgToUrlParams(valg, listeNavn)}`}
             >
               Pakk
             </LinkButton>
