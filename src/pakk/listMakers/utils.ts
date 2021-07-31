@@ -43,3 +43,7 @@ export function objektMedAntallTilItems(
     kategori: kategori,
   }));
 }
+
+export function overlapp<T>(array1: T[], array2: T[]): boolean {
+  return array2.some((it) => array1.includes(it));
+}

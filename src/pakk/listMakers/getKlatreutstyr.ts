@@ -2,23 +2,48 @@ import { Kategori } from "../../models/kategori";
 import { Aktivitet } from "../../models/aktivitet";
 import { Valg } from "../../models/valg";
 import { Item } from "../../models/liste";
-import { stringArrayToItems } from "./utils";
+import { overlapp, stringArrayToItems } from "./utils";
 
 export function getKlatreutstyr(valg: Valg): Item[] {
-  if (!valg.aktiviteter.includes(Aktivitet.Klatring)) {
-    return [];
+  let items: string[] = [];
+
+  if (
+    overlapp(valg.aktiviteter, [
+      Aktivitet.Sportsklatring,
+      Aktivitet.Tradklatring,
+      Aktivitet.ViaFerrata,
+    ])
+  ) {
+    items.push("Klatresele", "Hjelm");
   }
 
-  const klatreting = [
-    "Klatresele",
-    "Kortslynger",
-    "Tau",
-    "Kalkpose",
-    "Klatresko",
-    "Sikringsutstyr",
-    "Via ferrata kit",
-    "Hjelm",
-  ];
+  if (
+    overlapp(valg.aktiviteter, [
+      Aktivitet.Sportsklatring,
+      Aktivitet.Tradklatring,
+    ])
+  ) {
+    items.push("Tau", "Taubrems", "Kalkpose", "Klatresko");
+  }
 
-  return stringArrayToItems(klatreting, Kategori.TekniskUtstyr);
+  if (overlapp(valg.aktiviteter, [Aktivitet.Sportsklatring])) {
+    items.push("Quickdraws", "Sikringsbriller");
+  }
+
+  if (overlapp(valg.aktiviteter, [Aktivitet.Tradklatring])) {
+    items.push(
+      "Kiler, Kamkiler",
+      "Annet sikringsutstyr",
+      "Kortslynger",
+      "Diverse slynger",
+      "Bailetau",
+      "Skrukarabiner"
+    );
+  }
+
+  if (overlapp(valg.aktiviteter, [Aktivitet.ViaFerrata])) {
+    items.push("Via ferrata kit");
+  }
+
+  return stringArrayToItems(items, Kategori.TekniskUtstyr);
 }

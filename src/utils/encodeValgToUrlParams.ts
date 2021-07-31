@@ -13,7 +13,7 @@ export function encodeValgToUrlParams(valg: Valg, listeNavn?: string) {
   return `params=${JSON.stringify(params)}`;
 }
 
-interface Returns {
+interface DecodedUrlParams {
   valg: Valg;
   error?: Error;
   feilmelding?: string;
@@ -21,7 +21,7 @@ interface Returns {
   key: string;
 }
 
-export function useDecodeUrlParamsToValg(): Returns {
+export function useDecodeUrlParamsToValg(): DecodedUrlParams {
   const query = useRouter().query as Record<string, string>;
   try {
     const params: Params = JSON.parse(query.params);
@@ -29,13 +29,8 @@ export function useDecodeUrlParamsToValg(): Returns {
 
     return {
       valg: {
-        aktiviteter: params.valg.aktiviteter ?? defaultValg.aktiviteter,
-        lengde: params.valg.lengde ?? defaultValg.lengde,
-        kjønn: params.valg.kjønn ?? defaultValg.kjønn,
-        overnatting: params.valg.overnatting ?? defaultValg.overnatting,
-        sesong: params.valg.sesong ?? defaultValg.sesong,
-        spesielleBehov:
-          params.valg.spesielleBehov ?? defaultValg.spesielleBehov,
+        ...defaultValg,
+        ...params.valg,
       },
       listeNavn: liste,
       key: JSON.stringify(params),

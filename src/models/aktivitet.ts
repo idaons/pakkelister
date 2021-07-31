@@ -1,7 +1,9 @@
 import { getEnumAsArray } from "../utils/enum";
 
 export enum Aktivitet {
-  Klatring,
+  Sportsklatring,
+  Tradklatring,
+  ViaFerrata,
   Fottur,
   Tinderangling,
   Jogging,
@@ -21,7 +23,8 @@ export function getAktivitetAsArray(): Aktivitet[] {
 
 export function erSommerAktivitet(aktivitet: Aktivitet) {
   return [
-    Aktivitet.Klatring,
+    Aktivitet.Sportsklatring,
+    Aktivitet.Tradklatring,
     Aktivitet.Fottur,
     Aktivitet.Tinderangling,
     Aktivitet.Jogging,
@@ -46,7 +49,8 @@ export function skalGåPåTur(aktiviteter: Aktivitet[]) {
     Aktivitet.Skøyteski,
     Aktivitet.Fottur,
     Aktivitet.Tinderangling,
-    Aktivitet.Klatring,
+    Aktivitet.Sportsklatring,
+    Aktivitet.Tradklatring,
   ].some((it) => aktiviteter.includes(it));
 }
 
