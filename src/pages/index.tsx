@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChangeEvent, useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import SesongValg from "../lagListe/valg/SesongValg";
 import AktiviteterValg from "../lagListe/valg/AktiviteterValg";
 import OvernattingValg from "../lagListe/valg/Overnatting";
@@ -74,10 +74,10 @@ function reducer(state: Valg, update: Partial<Valg>): Valg {
 
 export default function Index() {
   const [valg, updateValg] = useReducer(reducer, defaultValg);
-
   const [listeNavn, setListeNavn] = useState<string | undefined>("");
   const [valgtListe, setValgtListe] = useState<string>("");
-  const [endreEksisterende, setEndreEksisterende] = useState<boolean>(false);
+  const [brukEksisterendeListe, setBrukEksisterendeListe] =
+    useState<boolean>(false);
 
   const urlParams = useDecodeUrlParamsToValg();
   useEffect(() => {
@@ -85,29 +85,10 @@ export default function Index() {
     setListeNavn(urlParams.listeNavn);
   }, [urlParams.key]);
 
-  useEffect(() => {
-    if (endreEksisterende) {
-      const listeKnapp = document.getElementById("knapp_" + listeNavn);
-      if (listeKnapp) {
-        listeKnapp.click();
-        listeKnapp.focus();
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!endreEksisterende) {
-      setValgtListe("");
-    }
-  }, [endreEksisterende]);
-
-  const onNyEllerEksisterendeRadioChanged = (
-    e: ChangeEvent<HTMLInputElement>
-  ) => {
-    setEndreEksisterende(!endreEksisterende);
-
-    // Nullstill verdier
+  const onNyEllerEksisterendeRadioChanged = () => {
+    setBrukEksisterendeListe(!brukEksisterendeListe);
     setListeNavn("");
+    setValgtListe("");
     updateValg(defaultValg);
   };
 
@@ -118,7 +99,6 @@ export default function Index() {
     const valg = PakkeAppLocalStorage.getList(e.currentTarget.value)?.valg;
     if (!valg) return;
     setListeNavn(e.currentTarget.value);
-
     updateValg(valg);
   };
 
@@ -129,21 +109,21 @@ export default function Index() {
         <InputGruppe>
           <Radio
             label="Lag ny liste"
-            checked={!endreEksisterende}
+            checked={!brukEksisterendeListe}
             onChange={onNyEllerEksisterendeRadioChanged}
             name="nyEllerEksisterende"
             value="ny"
           />
           <Radio
             label="Endre gammel liste"
-            checked={endreEksisterende}
+            checked={brukEksisterendeListe}
             onChange={onNyEllerEksisterendeRadioChanged}
             name="nyEllerEksisterende"
             value="eksisterende"
           />
         </InputGruppe>
       </Valggruppe>
-      {endreEksisterende ? (
+      {brukEksisterendeListe ? (
         <Valggruppe>
           <label>Velg liste</label>
           <InputGruppe>
@@ -152,7 +132,6 @@ export default function Index() {
                 liste.listeNavn && (
                   <Button
                     key={liste.listeNavn}
-                    id={"knapp_" + liste.listeNavn}
                     value={liste.listeNavn}
                     onClick={onListeValgt}
                   >
@@ -171,7 +150,7 @@ export default function Index() {
           />
         </Valggruppe>
       )}
-      {(!endreEksisterende || valgtListe) && (
+      {(!brukEksisterendeListe || valgtListe) && (
         <>
           <SesongValg
             sesong={valg.sesong}

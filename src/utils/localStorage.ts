@@ -10,7 +10,7 @@ type LocalStorageListe = {
 };
 
 export class PakkeAppLocalStorage {
-  static getLocalStorage() {
+  private static getLocalStorage() {
     if (typeof window === "undefined") {
       return undefined;
     }
