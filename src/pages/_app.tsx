@@ -10,6 +10,11 @@ function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Pakkelister</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css?family=Exo:400,600&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <GlobalStyles />
       <Component {...pageProps} />
