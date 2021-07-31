@@ -27,23 +27,30 @@ const Style = styled.div`
   grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr auto;
   align-items: start;
+  grid-gap: 4rem;
   grid-template-areas:
-    "knapp valg koffert"
+    "header valg koffert"
     "liste liste liste"
     "knapper knapper knapper";
 
   @media (max-width: ${desktopMinWidth}) {
     grid-template-columns: auto 1fr;
     grid-template-rows: auto 1fr;
+    grid-gap: 3rem 1rem;
     grid-template-areas:
-      "knapp koffert"
+      "header koffert"
       "valg valg "
       "liste liste"
       "knapper knapper";
   }
 `;
 
+const StyledH1 = styled.h1`
+  margin-top: 0;
+`;
+
 export const KategoriListe = styled.ul`
+  margin: 0;
   > li {
     margin-right: 3em;
 
@@ -91,10 +98,7 @@ function Pakk() {
   }, [checkedItems, ekstraTing]);
 
   const tilbakeKnapp = (
-    <LinkButton
-      style={{ gridArea: "knapp" }}
-      href={"/?" + encodeValgToUrlParams(valg, listeNavn)}
-    >
+    <LinkButton href={"/?" + encodeValgToUrlParams(valg, listeNavn)}>
       Tilbake
     </LinkButton>
   );
@@ -129,7 +133,10 @@ function Pakk() {
 
   return (
     <Style>
-      {tilbakeKnapp}
+      <div style={{ gridArea: "header" }}>
+        <StyledH1>Pakker {listeNavn && `'${listeNavn}'`}</StyledH1>
+        {tilbakeKnapp}
+      </div>
       <VisValg valg={valg} />
       <Progress progress={progress} />
       <KategoriListe>

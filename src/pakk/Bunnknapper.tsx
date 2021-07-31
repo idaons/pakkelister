@@ -4,7 +4,6 @@ import * as React from "react";
 
 const Style = styled.div`
   grid-area: knapper;
-  margin-top: 2rem;
   > * {
     margin-right: 0.5rem;
   }
@@ -22,8 +21,8 @@ function Bunnknapper(props: Props) {
       <p>
         {props.lagrer
           ? "Lagrer..."
-          : `Pakklisten ${
-              props.navn ? `'${props.navn}'` : ""
+          : `${
+              props.navn ? `'${props.navn}'` : "Pakklisten"
             } er lagret på enheten din 🏔🌤️`}
       </p>
       <Button

@@ -1,2 +1,2 @@
-export const desktopMinWidth = "768px";
+export const desktopMinWidth = "1000px";
 export const smallMobileMaxWidth = "400px";

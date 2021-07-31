@@ -16,11 +16,11 @@ const Style = styled.div`
   ul {
     list-style: circle;
     margin: 0.5rem 1.5rem;
+    padding: 0;
   }
   display: flex;
   flex-wrap: wrap;
   font-weight: 600;
-  padding: 0 1rem;
 
   @media (max-width: 768px) {
     margin-top: 1rem;

@@ -5,6 +5,7 @@ const Style = styled.div<{ progress: number }>`
   --progress: ${(p) => p.progress + "%"};
   grid-area: koffert;
   position: relative;
+  font-size: clamp(0.5rem, 2.5vw, 1.25rem);
   height: 7em;
   width: 9em;
   justify-self: end;
