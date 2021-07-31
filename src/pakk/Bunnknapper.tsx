@@ -12,7 +12,7 @@ const Style = styled.div`
 
 interface Props {
   lagrer: boolean;
-  navn: string;
+  navn?: string;
   clearPakkestatus: () => void;
 }
 
@@ -23,7 +23,7 @@ function Bunnknapper(props: Props) {
         {props.lagrer
           ? "Lagrer..."
           : `Pakklisten ${
-              props.navn && `'${props.navn}'`
+              props.navn ? `'${props.navn}'` : ""
             } er lagret på enheten din 🏔🌤️`}
       </p>
       <Button

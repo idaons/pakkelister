@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import SesongValg from "../lagListe/valg/SesongValg";
 import AktiviteterValg from "../lagListe/valg/AktiviteterValg";
 import OvernattingValg from "../lagListe/valg/Overnatting";
@@ -12,14 +12,16 @@ import { Kjonn } from "../models/kjonn";
 import LengdeValg from "../lagListe/valg/LengdeValg";
 import { UnmountClosed } from "react-collapse";
 import LinkButton from "../utils/baseComponents/LinkButton";
-import { decodeUrlParams, valgToUrlParams } from "../utils/valgToUrlParams";
+import {
+  useDecodeUrlParamsToValg,
+  encodeValgToUrlParams,
+} from "../utils/encodeValgToUrlParams";
 import TextInput from "../utils/baseComponents/TextInput";
 import Button from "../utils/baseComponents/Button";
 import { getStoredListeNavn, getStoredValg } from "../utils/localStorage";
 import Radio from "../utils/baseComponents/Radio";
 import { defaultValg } from "../lagListe/valg/defaultValg";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 
 const StyledForm = styled.form`
   border: 0.2em white solid;
@@ -67,33 +69,37 @@ const Opprett = styled.div`
 `;
 
 export default function Index() {
-  const query = useRouter().query as Record<string, string>;
-  const urlValg = decodeUrlParams(query);
-  const [sesong, setSesong] = useState<Sesong>(urlValg.valg.sesong);
+  const [sesong, setSesong] = useState<Sesong>(defaultValg.sesong);
   const [aktiviteter, setAktiviteter] = useState<Aktivitet[]>(
-    urlValg.valg.aktiviteter
+    defaultValg.aktiviteter
   );
   const [overnatting, setOvernatting] = useState<Overnatting[]>(
-    urlValg.valg.overnatting
+    defaultValg.overnatting
   );
-  const [kjønn, setKjønn] = useState<Kjonn>(urlValg.valg.kjønn);
-  const [lengde, setLengde] = useState<number>(urlValg.valg.lengde);
-  const [tittel, setTittel] = useState<string>(urlValg.currentListe);
-  const [valgtListe, setValgtListe] = useState<string>("");
-  const [endreEksisterende, setEndreEksisterende] = useState<boolean>(
-    !!urlValg.currentListe
-  );
+  const [kjønn, setKjønn] = useState<Kjonn>(defaultValg.kjønn);
+  const [lengde, setLengde] = useState<number>(defaultValg.lengde);
   const [spesielleBehov, setSpesielleBehov] = useState<boolean>(
-    urlValg.valg.spesielleBehov
+    defaultValg.spesielleBehov
   );
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-  };
+  const [listeNavn, setListeNavn] = useState<string | undefined>("");
+  const [valgtListe, setValgtListe] = useState<string>("");
+  const [endreEksisterende, setEndreEksisterende] = useState<boolean>(false);
+
+  const urlParams = useDecodeUrlParamsToValg();
+  useEffect(() => {
+    setSesong(urlParams.valg.sesong);
+    setAktiviteter(urlParams.valg.aktiviteter);
+    setOvernatting(urlParams.valg.overnatting);
+    setKjønn(urlParams.valg.kjønn);
+    setLengde(urlParams.valg.lengde);
+    setSpesielleBehov(urlParams.valg.spesielleBehov);
+    setListeNavn(urlParams.listeNavn);
+  }, [urlParams.key]);
 
   useEffect(() => {
     if (endreEksisterende) {
-      const listeKnapp = document.getElementById("knapp_" + tittel);
+      const listeKnapp = document.getElementById("knapp_" + listeNavn);
       if (listeKnapp) {
         listeKnapp.click();
         listeKnapp.focus();
@@ -104,7 +110,6 @@ export default function Index() {
   useEffect(() => {
     if (!endreEksisterende) {
       setValgtListe("");
-    } else {
     }
   }, [endreEksisterende]);
 
@@ -115,7 +120,7 @@ export default function Index() {
 
     // Nullstill verdier
     const valg = defaultValg;
-    setTittel("");
+    setListeNavn("");
     setSesong(valg.sesong);
     setAktiviteter(valg.aktiviteter);
     setOvernatting(valg.overnatting);
@@ -130,7 +135,7 @@ export default function Index() {
     // oppdater verdier
     const valg = getStoredValg(e.currentTarget.value);
     if (!valg) return;
-    setTittel(e.currentTarget.value);
+    setListeNavn(e.currentTarget.value);
 
     setSesong(valg.sesong);
     setAktiviteter(valg.aktiviteter);
@@ -141,7 +146,7 @@ export default function Index() {
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
+    <StyledForm onSubmit={(e) => e.preventDefault()}>
       <StyledH1>Tid for å pakke</StyledH1>
       <Valggruppe>
         <InputGruppe>
@@ -181,8 +186,8 @@ export default function Index() {
         <Valggruppe>
           <TextInput
             label="Navn på liste"
-            onChange={(e) => setTittel(e.target.value)}
-            value={tittel}
+            onChange={(e) => setListeNavn(e.target.value)}
+            value={listeNavn}
           />
         </Valggruppe>
       )}
@@ -207,7 +212,7 @@ export default function Index() {
           />
           <Opprett>
             <LinkButton
-              href={`/pakk?${valgToUrlParams(
+              href={`/pakk?${encodeValgToUrlParams(
                 {
                   sesong,
                   aktiviteter,
@@ -216,7 +221,7 @@ export default function Index() {
                   lengde,
                   spesielleBehov,
                 },
-                tittel
+                listeNavn
               )}`}
             >
               Pakk

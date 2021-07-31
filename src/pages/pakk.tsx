@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import { getAlleTing } from "../pakk/listMakers/getAlleTing";
 import { groupArray } from "../utils/groupArray";
 import { Kategori } from "../models/kategori";
-import { decodeUrlParams, valgToUrlParams } from "../utils/valgToUrlParams";
+import {
+  useDecodeUrlParamsToValg,
+  encodeValgToUrlParams,
+} from "../utils/encodeValgToUrlParams";
 import LinkButton from "../utils/baseComponents/LinkButton";
 import VisValg from "../pakk/Valg";
 import { getStoredEkstraTing, getStoredItems } from "../utils/localStorage";
@@ -13,7 +16,6 @@ import { desktopMinWidth, smallMobileMaxWidth } from "../commonStyles";
 import Bunnknapper from "../pakk/Bunnknapper";
 import ExtraItems from "../pakk/ExtraItems";
 import KategoriMarkup from "../pakk/KategoriMarkup";
-import { useRouter } from "next/router";
 
 const Style = styled.div`
   min-height: 100vh;
@@ -57,25 +59,24 @@ export const KategoriListe = styled.ul`
 `;
 
 function Pakk() {
-  const query = useRouter().query as Record<string, string>;
-  const { valg, currentListe, feilmelding } = decodeUrlParams(query);
+  const { valg, listeNavn, feilmelding } = useDecodeUrlParamsToValg();
   const [checkedItems, setCheckedItems] = useState<string[]>(
-    getStoredItems(currentListe)
+    getStoredItems(listeNavn)
   );
   const [lagrerListe, setLagrerListe] = useState(false);
   const [ekstraTing, setEkstraTing] = useState<string[]>(
-    getStoredEkstraTing(currentListe)
+    getStoredEkstraTing(listeNavn)
   );
 
   useEffect(() => {
     setLagrerListe(true);
-    window.localStorage.setItem(currentListe + "_valg", JSON.stringify(valg));
+    window.localStorage.setItem(listeNavn + "_valg", JSON.stringify(valg));
     window.localStorage.setItem(
-      currentListe + "_checkedItems",
+      listeNavn + "_checkedItems",
       JSON.stringify(checkedItems)
     );
     window.localStorage.setItem(
-      currentListe + "_ekstraItems",
+      listeNavn + "_ekstraItems",
       JSON.stringify(ekstraTing)
     );
     const timer = setTimeout(() => {
@@ -91,7 +92,7 @@ function Pakk() {
   const tilbakeKnapp = (
     <LinkButton
       style={{ gridArea: "knapp" }}
-      href={"/?" + valgToUrlParams(valg, currentListe)}
+      href={"/?" + encodeValgToUrlParams(valg, listeNavn)}
     >
       Tilbake
     </LinkButton>
@@ -153,7 +154,7 @@ function Pakk() {
       </KategoriListe>
       <Bunnknapper
         lagrer={lagrerListe}
-        navn={currentListe}
+        navn={listeNavn}
         clearPakkestatus={() => setCheckedItems([])}
       />
     </Style>

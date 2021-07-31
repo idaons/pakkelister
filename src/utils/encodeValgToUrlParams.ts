@@ -4,41 +4,38 @@ import { Kjonn } from "../models/kjonn";
 import { Overnatting } from "../models/overnatting";
 import { Sesong } from "../models/sesong";
 import { defaultValg } from "../lagListe/valg/defaultValg";
+import { useRouter } from "next/router";
 
-export function valgToUrlParams(valg: Valg, liste: String) {
-  const aktiviteter =
-    "aktiviteter=" +
-    valg.aktiviteter.map((aktivitet) => `${Aktivitet[aktivitet]}`).join(",");
-  const lengde = "lengde=" + valg.lengde;
-  const kjønn = "kjønn=" + Kjonn[valg.kjønn];
-  const overnatting =
-    "overnatting=" +
-    valg.overnatting
+export function encodeValgToUrlParams(valg: Valg, liste?: string) {
+  const params = {
+    aktiviteter: valg.aktiviteter
+      .map((aktivitet) => `${Aktivitet[aktivitet]}`)
+      .join(","),
+    lengde: valg.lengde,
+    kjønn: Kjonn[valg.kjønn],
+    overnatting: valg.overnatting
       .map((overnatting) => `${Overnatting[overnatting]}`)
-      .join(",");
-  const sesong = "sesong=" + Sesong[valg.sesong];
-  const spesiell = "spesiell=" + valg.spesielleBehov;
-  const currentListe = "liste=" + liste;
+      .join(","),
+    sesong: Sesong[valg.sesong],
+    spesiell: valg.spesielleBehov,
+    listeNavn: liste || "",
+  };
 
-  return [
-    aktiviteter,
-    lengde,
-    kjønn,
-    overnatting,
-    sesong,
-    spesiell,
-    currentListe,
-  ].join("&");
+  return Object.entries(params)
+    .map((param) => `${param[0]}=${param[1]}`)
+    .join("&");
 }
 
 interface Returns {
   valg: Valg;
   error?: Error;
   feilmelding?: string;
-  currentListe: string;
+  listeNavn: string;
+  key: string;
 }
 
-export function decodeUrlParams(params: Record<string, string>): Returns {
+export function useDecodeUrlParamsToValg(): Returns {
+  const params = useRouter().query as Record<string, string>;
   try {
     const valg: Valg = {
       aktiviteter:
@@ -68,7 +65,7 @@ export function decodeUrlParams(params: Record<string, string>): Returns {
         ? `Manglende parametere: ${manglendeParametere}`
         : undefined;
 
-    const liste = params.liste;
+    const liste = params.listeNavn;
 
     return {
       feilmelding: feilmelding,
@@ -80,14 +77,16 @@ export function decodeUrlParams(params: Record<string, string>): Returns {
         sesong: valg.sesong ?? defaultValg.sesong,
         spesielleBehov: valg.spesielleBehov ?? defaultValg.spesielleBehov,
       },
-      currentListe: liste,
+      listeNavn: liste,
+      key: JSON.stringify(params),
     };
   } catch (e) {
     return {
       error: e,
       feilmelding: "Det skjedde en feil under parsing av params",
       valg: defaultValg,
-      currentListe: "",
+      listeNavn: "",
+      key: "error",
     };
   }
 }
