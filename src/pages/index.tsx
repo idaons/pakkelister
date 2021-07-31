@@ -18,10 +18,10 @@ import {
 } from "../utils/encodeValgToUrlParams";
 import TextInput from "../utils/baseComponents/TextInput";
 import Button from "../utils/baseComponents/Button";
-import { getStoredListeNavn, getStoredValg } from "../utils/localStorage";
 import Radio from "../utils/baseComponents/Radio";
 import { defaultValg } from "../lagListe/valg/defaultValg";
 import styled from "styled-components";
+import { PakkeAppLocalStorage } from "../utils/localStorage";
 
 const StyledForm = styled.form`
   border: 0.2em white solid;
@@ -133,7 +133,7 @@ export default function Index() {
     setValgtListe(e.currentTarget.value);
 
     // oppdater verdier
-    const valg = getStoredValg(e.currentTarget.value);
+    const valg = PakkeAppLocalStorage.getList(e.currentTarget.value)?.valg;
     if (!valg) return;
     setListeNavn(e.currentTarget.value);
 
@@ -170,14 +170,14 @@ export default function Index() {
         <Valggruppe>
           <label>Velg liste</label>
           <InputGruppe>
-            {getStoredListeNavn().map((liste) => (
+            {PakkeAppLocalStorage.getLists().map((liste) => (
               <Button
-                key={liste}
-                id={"knapp_" + liste}
-                value={liste}
+                key={liste.listeNavn}
+                id={"knapp_" + liste.listeNavn}
+                value={liste.listeNavn}
                 onClick={onListeValgt}
               >
-                {liste}
+                {liste.listeNavn || "Liste"}
               </Button>
             ))}
           </InputGruppe>

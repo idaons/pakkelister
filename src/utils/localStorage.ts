@@ -1,44 +1,36 @@
 import { Valg } from "../models/valg";
 
-export function getStoredItems(listeNavn?: string): string[] {
-  if (typeof window === "undefined") return [];
-  const key = listeNavn + "_checkedItems";
-  const items = window.localStorage.getItem(key);
-  return items ? JSON.parse(items) : [];
-}
+const localStorageKey = "pakkelister";
 
-export function getStoredValg(listeNavn: string) {
-  if (typeof window === "undefined") return;
-  const key = listeNavn + "_valg";
-  const items = window.localStorage.getItem(key);
+type LocalStorageListe = {
+  valg: Valg;
+  listeNavn?: string;
+  checked: string[];
+  ekstraItems: string[];
+};
 
-  if (!items) return;
-  const valg = JSON.parse(items);
-  return valg as Valg;
-}
-export function getStoredEkstraTing(listeNavn?: string): string[] {
-  if (typeof window === "undefined") return [];
-  const key = listeNavn + "_ekstraItems";
-  const items = window.localStorage.getItem(key);
-
-  if (!items) return [];
-  const ekstra = JSON.parse(items);
-  return ekstra;
-}
-
-export function getStoredListeNavn(): string[] {
-  if (typeof window === "undefined") return [];
-  const items = window.localStorage;
-  let keys: string[] = [];
-  for (let i = 0; i < items.length; i++) {
-    if (items.key(i)?.includes("_")) {
-      const listeNavn = items.key(i)?.split("_")[0];
-      if (listeNavn) {
-        keys.push(listeNavn);
-      }
+export class PakkeAppLocalStorage {
+  static getLocalStorage() {
+    if (typeof window === "undefined") {
+      return undefined;
     }
+    return window.localStorage;
   }
 
-  // Return unique values
-  return keys.filter((a, b) => keys.indexOf(a) === b);
+  static getLists(): LocalStorageListe[] {
+    const lists = this.getLocalStorage()?.getItem(localStorageKey);
+    return lists ? JSON.parse(lists) : [];
+  }
+
+  static getList(navn?: string): LocalStorageListe | undefined {
+    return this.getLists().find((liste) => liste.listeNavn === navn);
+  }
+
+  static saveList(liste: LocalStorageListe) {
+    const lists = this.getLists().filter(
+      (list) => list.listeNavn !== liste.listeNavn
+    );
+    const nyeLister = [...lists, liste];
+    this.getLocalStorage()?.setItem(localStorageKey, JSON.stringify(nyeLister));
+  }
 }

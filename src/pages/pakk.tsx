@@ -9,7 +9,7 @@ import {
 } from "../utils/encodeValgToUrlParams";
 import LinkButton from "../utils/baseComponents/LinkButton";
 import VisValg from "../pakk/Valg";
-import { getStoredEkstraTing, getStoredItems } from "../utils/localStorage";
+import { PakkeAppLocalStorage } from "../utils/localStorage";
 import styled from "styled-components";
 import Progress from "../pakk/Progress";
 import { desktopMinWidth, smallMobileMaxWidth } from "../commonStyles";
@@ -60,25 +60,26 @@ export const KategoriListe = styled.ul`
 
 function Pakk() {
   const { valg, listeNavn, feilmelding } = useDecodeUrlParamsToValg();
-  const [checkedItems, setCheckedItems] = useState<string[]>(
-    getStoredItems(listeNavn)
-  );
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [lagrerListe, setLagrerListe] = useState(false);
-  const [ekstraTing, setEkstraTing] = useState<string[]>(
-    getStoredEkstraTing(listeNavn)
-  );
+  const [ekstraTing, setEkstraTing] = useState<string[]>([]);
+  const urlParams = useDecodeUrlParamsToValg();
+
+  const listFromLocalStorage = PakkeAppLocalStorage.getList(listeNavn);
+  useEffect(() => {
+    if (!listFromLocalStorage) return;
+    setCheckedItems(listFromLocalStorage.checked);
+    setEkstraTing(listFromLocalStorage.ekstraItems);
+  }, [urlParams.key]);
 
   useEffect(() => {
     setLagrerListe(true);
-    window.localStorage.setItem(listeNavn + "_valg", JSON.stringify(valg));
-    window.localStorage.setItem(
-      listeNavn + "_checkedItems",
-      JSON.stringify(checkedItems)
-    );
-    window.localStorage.setItem(
-      listeNavn + "_ekstraItems",
-      JSON.stringify(ekstraTing)
-    );
+    PakkeAppLocalStorage.saveList({
+      listeNavn,
+      checked: checkedItems,
+      ekstraItems: ekstraTing,
+      valg,
+    });
     const timer = setTimeout(() => {
       document.getElementById("lagreknapp")?.blur();
       setLagrerListe(false);
