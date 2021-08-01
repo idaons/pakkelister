@@ -46,7 +46,7 @@ export function getKlaer(valg: Valg): Item[] {
       ...klær,
       Shorts: 1,
       Bukse: 1,
-      Tskjorte: 2,
+      ["T-skjorte"]: 2,
       Badetøy: 1,
       Caps: 1,
     };
@@ -54,11 +54,11 @@ export function getKlaer(valg: Valg): Item[] {
     if (valg.kjønn !== Kjonn.Mann) {
       klær = {
         ...klær,
-        sportsBH: 1,
+        ["Sports-BH"]: 1,
         singlet: 1,
       };
     }
-    if (valg.sesong === Sesong.FjellSommer) {
+    if (valg.sesong === Sesong.Sommer) {
       klær = {
         ...klær,
         Fleece: 1,
@@ -101,15 +101,15 @@ export function getKlaer(valg: Valg): Item[] {
     if (skalVæreInneBlantFolk) {
       klær = {
         ...klær,
-        Innesokker: Math.ceil(valg.lengde / 3),
+        Innesokker: Math.ceil(valg.lengde / 4),
         Innebukse: 1,
-        ["Inne-T-skjorter"]: Math.ceil(valg.lengde / 3),
+        ["T-skjorte for innebruk"]: Math.ceil(valg.lengde / 4),
       };
 
       if (valg.kjønn !== Kjonn.Mann) {
         klær = {
           ...klær,
-          ["Inne-BH"]: 1,
+          ["BH"]: 1,
         };
       }
     }

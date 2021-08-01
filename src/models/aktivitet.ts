@@ -17,11 +17,24 @@ export enum Aktivitet {
   Kajakk,
 }
 
+export function getAktivitetLabel(aktivitet: Aktivitet) {
+  let label = "";
+
+  switch (aktivitet) {
+    case Aktivitet.ViaFerrata:
+      label = "Via Ferrata";
+      break;
+    default:
+      label = Aktivitet[aktivitet];
+  }
+  return label;
+}
+
 export function getAktivitetAsArray(): Aktivitet[] {
   return getEnumAsArray(Aktivitet);
 }
 
-export function erSommerAktivitet(aktivitet: Aktivitet) {
+export function skalGjoreSommerAktivitet(aktiviteter: Aktivitet[]) {
   return [
     Aktivitet.Sportsklatring,
     Aktivitet.Tradklatring,
@@ -29,7 +42,8 @@ export function erSommerAktivitet(aktivitet: Aktivitet) {
     Aktivitet.Tinderangling,
     Aktivitet.Jogging,
     Aktivitet.Kajakk,
-  ].includes(aktivitet);
+    Aktivitet.ViaFerrata,
+  ].some((it) => aktiviteter.includes(it));
 }
 
 export function erVinterAktivitet(aktivitet: Aktivitet) {
@@ -41,6 +55,7 @@ export function erVinterAktivitet(aktivitet: Aktivitet) {
   ].includes(aktivitet);
 }
 
+// Todo: spesifisere denne mer
 export function skalGåPåTur(aktiviteter: Aktivitet[]) {
   return [
     Aktivitet.Randonée,
@@ -51,9 +66,19 @@ export function skalGåPåTur(aktiviteter: Aktivitet[]) {
     Aktivitet.Tinderangling,
     Aktivitet.Sportsklatring,
     Aktivitet.Tradklatring,
+    Aktivitet.ViaFerrata,
+    Aktivitet.Isbre,
   ].some((it) => aktiviteter.includes(it));
 }
 
-export function erAnnenAktivitet(aktivitet: Aktivitet) {
-  return [Aktivitet.Bytur].includes(aktivitet);
+export function skalBæreTungSekk(aktiviteter: Aktivitet[]) {
+  return [
+    Aktivitet.Fottur,
+    Aktivitet.Tinderangling,
+    Aktivitet.Randonée,
+    Aktivitet.Fjellski,
+    Aktivitet.Sportsklatring,
+    Aktivitet.Tradklatring,
+    Aktivitet.ViaFerrata,
+  ].some((it) => aktiviteter.includes(it));
 }

@@ -1,7 +1,11 @@
 import ValgStyle from "./ValgStyle";
 import * as React from "react";
 import Checkbox from "../../utils/baseComponents/Checkbox";
-import { Aktivitet, getAktivitetAsArray } from "../../models/aktivitet";
+import {
+  Aktivitet,
+  getAktivitetAsArray,
+  getAktivitetLabel,
+} from "../../models/aktivitet";
 
 interface Props {
   valgteAktiviteter: Aktivitet[];
@@ -24,7 +28,7 @@ function AktiviteterValg(props: Props) {
         return (
           <Checkbox
             key={aktivitet}
-            label={Aktivitet[aktivitet]}
+            label={getAktivitetLabel(aktivitet)}
             value={aktivitet}
             checked={props.valgteAktiviteter.includes(aktivitet)}
             onChange={handleChange}

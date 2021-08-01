@@ -38,12 +38,16 @@ export function getToalettSaker(valg: Valg): Item[] {
     toalettSaker.push("Barberhøvel");
   }
 
-  if (valg.sesong === Sesong.FjellSommer) toalettSaker.push("Myggmiddel");
+  if (valg.sesong === Sesong.Sommer) {
+    toalettSaker.push("Myggmiddel");
+  }
 
   if (valg.spesielleBehov) {
-    toalettSaker.push("Sovekit");
-
-    if (valg.sesong === Sesong.Vinter) toalettSaker.push("Kuldekrem");
+    if (valg.sesong === Sesong.Sommer) {
+      toalettSaker.push("Sovekit");
+    } else {
+      toalettSaker.push("Kuldekrem");
+    }
   }
 
   return stringArrayToItems(toalettSaker, Kategori.Toalettsaker);
