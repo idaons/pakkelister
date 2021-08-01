@@ -37,6 +37,11 @@ export function overnattingUte(valg: Valg): boolean {
   );
 }
 
+export function overnatteUkjentSted(overnatting: Overnatting[]) {
+  return [Overnatting.Hengekøye, Overnatting.Telt, Overnatting.DNThytte].some(
+    (o) => overnatting.includes(o)
+  );
+}
 export function overnattingBareHus(valg: Valg): boolean {
   return (
     valg.overnatting.length === 1 &&

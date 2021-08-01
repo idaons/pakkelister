@@ -1,23 +1,30 @@
 import { Kategori } from "../../models/kategori";
-import { Aktivitet, skalGåPåTur } from "../../models/aktivitet";
+import {
+  Aktivitet,
+  skalBæreTungSekk,
+  skalGåPåTur,
+} from "../../models/aktivitet";
 import { Valg } from "../../models/valg";
 import { Item } from "../../models/liste";
 import { stringArrayToItems } from "./utils";
 import { Sesong } from "../../models/sesong";
-import { Overnatting } from "../../models/overnatting";
+import { overnatteUkjentSted, Overnatting } from "../../models/overnatting";
 
 export function getSpesielleTing(valg: Valg): Item[] {
   let ting: string[] = [];
 
+  if (skalBæreTungSekk(valg.aktiviteter)) {
+    ting.push("Hoftegnagsårbeskytter");
+  }
+
+  if (overnatteUkjentSted(valg.overnatting) && valg.sesong === Sesong.Vinter) {
+    ting.push("Termos");
+  }
+
   if (skalGåPåTur(valg.aktiviteter)) {
-    ting.push("Treningsklokke");
-    if (valg.spesielleBehov) {
-      ting.push("Hoftegnagsårbeskytter");
-    }
     if (valg.sesong === Sesong.Vinter) {
-      ting.push("Termos");
       ting.push("Varmeposer");
-    } else if (valg.sesong === Sesong.FjellSommer) {
+    } else if (valg.sesong === Sesong.Sommer) {
       ting.push("Sitteunderlag");
     }
   }

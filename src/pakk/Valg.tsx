@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Valg } from "../models/valg";
-import { getSesongLabel } from "../models/sesong";
+import { Sesong } from "../models/sesong";
 import { getKjønnLabel } from "../models/kjonn";
 import { overnatting } from "./listMakers/utils";
 import { Aktivitet } from "../models/aktivitet";
@@ -35,7 +35,7 @@ function VisValg(props: Props) {
   return (
     <Style>
       <ul>
-        <li>{getSesongLabel(props.valg.sesong)}</li>
+        <li>{Sesong[props.valg.sesong]}</li>
         <li>{getKjønnLabel(props.valg.kjønn)}</li>
         {overnatting(props.valg) && <li>{props.valg.lengde} dager</li>}
       </ul>
