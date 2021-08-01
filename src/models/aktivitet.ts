@@ -42,7 +42,6 @@ export function skalGjoreSommerAktivitet(aktiviteter: Aktivitet[]) {
     Aktivitet.Tinderangling,
     Aktivitet.Jogging,
     Aktivitet.Kajakk,
-    Aktivitet.Fottur,
     Aktivitet.ViaFerrata,
   ].some((it) => aktiviteter.includes(it));
 }
