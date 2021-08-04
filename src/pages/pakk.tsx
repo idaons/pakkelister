@@ -16,6 +16,7 @@ import { desktopMinWidth, smallMobileMaxWidth } from "../commonStyles";
 import Bunnknapper from "../pakk/Bunnknapper";
 import ExtraItems from "../pakk/ExtraItems";
 import KategoriMarkup from "../pakk/KategoriMarkup";
+import UgyldigLocalStorage from "../pakk/UgyldigLocalStorage";
 
 const Style = styled.div`
   min-height: 100vh;
@@ -30,6 +31,7 @@ const Style = styled.div`
   grid-gap: 4rem;
   grid-template-areas:
     "header valg koffert"
+    "warning warning warning"
     "liste liste liste"
     "knapper knapper knapper";
 
@@ -39,6 +41,7 @@ const Style = styled.div`
     grid-gap: 3rem 1rem;
     grid-template-areas:
       "header koffert"
+      "warning warning"
       "valg valg "
       "liste liste"
       "knapper knapper";
@@ -47,6 +50,7 @@ const Style = styled.div`
 
 const StyledH1 = styled.h1`
   margin-top: 0;
+  margin-bottom: 1.5rem;
 `;
 
 export const KategoriListe = styled.ul`
@@ -65,16 +69,58 @@ export const KategoriListe = styled.ul`
   padding-left: 0;
 `;
 
+interface VerifyLocalStorage {
+  gyldigeElementer: string[];
+  ugyldigeElementer: string[];
+}
+
 function Pakk() {
   const { valg, listeNavn, feilmelding } = useDecodeUrlParamsToValg();
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [lagrerListe, setLagrerListe] = useState(false);
   const [ekstraTing, setEkstraTing] = useState<string[]>([]);
   const urlParams = useDecodeUrlParamsToValg();
-
+  const alleElementer = getAlleTing(valg);
   const listFromLocalStorage = PakkeAppLocalStorage.getList(listeNavn);
+  const [verifyLocalStorage, setVerifyLocalStorage] =
+    useState<VerifyLocalStorage>({
+      gyldigeElementer: [],
+      ugyldigeElementer: [],
+    });
+
   useEffect(() => {
     if (!listFromLocalStorage) return;
+
+    // Sjekk om det finnes noe i localStorage som ikke lenger er i pakkelista
+    const alleNavn = alleElementer.map((element) => element.navn);
+    let ugyldigElementFunnet = false;
+
+    // Split liste fra localstorage i gylde elementer og ugyldige elementer
+    function splitArray(array, isValid) {
+      return array.reduce(
+        ([pass, fail], elem) => {
+          if (isValid(elem)) {
+            return [[...pass, elem], fail];
+          } else {
+            ugyldigElementFunnet = true;
+            return [pass, [...fail, elem]];
+          }
+        },
+        [[], []]
+      );
+    }
+
+    const [pass, fail] = splitArray(listFromLocalStorage.checked, (e) =>
+      alleNavn.includes(e)
+    );
+
+    if (ugyldigElementFunnet) {
+      setVerifyLocalStorage({
+        gyldigeElementer: pass,
+        ugyldigeElementer: fail,
+      });
+    }
+
     setCheckedItems(listFromLocalStorage.checked);
     setEkstraTing(listFromLocalStorage.ekstraItems);
   }, [urlParams.key]);
@@ -121,7 +167,6 @@ function Pakk() {
     }
   };
 
-  const alleElementer = getAlleTing(valg);
   const elementeriKategorier = groupArray(
     alleElementer,
     (it) => Kategori[it.kategori]
@@ -131,6 +176,15 @@ function Pakk() {
     (checkedItems.length * 100) / (alleElementer.length + ekstraTing.length)
   );
 
+  const handleUgyldigLocalStorage = (skalFjernes: boolean) => {
+    if (skalFjernes && verifyLocalStorage.gyldigeElementer) {
+      setCheckedItems(verifyLocalStorage.gyldigeElementer);
+    }
+    setVerifyLocalStorage({
+      gyldigeElementer: [],
+      ugyldigeElementer: [],
+    });
+  };
   return (
     <Style>
       <div style={{ gridArea: "header" }}>
@@ -139,6 +193,12 @@ function Pakk() {
       </div>
       <VisValg valg={valg} />
       <Progress progress={progress} />
+      {verifyLocalStorage.ugyldigeElementer.length > 0 && (
+        <UgyldigLocalStorage
+          ugyldigeElementer={verifyLocalStorage.ugyldigeElementer}
+          handleUgyldigLocalStorage={handleUgyldigLocalStorage}
+        />
+      )}
       <KategoriListe>
         {elementeriKategorier.map((kategori) => (
           <li key={kategori.category}>

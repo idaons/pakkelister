@@ -28,7 +28,7 @@ export class PakkeAppLocalStorage {
 
   static saveList(liste: LocalStorageListe) {
     const lists = this.getLists().filter(
-      (list) => list.listeNavn !== liste.listeNavn
+      (listFraLs) => listFraLs.listeNavn !== liste.listeNavn
     );
     const nyeLister = [...lists, liste];
     this.getLocalStorage()?.setItem(localStorageKey, JSON.stringify(nyeLister));
