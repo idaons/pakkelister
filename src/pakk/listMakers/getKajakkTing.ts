@@ -20,5 +20,5 @@ export function getKajakkTing(valg: Valg): Item[] {
     "Spruttrekk",
   ];
 
-  return stringArrayToItems(kajakkTing, Kategori.TekniskUtstyr);
+  return stringArrayToItems(kajakkTing, Kategori.Kajakk);
 }

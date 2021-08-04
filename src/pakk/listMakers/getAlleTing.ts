@@ -12,6 +12,7 @@ import { getKlatreutstyr } from "./getKlatreutstyr";
 import { getFjellturTing } from "./getFjellturTing";
 import { getSpesielleTing } from "./getSpesielleTing";
 import { getKajakkTing } from "../../pakk/listMakers/getKajakkTing";
+import { getSykkelTing } from "./getSykkelTing";
 
 export const alleLister: ItemsGetter[] = [
   getToalettSaker,
@@ -25,6 +26,7 @@ export const alleLister: ItemsGetter[] = [
   getFjellturTing,
   getSpesielleTing,
   getKajakkTing,
+  getSykkelTing,
 ];
 
 const sortAlphabetically = (item1: Item, item2: Item) =>

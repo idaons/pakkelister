@@ -89,6 +89,12 @@ export function getKlaer(valg: Valg): Item[] {
       Joggesko: 1,
     };
   }
+  if (valg.aktiviteter.includes(Aktivitet.Sykkel)) {
+    klær = {
+      ...klær,
+      Sykkelshort: 1,
+    };
+  }
 
   if (overnatting(valg)) {
     klær = {

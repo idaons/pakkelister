@@ -40,10 +40,6 @@ export function getDivTing(valg: Valg): Item[] {
     }
   }
 
-  if (valg.aktiviteter.includes(Aktivitet.Fotografi)) {
-    ting.push("Kamera");
-  }
-
   if (valg.aktiviteter.includes(Aktivitet.Bytur)) {
     ting.push("Paraply");
 
@@ -52,7 +48,9 @@ export function getDivTing(valg: Valg): Item[] {
 
   if (
     valg.aktiviteter.includes(Aktivitet.Skøyteski) ||
-    valg.aktiviteter.includes(Aktivitet.Langrenn)
+    valg.aktiviteter.includes(Aktivitet.Langrenn) ||
+    valg.aktiviteter.includes(Aktivitet.Jogging) ||
+    valg.aktiviteter.includes(Aktivitet.Sykkel)
   ) {
     ting.push("Treningssekk");
   }
@@ -61,5 +59,10 @@ export function getDivTing(valg: Valg): Item[] {
     ting.push("Biotex");
   }
 
+  if (valg.aktiviteter.includes(Aktivitet.Bortekontor)) {
+    ting.push("PC og ladekabel");
+    ting.push("Mus og usb-dings");
+    ting.push("Hodetelefoner");
+  }
   return stringArrayToItems(ting, Kategori.Div);
 }

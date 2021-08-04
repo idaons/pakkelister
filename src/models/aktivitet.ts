@@ -13,8 +13,9 @@ export enum Aktivitet {
   Langrenn,
   Skøyteski,
   Bytur,
-  Fotografi,
   Kajakk,
+  Sykkel,
+  Bortekontor,
 }
 
 export function getAktivitetLabel(aktivitet: Aktivitet) {

@@ -6,4 +6,6 @@ export enum Kategori {
   Div,
   Overnatting,
   Ski,
+  Sykkel,
+  Kajakk,
 }
