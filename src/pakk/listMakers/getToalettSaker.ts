@@ -30,11 +30,14 @@ export function getToalettSaker(valg: Valg): Item[] {
   );
 
   if (valg.kjønn === Kjonn.Kvinne) {
-    toalettSaker.push("Hårstrikk");
     toalettSaker.push("Diverse jenteting");
   }
 
-  if (valg.kjønn === Kjonn.Mann && erLangtur(valg)) {
+  if (valg.kjønn !== Kjonn.Mann) {
+    toalettSaker.push("Hårstrikk");
+  }
+
+  if (valg.kjønn !== Kjonn.Kvinne && erLangtur(valg)) {
     toalettSaker.push("Barberhøvel");
   }
 

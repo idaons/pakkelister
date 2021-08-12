@@ -3,14 +3,14 @@ import { getEnumAsArray } from "../utils/enum";
 export enum Kjonn {
   Mann,
   Kvinne,
-  VilIkkeOppgi,
+  Irrelevant,
 }
 
 export function getKjønnLabel(k: Kjonn) {
   let label = "";
   switch (k) {
-    case Kjonn.VilIkkeOppgi:
-      label = "Vil ikke oppgi";
+    case Kjonn.Irrelevant:
+      label = "Annet / irrelevant";
       break;
     default:
       label = Kjonn[k];
