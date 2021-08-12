@@ -4,7 +4,7 @@ import Button from "../utils/baseComponents/Button";
 import Soppelkasse from "../ikoner/Soppelkasse";
 import * as React from "react";
 import { smallMobileMaxWidth } from "../commonStyles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TingListe } from "./KategoriMarkup";
 import TextInput from "../utils/baseComponents/TextInput";
 
@@ -53,10 +53,22 @@ interface Props {
 
 function ExtraItems(props: Props) {
   const [currentEkstraVerdi, setCurrentEkstraVerdi] = useState<string>("");
+  const [allChecked, setAllChecked] = useState(false);
+
+  useEffect(() => {
+    if (props.ekstraTing.length > 0) {
+      const allItemsAreChecked = props.ekstraTing.every((it) =>
+        props.checkedItems.includes(it)
+      );
+      setAllChecked(allItemsAreChecked);
+    }
+  }, [props.ekstraTing, props.checkedItems]);
 
   const removeEkstraItem = (value: string) => {
-    const tmp = props.ekstraTing.filter((item) => item !== value);
-    props.setEkstraTing(tmp);
+    const nyEkstraItems = props.ekstraTing.filter((item) => item !== value);
+    const nyeCheckedItems = props.checkedItems.filter((item) => item !== value);
+    props.setEkstraTing(nyEkstraItems);
+    props.setCheckedItems(nyeCheckedItems);
   };
 
   const leggTilEkstra = () => {
@@ -67,17 +79,15 @@ function ExtraItems(props: Props) {
     setCurrentEkstraVerdi("");
   };
 
-  const onEkstraChecked = () => {
-    const allChecked = props.ekstraTing.every((it) =>
-      props.checkedItems.includes(it)
-    );
-    const filteredCheckedItems = props.checkedItems.filter(
+  const onAllExtrasChecked = (e) => {
+    setAllChecked(e.target.checked);
+    const otherCheckedItems = props.checkedItems.filter(
       (it) => !props.ekstraTing?.includes(it)
     );
-    if (allChecked) {
-      props.setCheckedItems(filteredCheckedItems);
+    if (e.target.checked) {
+      props.setCheckedItems([...otherCheckedItems, ...props.ekstraTing]);
     } else {
-      props.setCheckedItems([...filteredCheckedItems, ...props.ekstraTing]);
+      props.setCheckedItems(otherCheckedItems);
     }
   };
 
@@ -87,10 +97,8 @@ function ExtraItems(props: Props) {
         header={true}
         strikeThrough
         label="Ekstra"
-        checked={props.ekstraTing.every((it) =>
-          props.checkedItems.includes(it)
-        )}
-        onChange={onEkstraChecked}
+        checked={allChecked}
+        onChange={onAllExtrasChecked}
       />
       <TingListe>
         <EkstravalgWrapper>

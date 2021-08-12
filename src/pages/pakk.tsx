@@ -74,6 +74,20 @@ interface VerifyLocalStorage {
   ugyldigeElementer: string[];
 }
 
+// Split liste fra localstorage i gylde elementer og ugyldige elementer
+function splitArray(array, isValid) {
+  return array.reduce(
+    ([pass, fail], elem) => {
+      if (isValid(elem)) {
+        return [[...pass, elem], fail];
+      } else {
+        return [pass, [...fail, elem]];
+      }
+    },
+    [[], []]
+  );
+}
+
 function Pakk() {
   const { valg, listeNavn, feilmelding } = useDecodeUrlParamsToValg();
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
@@ -92,29 +106,16 @@ function Pakk() {
     if (!listFromLocalStorage) return;
 
     // Sjekk om det finnes noe i localStorage som ikke lenger er i pakkelista
-    const alleNavn = alleElementer.map((element) => element.navn);
-    let ugyldigElementFunnet = false;
+    const alleNavn = alleElementer
+      .map((element) => element.navn)
+      .concat(listFromLocalStorage.ekstraItems);
 
-    // Split liste fra localstorage i gylde elementer og ugyldige elementer
-    function splitArray(array, isValid) {
-      return array.reduce(
-        ([pass, fail], elem) => {
-          if (isValid(elem)) {
-            return [[...pass, elem], fail];
-          } else {
-            ugyldigElementFunnet = true;
-            return [pass, [...fail, elem]];
-          }
-        },
-        [[], []]
-      );
-    }
-
-    const [pass, fail] = splitArray(listFromLocalStorage.checked, (e) =>
-      alleNavn.includes(e)
+    const [pass, fail] = splitArray(
+      listFromLocalStorage.checked.concat(),
+      (e) => alleNavn.includes(e)
     );
 
-    if (ugyldigElementFunnet) {
+    if (fail.length > 0) {
       setVerifyLocalStorage({
         gyldigeElementer: pass,
         ugyldigeElementer: fail,
@@ -133,6 +134,7 @@ function Pakk() {
       ekstraItems: ekstraTing,
       valg,
     });
+
     const timer = setTimeout(() => {
       document.getElementById("lagreknapp")?.blur();
       setLagrerListe(false);
