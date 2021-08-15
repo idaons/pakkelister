@@ -175,10 +175,8 @@ export default function Index() {
             setKjønn={(kjønn) => updateValg({ kjønn })}
           />
           <CustomValg
-            spesielleBehov={valg.spesielleBehov}
-            setSpesielleBehov={(spesielleBehov) =>
-              updateValg({ spesielleBehov })
-            }
+            idaBehov={valg.idaBehov}
+            setIdaBehov={(idaBehov) => updateValg({ idaBehov })}
           />
           <Opprett>
             <LinkButton

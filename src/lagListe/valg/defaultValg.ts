@@ -12,5 +12,5 @@ export const defaultValg: Valg = {
   kjønn: Kjonn.Irrelevant,
   lengde: 3,
   aktiviteter: [],
-  spesielleBehov: false,
+  idaBehov: false,
 };

@@ -14,22 +14,26 @@ export function getKlaer(valg: Valg): Item[] {
     valg.overnatting.includes(Overnatting.HusHotell) ||
     valg.overnatting.includes(Overnatting.FamilieHytte);
 
+  klær = {
+    ...klær,
+    Fleece: 1,
+    Vindjakke: 1,
+    Vindbukse: 1,
+    Dunjakke: 1,
+    Hansker: 1,
+    Hals: 2,
+  };
+
   if (valg.sesong === Sesong.Vinter) {
     klær = {
       ...klær,
-      Vindjakke: 1,
-      Vindbukse: 1,
       Ulltrøye: 2,
-      Stilong: 1,
-      Fleece: 1,
-      Ullsokker: 3,
-      Dunjakke: 1,
-      Lue: 2,
-      Hansker: 1,
       Votter: 1,
       Vindvotter: 1,
-      Hals: 2,
       Brynje: 1,
+      Ullsokker: 3,
+      Lue: 2,
+      Stilongs: 1,
     };
 
     if (valg.kjønn !== Kjonn.Mann) {
@@ -41,36 +45,25 @@ export function getKlaer(valg: Valg): Item[] {
     }
   }
 
-  if (valg.sesong !== Sesong.Vinter) {
+  if (valg.sesong === Sesong.Sommer) {
     klær = {
       ...klær,
+      Ulltrøye: 1,
       Shorts: 1,
       Bukse: 1,
+      Sportssokker: 2,
+      Ullsokker: 1,
       ["T-skjorte"]: 2,
       Badetøy: 1,
       Caps: 1,
+      Lue: 1,
     };
 
     if (valg.kjønn !== Kjonn.Mann) {
       klær = {
         ...klær,
         ["Sports-BH"]: 1,
-        singlet: 1,
-      };
-    }
-    if (valg.sesong === Sesong.Sommer) {
-      klær = {
-        ...klær,
-        Fleece: 1,
-        Ulltrøye: 1,
-        Vindjakke: 1,
-        Vindbukse: 1,
-        Ullsokker: 3,
-        Dunjakke: 1,
-        Lue: 2,
-        Hansker: 1,
-        Hals: 2,
-        Stilongs: 1,
+        Singlet: 1,
       };
     }
   }
@@ -103,7 +96,7 @@ export function getKlaer(valg: Valg): Item[] {
     };
   }
 
-  if (valg.spesielleBehov) {
+  if (valg.idaBehov) {
     if (skalVæreInneBlantFolk) {
       klær = {
         ...klær,

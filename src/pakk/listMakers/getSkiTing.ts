@@ -16,7 +16,7 @@ export function getSkiTing(valg: Valg): Item[] {
 
   if (skalPåSki) {
     skiTing.push("Ski", "Skistaver", "Skisko");
-    if (valg.spesielleBehov) {
+    if (valg.idaBehov) {
       skiTing.push("Varme såler");
     }
   }

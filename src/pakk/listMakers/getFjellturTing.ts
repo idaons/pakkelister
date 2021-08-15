@@ -19,7 +19,7 @@ export function getFjellturTing(valg: Valg): Item[] {
   fjellturTing.push("Regntrekk til sekk");
   fjellturTing.push("Staver");
 
-  if (valg.spesielleBehov) {
+  if (valg.idaBehov) {
     fjellturTing.push("Gamasjer");
   }
 

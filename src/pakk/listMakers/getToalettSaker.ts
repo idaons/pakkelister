@@ -45,7 +45,7 @@ export function getToalettSaker(valg: Valg): Item[] {
     toalettSaker.push("Myggmiddel");
   }
 
-  if (valg.spesielleBehov) {
+  if (valg.idaBehov) {
     if (valg.sesong === Sesong.Sommer) {
       toalettSaker.push("Sovekit");
     } else {

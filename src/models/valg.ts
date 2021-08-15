@@ -9,5 +9,5 @@ export interface Valg {
   overnatting: Overnatting[];
   kjønn: Kjonn;
   lengde: number;
-  spesielleBehov: boolean;
+  idaBehov: boolean;
 }
