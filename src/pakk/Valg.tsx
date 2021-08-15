@@ -38,6 +38,7 @@ function VisValg(props: Props) {
         <li>{Sesong[props.valg.sesong]}</li>
         <li>{getKjønnLabel(props.valg.kjønn)}</li>
         {overnatting(props.valg) && <li>{props.valg.lengde} dager</li>}
+        {props.valg.idaBehov && <li>Ida sine sære ting</li>}
       </ul>
       <ul>
         {props.valg.aktiviteter.map((aktivitet) => (
