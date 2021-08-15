@@ -16,7 +16,7 @@ export function getIsbreTing(valg: Valg): Item[] {
     Klatresele: 1,
     Karabin: 1,
     Skrukarabiner: 2,
-    Prussiker: 2,
+    Prusiker: 2,
     "120-slynge": 2,
   };
 
