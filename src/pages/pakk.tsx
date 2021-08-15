@@ -31,8 +31,8 @@ const Style = styled.div`
   grid-gap: 4rem;
   grid-template-areas:
     "header valg koffert"
-    "warning warning warning"
     "liste liste liste"
+    "warning warning warning"
     "knapper knapper knapper";
 
   @media (max-width: ${desktopMinWidth}) {
@@ -41,9 +41,9 @@ const Style = styled.div`
     grid-gap: 3rem 1rem;
     grid-template-areas:
       "header koffert"
-      "warning warning"
       "valg valg "
       "liste liste"
+      "warning warning"
       "knapper knapper";
   }
 `;
@@ -69,25 +69,6 @@ export const KategoriListe = styled.ul`
   padding-left: 0;
 `;
 
-interface VerifyLocalStorage {
-  gyldigeElementer: string[];
-  ugyldigeElementer: string[];
-}
-
-// Split liste fra localstorage i gylde elementer og ugyldige elementer
-function splitArray(array, isValid) {
-  return array.reduce(
-    ([pass, fail], elem) => {
-      if (isValid(elem)) {
-        return [[...pass, elem], fail];
-      } else {
-        return [pass, [...fail, elem]];
-      }
-    },
-    [[], []]
-  );
-}
-
 function Pakk() {
   const { valg, listeNavn, feilmelding } = useDecodeUrlParamsToValg();
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
@@ -96,32 +77,9 @@ function Pakk() {
   const urlParams = useDecodeUrlParamsToValg();
   const alleElementer = getAlleTing(valg);
   const listFromLocalStorage = PakkeAppLocalStorage.getList(listeNavn);
-  const [verifyLocalStorage, setVerifyLocalStorage] =
-    useState<VerifyLocalStorage>({
-      gyldigeElementer: [],
-      ugyldigeElementer: [],
-    });
 
   useEffect(() => {
     if (!listFromLocalStorage) return;
-
-    // Sjekk om det finnes noe i localStorage som ikke lenger er i pakkelista
-    const alleNavn = alleElementer
-      .map((element) => element.navn)
-      .concat(listFromLocalStorage.ekstraItems);
-
-    const [pass, fail] = splitArray(
-      listFromLocalStorage.checked.concat(),
-      (e) => alleNavn.includes(e)
-    );
-
-    if (fail.length > 0) {
-      setVerifyLocalStorage({
-        gyldigeElementer: pass,
-        ugyldigeElementer: fail,
-      });
-    }
-
     setCheckedItems(listFromLocalStorage.checked);
     setEkstraTing(listFromLocalStorage.ekstraItems);
   }, [urlParams.key]);
@@ -178,15 +136,6 @@ function Pakk() {
     (checkedItems.length * 100) / (alleElementer.length + ekstraTing.length)
   );
 
-  const handleUgyldigLocalStorage = (skalFjernes: boolean) => {
-    if (skalFjernes && verifyLocalStorage.gyldigeElementer) {
-      setCheckedItems(verifyLocalStorage.gyldigeElementer);
-    }
-    setVerifyLocalStorage({
-      gyldigeElementer: [],
-      ugyldigeElementer: [],
-    });
-  };
   return (
     <Style>
       <div style={{ gridArea: "header" }}>
@@ -195,12 +144,6 @@ function Pakk() {
       </div>
       <VisValg valg={valg} />
       <Progress progress={progress} />
-      {verifyLocalStorage.ugyldigeElementer.length > 0 && (
-        <UgyldigLocalStorage
-          ugyldigeElementer={verifyLocalStorage.ugyldigeElementer}
-          handleUgyldigLocalStorage={handleUgyldigLocalStorage}
-        />
-      )}
       <KategoriListe>
         {elementeriKategorier.map((kategori) => (
           <li key={kategori.category}>
@@ -222,6 +165,12 @@ function Pakk() {
           />
         </li>
       </KategoriListe>
+      <UgyldigLocalStorage
+        ekstraItems={ekstraTing}
+        checked={checkedItems}
+        alleElementer={alleElementer}
+        setChecked={setCheckedItems}
+      />
       <Bunnknapper
         lagrer={lagrerListe}
         navn={listeNavn}
