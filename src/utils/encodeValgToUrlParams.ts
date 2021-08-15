@@ -1,12 +1,51 @@
 import { Valg } from "../models/valg";
 import { defaultValg } from "../lagListe/valg/defaultValg";
 import { useRouter } from "next/router";
+import { Aktivitet } from "../models/aktivitet";
+import { Sesong } from "../models/sesong";
+import { Overnatting } from "../models/overnatting";
+import { Kjonn } from "../models/kjonn";
 
-type Params = { valg: Valg; listeNavn?: string };
+type Modify<T, R> = Omit<T, keyof R> & R;
+
+type StringifiedValg = Modify<
+  Valg,
+  {
+    sesong: string;
+    aktiviteter: string[];
+    overnatting: string[];
+    kjønn: string;
+  }
+>;
+
+type Params = { valg: StringifiedValg; listeNavn?: string };
+
+// For å gjøre url og local-storage mer human-readable oversettes enum'er til strings slik at det står feks "Klatring" istedenfor "2"
+export function stringifyValg(valg: Valg): StringifiedValg {
+  return {
+    ...valg,
+    aktiviteter: valg.aktiviteter.map((it) => Aktivitet[it]),
+    sesong: Sesong[valg.sesong],
+    overnatting: valg.overnatting.map((it) => Overnatting[it]),
+    kjønn: Kjonn[valg.kjønn],
+  };
+}
+
+// For å gjøre url og local-storage mer human-readable oversettes enum'er til strings slik at det står feks "Klatring" istedenfor "2"
+export function unStringifyValg(valg: StringifiedValg): Valg {
+  return {
+    ...defaultValg,
+    ...valg,
+    aktiviteter: valg.aktiviteter.map((it) => Aktivitet[it]),
+    sesong: Sesong[valg.sesong],
+    overnatting: valg.overnatting.map((it) => Overnatting[it]),
+    kjønn: Kjonn[valg.kjønn],
+  };
+}
 
 export function encodeValgToUrlParams(valg: Valg, listeNavn?: string) {
   const params: Params = {
-    valg,
+    valg: stringifyValg(valg),
     listeNavn,
   };
 
@@ -28,10 +67,7 @@ export function useDecodeUrlParamsToValg(): DecodedUrlParams {
     const liste = params.listeNavn;
 
     return {
-      valg: {
-        ...defaultValg,
-        ...params.valg,
-      },
+      valg: unStringifyValg(params.valg),
       listeNavn: liste,
       key: JSON.stringify(params),
     };

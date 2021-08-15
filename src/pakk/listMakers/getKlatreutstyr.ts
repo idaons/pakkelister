@@ -32,7 +32,7 @@ export function getKlatreutstyr(valg: Valg): Item[] {
 
   if (overlapp(valg.aktiviteter, [Aktivitet.Tradklatring])) {
     items.push(
-      "Kiler, kamkiler, annet",
+      "Kiler, kamkiler",
       "Kortslynger",
       "Diverse slynger",
       "Bailetau",

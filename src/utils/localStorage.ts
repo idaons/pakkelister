@@ -1,4 +1,5 @@
 import { Valg } from "../models/valg";
+import { stringifyValg, unStringifyValg } from "./encodeValgToUrlParams";
 
 const localStorageKey = "pakkelister";
 
@@ -19,7 +20,12 @@ export class PakkeAppLocalStorage {
 
   static getLists(): LocalStorageListe[] {
     const lists = this.getLocalStorage()?.getItem(localStorageKey);
-    return lists ? JSON.parse(lists) : [];
+    return lists
+      ? JSON.parse(lists).map((it) => ({
+          ...it,
+          valg: unStringifyValg(it.valg),
+        }))
+      : [];
   }
 
   static getList(navn?: string): LocalStorageListe | undefined {
@@ -30,7 +36,7 @@ export class PakkeAppLocalStorage {
     const lists = this.getLists().filter(
       (listFraLs) => listFraLs.listeNavn !== liste.listeNavn
     );
-    const nyeLister = [...lists, liste];
+    const nyeLister = [...lists, { ...liste, valg: stringifyValg(liste.valg) }];
     this.getLocalStorage()?.setItem(localStorageKey, JSON.stringify(nyeLister));
   }
 }
