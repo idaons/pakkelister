@@ -5,10 +5,9 @@ import { Aktivitet } from "../models/aktivitet";
 import { Sesong } from "../models/sesong";
 import { Overnatting } from "../models/overnatting";
 import { Kjonn } from "../models/kjonn";
+import { Modify } from "./typeUtils";
 
-type Modify<T, R> = Omit<T, keyof R> & R;
-
-type StringifiedValg = Modify<
+export type StringifiedValg = Modify<
   Valg,
   {
     sesong: string;

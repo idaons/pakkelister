@@ -1,6 +1,11 @@
 import * as React from "react";
 import { ReactNode } from "react";
 import { InputGruppe, Valggruppe } from "../../pages";
+import styled from "styled-components/macro";
+
+const StyledH2 = styled.h2`
+  margin-bottom: 1rem !important;
+`;
 
 interface Props {
   name: string;
@@ -10,7 +15,7 @@ interface Props {
 function ValgStyle(props: Props) {
   return (
     <Valggruppe>
-      <h2>{props.name}</h2>
+      <StyledH2>{props.name}</StyledH2>
       <InputGruppe>{props.children}</InputGruppe>
     </Valggruppe>
   );

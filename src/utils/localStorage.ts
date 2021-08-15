@@ -1,14 +1,26 @@
+import {
+  StringifiedValg,
+  stringifyValg,
+  unStringifyValg,
+} from "./encodeValgToUrlParams";
+import { Modify } from "./typeUtils";
 import { Valg } from "../models/valg";
-import { stringifyValg, unStringifyValg } from "./encodeValgToUrlParams";
 
 const localStorageKey = "pakkelister";
 
-type LocalStorageListe = {
-  valg: Valg;
+type StringifiedLocalStorageListe = {
+  valg: StringifiedValg;
   listeNavn?: string;
   checked: string[];
   ekstraItems: string[];
 };
+
+type LocalStorageListe = Modify<
+  StringifiedLocalStorageListe,
+  {
+    valg: Valg;
+  }
+>;
 
 export class PakkeAppLocalStorage {
   private static getLocalStorage() {
@@ -18,18 +30,14 @@ export class PakkeAppLocalStorage {
     return window.localStorage;
   }
 
-  static getLists(): LocalStorageListe[] {
+  static getLists(): StringifiedLocalStorageListe[] {
     const lists = this.getLocalStorage()?.getItem(localStorageKey);
-    return lists
-      ? JSON.parse(lists).map((it) => ({
-          ...it,
-          valg: unStringifyValg(it.valg),
-        }))
-      : [];
+    return lists ? JSON.parse(lists) : [];
   }
 
   static getList(navn?: string): LocalStorageListe | undefined {
-    return this.getLists().find((liste) => liste.listeNavn === navn);
+    const liste = this.getLists().find((liste) => liste.listeNavn === navn);
+    return liste ? { ...liste, valg: unStringifyValg(liste.valg) } : undefined;
   }
 
   static saveList(liste: LocalStorageListe) {
