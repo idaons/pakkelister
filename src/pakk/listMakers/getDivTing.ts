@@ -8,24 +8,23 @@ import { Overnatting, overnattingBareHus } from "../../models/overnatting";
 import { erLangtur } from "../../lagListe/valg/LengdeValg";
 
 export function getDivTing(valg: Valg): Item[] {
-  let ting = ["Solbriller", "Lommebok"];
+  let ting = [
+    "Solbriller",
+    "Lommebok",
+    "Antibac",
+    "Mat",
+    "Fyrstikker",
+    "Dopapir",
+    "Flaske",
+    "Førstehjelp",
+  ];
 
   if (skalGåPåTur(valg.aktiviteter)) {
-    ting.push(
-      "Flaske",
-      "Sekk",
-      "Førstehjelp",
-      "Kart",
-      "Mat",
-      "Antibac",
-      "Fyrstikker",
-      "Dopapir",
-      "Håndkle"
-    );
+    ting.push("Sekk", "Kart");
   }
 
   if (overnatting(valg)) {
-    ting.push("Ladekabler", "Bok");
+    ting.push("Ladekabler", "Bok", "Håndkle");
 
     if (!overnattingBareHus(valg)) {
       ting.push("Hodelykt", "Powerbank");

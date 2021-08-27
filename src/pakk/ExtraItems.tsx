@@ -15,6 +15,7 @@ const EkstravalgWrapper = styled.div`
 
   @media (max-width: ${smallMobileMaxWidth}) {
     flex-direction: column;
+    align-items: flex-start;
   }
 
   input {
