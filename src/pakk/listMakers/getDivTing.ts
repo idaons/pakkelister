@@ -17,6 +17,7 @@ export function getDivTing(valg: Valg): Item[] {
     "Dopapir",
     "Flaske",
     "Førstehjelp",
+    "Hodelykt",
   ];
 
   if (skalGåPåTur(valg.aktiviteter)) {
@@ -27,7 +28,7 @@ export function getDivTing(valg: Valg): Item[] {
     ting.push("Ladekabler", "Bok", "Håndkle");
 
     if (!overnattingBareHus(valg)) {
-      ting.push("Hodelykt", "Powerbank");
+      ting.push("Powerbank");
     }
 
     if (valg.overnatting.includes(Overnatting.FamilieHytte)) {
