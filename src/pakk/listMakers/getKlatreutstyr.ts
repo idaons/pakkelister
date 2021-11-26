@@ -27,7 +27,7 @@ export function getKlatreutstyr(valg: Valg): Item[] {
   }
 
   if (overlapp(valg.aktiviteter, [Aktivitet.Sportsklatring])) {
-    items.push("Quickdraws", "Sikringsbriller");
+    items.push("Kortslynger", "Sikringsbriller");
   }
 
   if (overlapp(valg.aktiviteter, [Aktivitet.Tradklatring])) {

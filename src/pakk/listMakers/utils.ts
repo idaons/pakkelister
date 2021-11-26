@@ -9,12 +9,32 @@ export function overnatting(valg: Valg) {
 }
 
 export function sikkerhetVinter(valg: Valg) {
-  return (
-    valg.sesong === Sesong.Vinter ||
-    [Aktivitet.Randonée, Aktivitet.Fjellski].some((it) =>
-      valg.aktiviteter.includes(it)
-    )
-  );
+  let trengerSikkerhet = false;
+  if (
+    valg.sesong === Sesong.Vinter &&
+    [
+      Aktivitet.Tradklatring,
+      Aktivitet.ViaFerrata,
+      Aktivitet.Fottur,
+      Aktivitet.Tinderangling,
+    ].some((it) => valg.aktiviteter.includes(it))
+  ) {
+    trengerSikkerhet = true;
+  }
+
+  if (
+    [
+      Aktivitet.Randonée,
+      Aktivitet.Fjellski,
+      Aktivitet.Isbre,
+      Aktivitet.Langrenn,
+      Aktivitet.Skøyteski,
+    ].some((it) => valg.aktiviteter.includes(it))
+  ) {
+    trengerSikkerhet = true;
+  }
+
+  return trengerSikkerhet;
 }
 
 export function stringArrayToItems(

@@ -4,8 +4,13 @@ import { Aktivitet, skalGåPåTur } from "../../models/aktivitet";
 import { Valg } from "../../models/valg";
 import { Item } from "../../models/liste";
 import { Kjonn } from "../../models/kjonn";
-import { Overnatting, overnattingBareHus } from "../../models/overnatting";
+import {
+  overnatteUkjentSted,
+  Overnatting,
+  overnattingBareHus,
+} from "../../models/overnatting";
 import { erLangtur } from "../../lagListe/valg/LengdeValg";
+import { Sesong } from "../../models/sesong";
 
 export function getDivTing(valg: Valg): Item[] {
   let ting = [
@@ -13,15 +18,21 @@ export function getDivTing(valg: Valg): Item[] {
     "Lommebok",
     "Antibac",
     "Mat",
-    "Fyrstikker",
-    "Dopapir",
     "Flaske",
     "Førstehjelp",
     "Hodelykt",
+    "Hodetelefoner",
   ];
+  if (overnatteUkjentSted(valg.overnatting)) {
+    ting.push("Termos", "Dopapir", "Fyrstikker");
+  }
 
   if (skalGåPåTur(valg.aktiviteter)) {
     ting.push("Sekk", "Kart");
+
+    if (valg.sesong === Sesong.Sommer) {
+      ting.push("Sitteunderlag");
+    }
   }
 
   if (overnatting(valg)) {
@@ -62,7 +73,6 @@ export function getDivTing(valg: Valg): Item[] {
   if (valg.aktiviteter.includes(Aktivitet.Bortekontor)) {
     ting.push("PC og ladekabel");
     ting.push("Mus og usb-dings");
-    ting.push("Hodetelefoner");
   }
   return stringArrayToItems(ting, Kategori.Div);
 }
