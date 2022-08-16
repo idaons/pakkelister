@@ -1,31 +1,23 @@
-# empty-project
+# Pakkeliste
 
-Empty project.
+Lager en pakkeliste til din neste tur!
 
-## Building and running on localhost
+## Kjør applikasjonen lokalt
 
-First install dependencies:
+1. Installer avhengigheter
 
 ```sh
 npm install
 ```
 
-To run in hot module reloading mode:
+2. Start applikasjonen
 
 ```sh
-npm start
+npm run dev
 ```
 
-To create a production build:
+For å lage et produksjonsbygg
 
 ```sh
-npm run build-prod
+npm run build
 ```
-
-## Running
-
-Open the file `dist/index.html` in your browser
-
-## Credits
-
-Made with [createapp.dev](https://createapp.dev/)
