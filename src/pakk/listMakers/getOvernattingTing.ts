@@ -24,7 +24,7 @@ export function getOvernattingTing(valg: Valg): Item[] {
   }
 
   if (valg.overnatting.includes(Overnatting.Telt)) {
-    overnattingTing.push("Telt");
+    overnattingTing.push("Telt", "Våtservietter");
   }
 
   if (valg.overnatting.includes(Overnatting.Hengekøye)) {
@@ -32,7 +32,8 @@ export function getOvernattingTing(valg: Valg): Item[] {
       "Hengekøye",
       "Hengekøyeoppheng",
       "Tarp",
-      "Myggnetting"
+      "Myggnetting",
+      "Våtservietter"
     );
   }
 

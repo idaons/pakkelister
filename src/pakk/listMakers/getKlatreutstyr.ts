@@ -23,7 +23,7 @@ export function getKlatreutstyr(valg: Valg): Item[] {
       Aktivitet.Tradklatring,
     ])
   ) {
-    items.push("Tau", "Taubrems", "Kalkpose", "Klatresko");
+    items.push("Tau", "Taubrems", "Kalkpose", "Klatresko", "Walkie-talkie");
   }
 
   if (overlapp(valg.aktiviteter, [Aktivitet.Sportsklatring])) {
