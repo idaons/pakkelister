@@ -49,6 +49,10 @@ export function getDivTing(valg: Valg): Item[] {
     if (valg.overnatting.includes(Overnatting.DNThytte)) {
       ting.push("DNT-nøkkel");
     }
+
+    if (valg.overnatting.includes(Overnatting.HusHotell)) {
+      ting.push("Brødristerpose");
+    }
   }
 
   if (valg.aktiviteter.includes(Aktivitet.Bytur)) {

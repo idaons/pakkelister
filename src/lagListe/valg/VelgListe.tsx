@@ -7,11 +7,10 @@ import { InputGruppe } from "../../pages";
 import { Valg } from "../../models/valg";
 import ValgStyle from "./ValgStyle";
 
-const Flex = styled.div`
+const FlexCol = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 1.5rem 2rem;
-  align-items: center;
 `;
 
 const StyledTextinput = styled(TextInput)`
@@ -36,7 +35,7 @@ function VelgListe(props: Props) {
 
   return (
     <ValgStyle name="Listenavn">
-      <Flex>
+      <FlexCol>
         <StyledTextinput
           label="Ny liste"
           onChange={(e) => props.setListeNavn(e.target.value)}
@@ -44,7 +43,7 @@ function VelgListe(props: Props) {
         />
         {eksisterendeLister.length !== 0 && (
           <>
-            <div>eller bruk eksisterende liste:</div>
+            <div>...eller bruk eksisterende liste:</div>
             <InputGruppe>
               {eksisterendeLister.map(
                 (liste) =>
@@ -66,7 +65,7 @@ function VelgListe(props: Props) {
             </InputGruppe>
           </>
         )}
-      </Flex>
+      </FlexCol>
     </ValgStyle>
   );
 }
