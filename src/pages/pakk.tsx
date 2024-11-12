@@ -9,7 +9,6 @@ import {
 } from "../utils/encodeValgToUrlParams";
 import LinkButton from "../utils/baseComponents/LinkButton";
 import VisValg from "../pakk/Valg";
-import { PakkeAppLocalStorage } from "../utils/localStorage";
 import styled from "styled-components";
 import Progress from "../pakk/Progress";
 import { desktopMinWidth, smallMobileMaxWidth } from "../commonStyles";
@@ -17,6 +16,7 @@ import Bunnknapper from "../pakk/Bunnknapper";
 import ExtraItems from "../pakk/ExtraItems";
 import KategoriMarkup from "../pakk/KategoriMarkup";
 import UgyldigLocalStorage from "../pakk/UgyldigLocalStorage";
+import { useLocalStorage } from "../utils/useLocalStorage";
 
 const Style = styled.div`
   min-height: 100vh;
@@ -76,7 +76,8 @@ function Pakk() {
   const [ekstraTing, setEkstraTing] = useState<string[]>([]);
   const urlParams = useDecodeUrlParamsToValg();
   const alleElementer = getAlleTing(valg);
-  const listFromLocalStorage = PakkeAppLocalStorage.getList(listeNavn);
+  const ls = useLocalStorage();
+  const listFromLocalStorage = ls.getList(listeNavn);
 
   useEffect(() => {
     if (!listFromLocalStorage) return;
@@ -86,7 +87,7 @@ function Pakk() {
 
   useEffect(() => {
     setLagrerListe(true);
-    PakkeAppLocalStorage.saveList({
+    ls.saveList({
       listeNavn,
       checked: checkedItems,
       ekstraItems: ekstraTing,
@@ -129,11 +130,11 @@ function Pakk() {
 
   const elementeriKategorier = groupArray(
     alleElementer,
-    (it) => Kategori[it.kategori]
+    (it) => Kategori[it.kategori],
   );
 
   const progress = Math.floor(
-    (checkedItems.length * 100) / (alleElementer.length + ekstraTing.length)
+    (checkedItems.length * 100) / (alleElementer.length + ekstraTing.length),
   );
 
   return (

@@ -5,6 +5,7 @@ import {
 } from "./encodeValgToUrlParams";
 import { Modify } from "./typeUtils";
 import { Valg } from "../models/valg";
+import useIsClient from "./useIsClient";
 
 const localStorageKey = "pakkelister";
 
@@ -22,29 +23,32 @@ type LocalStorageListe = Modify<
   }
 >;
 
-export class PakkeAppLocalStorage {
-  private static getLocalStorage() {
-    if (typeof window === "undefined") {
+export const useLocalStorage = () => {
+  const isClient = useIsClient();
+  function getLocalStorage() {
+    if (!isClient) {
       return undefined;
     }
     return window.localStorage;
   }
 
-  static getLists(): StringifiedLocalStorageListe[] {
-    const lists = this.getLocalStorage()?.getItem(localStorageKey);
+  function getLists(): StringifiedLocalStorageListe[] {
+    const lists = getLocalStorage()?.getItem(localStorageKey);
     return lists ? JSON.parse(lists) : [];
   }
 
-  static getList(navn?: string): LocalStorageListe | undefined {
-    const liste = this.getLists().find((liste) => liste.listeNavn === navn);
+  function getList(navn?: string): LocalStorageListe | undefined {
+    const liste = getLists().find((liste) => liste.listeNavn === navn);
     return liste ? { ...liste, valg: unStringifyValg(liste.valg) } : undefined;
   }
 
-  static saveList(liste: LocalStorageListe) {
-    const lists = this.getLists().filter(
-      (listFraLs) => listFraLs.listeNavn !== liste.listeNavn
+  function saveList(liste: LocalStorageListe) {
+    const lists = getLists().filter(
+      (listFraLs) => listFraLs.listeNavn !== liste.listeNavn,
     );
     const nyeLister = [...lists, { ...liste, valg: stringifyValg(liste.valg) }];
-    this.getLocalStorage()?.setItem(localStorageKey, JSON.stringify(nyeLister));
+    getLocalStorage()?.setItem(localStorageKey, JSON.stringify(nyeLister));
   }
-}
+
+  return { saveList, getList, getLists };
+};

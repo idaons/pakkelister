@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import TextInput from "../../utils/baseComponents/TextInput";
-import { PakkeAppLocalStorage } from "../../utils/localStorage";
+
 import Button from "../../utils/baseComponents/Button";
 import * as React from "react";
 import { InputGruppe } from "../../pages";
 import { Valg } from "../../models/valg";
 import ValgStyle from "./ValgStyle";
+import { useLocalStorage } from "../../utils/useLocalStorage";
 
 const FlexCol = styled.div`
   display: flex;
@@ -24,14 +25,15 @@ interface Props {
 }
 
 function VelgListe(props: Props) {
+  const ls = useLocalStorage();
   const onListeValgt = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const valg = PakkeAppLocalStorage.getList(e.currentTarget.value)?.valg;
+    const valg = ls.getList(e.currentTarget.value)?.valg;
     if (!valg) return;
     props.setListeNavn(e.currentTarget.value);
     props.updateValg(valg);
   };
 
-  const eksisterendeLister = PakkeAppLocalStorage.getLists();
+  const eksisterendeLister = ls.getLists();
 
   return (
     <ValgStyle name="Listenavn">
@@ -60,7 +62,7 @@ function VelgListe(props: Props) {
                     >
                       {liste.listeNavn}
                     </Button>
-                  )
+                  ),
               )}
             </InputGruppe>
           </>
