@@ -7,6 +7,7 @@ import { InputGruppe } from "../pages";
 import { Valg } from "../models/valg";
 import ValgStyle from "./ValgStyle";
 import { useLocalStorage } from "../utils/useLocalStorage";
+import { LocalStorageListe, useAllLists } from "../utils/useList";
 
 const FlexCol = styled.div`
   display: flex;
@@ -25,15 +26,13 @@ interface Props {
 }
 
 function VelgListe(props: Props) {
-  const ls = useLocalStorage();
-  const onListeValgt = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const valg = ls.getList(e.currentTarget.value)?.valg;
-    if (!valg) return;
-    props.setListeNavn(e.currentTarget.value);
-    props.updateValg(valg);
-  };
+  const [eksisterendeLister] = useAllLists();
 
-  const eksisterendeLister = ls.getLists();
+  const onListeValgt = (liste: LocalStorageListe) => {
+    if (!liste) return;
+    props.setListeNavn(liste.listeNavn);
+    props.updateValg(liste.valg);
+  };
 
   return (
     <ValgStyle name="Listenavn">
@@ -43,7 +42,7 @@ function VelgListe(props: Props) {
           onChange={(e) => props.setListeNavn(e.target.value)}
           value={props.listeNavn}
         />
-        {eksisterendeLister.length !== 0 && (
+        {!!eksisterendeLister?.length && (
           <>
             <div>...eller bruk eksisterende liste:</div>
             <InputGruppe>
@@ -53,7 +52,7 @@ function VelgListe(props: Props) {
                     <Button
                       key={liste.listeNavn}
                       value={liste.listeNavn}
-                      onClick={onListeValgt}
+                      onClick={() => onListeValgt(liste)}
                       style={
                         liste.listeNavn === props.listeNavn
                           ? { borderColor: "gold" }

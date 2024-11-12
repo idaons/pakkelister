@@ -4,7 +4,7 @@ import Button from "../ui/Button";
 import Soppelkasse from "../ikoner/Soppelkasse";
 import * as React from "react";
 import { smallMobileMaxWidth } from "../commonStyles";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TingListe } from "./KategoriMarkup";
 import TextInput from "../ui/TextInput";
 
@@ -47,48 +47,36 @@ const SlettKnapp = styled.button`
 interface Props {
   ekstraTing: string[];
   checkedItems: string[];
-  setEkstraTing: (ting: string[]) => void;
-  setCheckedItems: (items: string[]) => void;
-  updateCheckedItems: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  toggleExtraItem: (item: string) => void;
+  toggleItem: (item: string) => void;
+  setItems: (items: string[]) => void;
+  removeItems: (items: string[]) => void;
 }
 
 function ExtraItems(props: Props) {
-  const [currentEkstraVerdi, setCurrentEkstraVerdi] = useState<string>("");
-  const [allChecked, setAllChecked] = useState(false);
-
-  useEffect(() => {
-    if (props.ekstraTing.length > 0) {
-      const allItemsAreChecked = props.ekstraTing.every((it) =>
-        props.checkedItems.includes(it),
-      );
-      setAllChecked(allItemsAreChecked);
-    }
-  }, [props.ekstraTing, props.checkedItems]);
+  const [input, setInput] = useState<string>("");
 
   const removeEkstraItem = (value: string) => {
-    const nyEkstraItems = props.ekstraTing.filter((item) => item !== value);
-    const nyeCheckedItems = props.checkedItems.filter((item) => item !== value);
-    props.setEkstraTing(nyEkstraItems);
-    props.setCheckedItems(nyeCheckedItems);
+    if (props.checkedItems.includes(value)) props.toggleExtraItem(value);
+    if (props.ekstraTing.includes(value)) props.toggleExtraItem(value);
   };
 
   const leggTilEkstra = () => {
-    if (currentEkstraVerdi === "") {
-      return;
-    }
-    props.setEkstraTing([...props.ekstraTing, currentEkstraVerdi]);
-    setCurrentEkstraVerdi("");
+    if (props.ekstraTing.includes(input)) return;
+    props.toggleExtraItem(input);
+    setInput("");
   };
 
-  const onAllExtrasChecked = (e) => {
-    setAllChecked(e.target.checked);
-    const otherCheckedItems = props.checkedItems.filter(
-      (it) => !props.ekstraTing?.includes(it),
-    );
-    if (e.target.checked) {
-      props.setCheckedItems([...otherCheckedItems, ...props.ekstraTing]);
+  const allChecked = props.ekstraTing.every((it) =>
+    props.checkedItems.includes(it),
+  );
+
+  const toggleAll = () => {
+    const itemNames = props.ekstraTing.map((it) => it);
+    if (allChecked) {
+      props.removeItems(itemNames);
     } else {
-      props.setCheckedItems(otherCheckedItems);
+      props.setItems(itemNames);
     }
   };
 
@@ -99,14 +87,14 @@ function ExtraItems(props: Props) {
         strikeThrough
         label="Ekstra"
         checked={allChecked}
-        onChange={onAllExtrasChecked}
+        onChange={toggleAll}
       />
       <TingListe>
         <EkstravalgWrapper>
           <TextInput
             label="Ekstra ting"
-            value={currentEkstraVerdi}
-            onChange={(e) => setCurrentEkstraVerdi(e.target.value)}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
           />
           <Button onClick={leggTilEkstra}>+ Legg til</Button>
         </EkstravalgWrapper>
@@ -117,7 +105,7 @@ function ExtraItems(props: Props) {
               label={element}
               checked={props.checkedItems.includes(element)}
               strikeThrough={true}
-              onChange={props.updateCheckedItems}
+              onChange={() => props.toggleItem(element)}
             />
             <SlettKnapp
               aria-label="Slett"

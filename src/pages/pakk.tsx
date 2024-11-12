@@ -1,22 +1,20 @@
-import * as React from "react";
-import { useEffect, useState } from "react";
-import { getAlleTing } from "../pakkListe/listMakers/getAlleTing";
-import { groupArray } from "../utils/groupArray";
-import { Kategori } from "../models/kategori";
-import {
-  useDecodeUrlParamsToValg,
-  encodeValgToUrlParams,
-} from "../utils/encodeValgToUrlParams";
-import LinkButton from "../ui/LinkButton";
-import VisValg from "../pakkListe/Valg";
 import styled from "styled-components";
-import Progress from "../pakkListe/Progress";
 import { desktopMinWidth, smallMobileMaxWidth } from "../commonStyles";
+import { Kategori } from "../models/kategori";
 import Bunnknapper from "../pakkListe/Bunnknapper";
 import ExtraItems from "../pakkListe/ExtraItems";
 import KategoriMarkup from "../pakkListe/KategoriMarkup";
+import { getAlleTing } from "../pakkListe/listMakers/getAlleTing";
+import Progress from "../pakkListe/Progress";
 import UgyldigLocalStorage from "../pakkListe/UgyldigLocalStorage";
-import { useLocalStorage } from "../utils/useLocalStorage";
+import VisValg from "../pakkListe/Valg";
+import LinkButton from "../ui/LinkButton";
+import {
+  encodeValgToUrlParams,
+  useDecodeUrlParamsToValg,
+} from "../utils/encodeValgToUrlParams";
+import { groupArray } from "../utils/groupArray";
+import { useList } from "../utils/useList";
 
 const Style = styled.div`
   min-height: 100vh;
@@ -31,8 +29,8 @@ const Style = styled.div`
   grid-gap: 4rem;
   grid-template-areas:
     "header valg koffert"
-    "liste liste liste"
     "warning warning warning"
+    "liste liste liste"
     "knapper knapper knapper";
 
   @media (max-width: ${desktopMinWidth}) {
@@ -41,9 +39,9 @@ const Style = styled.div`
     grid-gap: 3rem 1rem;
     grid-template-areas:
       "header koffert"
+      "warning warning"
       "valg valg "
       "liste liste"
-      "warning warning"
       "knapper knapper";
   }
 `;
@@ -73,32 +71,8 @@ export const KategoriListe = styled.ul`
 
 function Pakk() {
   const { valg, listeNavn, feilmelding } = useDecodeUrlParamsToValg();
-  const [checkedItems, setCheckedItems] = useState<string[]>([]);
-  const [lagrerListe, setLagrerListe] = useState(false);
-  const [initalLocalStorageSync, setInitialLocalStorageSync] = useState(false);
-  const [ekstraTing, setEkstraTing] = useState<string[]>([]);
+  const { list, updateList } = useList(listeNavn, valg);
   const alleElementer = getAlleTing(valg);
-  const ls = useLocalStorage();
-
-  // Sync with stored values from localstorage on mount
-  useEffect(() => {
-    if (!ls.isReady || initalLocalStorageSync) return;
-    setInitialLocalStorageSync(true);
-    const listFromLocalStorage = ls.getList(listeNavn);
-    if (!listFromLocalStorage) return;
-    setCheckedItems(listFromLocalStorage.checked);
-    setEkstraTing(listFromLocalStorage.ekstraItems);
-  }, [listeNavn, ls, initalLocalStorageSync]);
-
-  useEffect(() => {
-    setLagrerListe(true);
-    ls.saveList({
-      listeNavn,
-      checked: checkedItems,
-      ekstraItems: ekstraTing,
-      valg,
-    });
-  }, [checkedItems, ekstraTing]);
 
   const tilbakeKnapp = (
     <LinkButton href={"/?" + encodeValgToUrlParams(valg, listeNavn)}>
@@ -115,23 +89,47 @@ function Pakk() {
     );
   }
 
-  const updateCheckedItems = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (e.target.checked) {
-      setCheckedItems([...checkedItems, value]);
-    } else {
-      setCheckedItems(checkedItems.filter((a) => a !== value));
-    }
-  };
-
   const elementeriKategorier = groupArray(
     alleElementer,
     (it) => Kategori[it.kategori],
   );
 
-  const progress = Math.floor(
-    (checkedItems.length * 100) / (alleElementer.length + ekstraTing.length),
-  );
+  const progress = list
+    ? Math.floor(
+        (list.checkedItems.length * 100) /
+          (alleElementer.length + list.extraItems.length),
+      )
+    : 0;
+
+  const toggleItem = (item: string) => {
+    const checkedItems = list.checkedItems ?? [];
+    const newCheckedItems = checkedItems.includes(item)
+      ? checkedItems.filter((checkedItem) => checkedItem !== item)
+      : [...checkedItems, item];
+    updateList({ checkedItems: newCheckedItems });
+  };
+
+  const setItems = (items: string[]) =>
+    updateList({ checkedItems: [...list.checkedItems, ...items] });
+
+  const removeItems = (items: string[]) =>
+    updateList({
+      checkedItems: list.checkedItems.filter(
+        (checkedItem) => !items.includes(checkedItem),
+      ),
+    });
+
+  const clearList = () => updateList({ checkedItems: [] });
+
+  const toggleExtraItem = (item: string) => {
+    const extraItems = list?.extraItems ?? [];
+
+    const updatedExtraItems = extraItems.includes(item)
+      ? extraItems.filter((i) => i !== item)
+      : [...extraItems, item];
+
+    updateList({ extraItems: updatedExtraItems });
+  };
 
   return (
     <Style>
@@ -141,38 +139,36 @@ function Pakk() {
       </div>
       <VisValg valg={valg} />
       <Progress progress={progress} />
+      <UgyldigLocalStorage
+        ekstraItems={list.extraItems}
+        checked={list.checkedItems}
+        alleElementer={alleElementer}
+        removeItems={removeItems}
+      />
       <KategoriListe>
         {elementeriKategorier.map((kategori) => (
           <li key={kategori.category}>
             <KategoriMarkup
               kategori={kategori}
-              updateCheckedItems={updateCheckedItems}
-              setCheckedItems={setCheckedItems}
-              checkedItems={checkedItems}
+              checkedItems={list?.checkedItems ?? []}
+              toggleItem={toggleItem}
+              setItems={setItems}
+              removeItems={removeItems}
             />
           </li>
         ))}
         <li>
           <ExtraItems
-            checkedItems={checkedItems}
-            ekstraTing={ekstraTing}
-            setCheckedItems={setCheckedItems}
-            setEkstraTing={setEkstraTing}
-            updateCheckedItems={updateCheckedItems}
+            checkedItems={list?.checkedItems ?? []}
+            ekstraTing={list?.extraItems ?? []}
+            toggleItem={toggleItem}
+            setItems={setItems}
+            removeItems={removeItems}
+            toggleExtraItem={toggleExtraItem}
           />
         </li>
       </KategoriListe>
-      <UgyldigLocalStorage
-        ekstraItems={ekstraTing}
-        checked={checkedItems}
-        alleElementer={alleElementer}
-        setChecked={setCheckedItems}
-      />
-      <Bunnknapper
-        lagrer={lagrerListe}
-        navn={listeNavn}
-        clearPakkestatus={() => setCheckedItems([])}
-      />
+      <Bunnknapper navn={listeNavn} clearPakkestatus={clearList} />
     </Style>
   );
 }

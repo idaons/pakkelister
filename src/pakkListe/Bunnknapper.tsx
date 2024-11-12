@@ -10,7 +10,6 @@ const Style = styled.div`
 `;
 
 interface Props {
-  lagrer: boolean;
   navn?: string;
   clearPakkestatus: () => void;
 }
@@ -19,11 +18,9 @@ function Bunnknapper(props: Props) {
   return (
     <Style>
       <p>
-        {props.lagrer
-          ? "Lagrer..."
-          : `${
-              props.navn ? `'${props.navn}'` : "Pakklisten"
-            } er lagret på enheten din 🏔🌤️`}
+        {`${
+          props.navn ? `'${props.navn}'` : "Pakklisten"
+        } er lagret på enheten din 🏔🌤️`}
       </p>
       <Button
         onClick={() =>

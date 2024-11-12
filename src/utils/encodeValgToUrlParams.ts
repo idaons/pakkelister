@@ -75,7 +75,6 @@ export function useDecodeUrlParamsToValg(): DecodedUrlParams {
       error: e,
       feilmelding: "Det skjedde en feil under parsing av params",
       valg: defaultValg,
-      listeNavn: "",
       key: "error",
     };
   }

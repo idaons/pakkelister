@@ -18,25 +18,11 @@ const StyledButton = styled(Button)`
   margin-top: 1rem;
 `;
 
-// Split liste fra localstorage i gylde elementer og ugyldige elementer
-function splitArray(array, isValid) {
-  return array.reduce(
-    ([pass, fail], elem) => {
-      if (isValid(elem)) {
-        return [[...pass, elem], fail];
-      } else {
-        return [pass, [...fail, elem]];
-      }
-    },
-    [[], []],
-  );
-}
-
 interface Props {
   alleElementer: Item[];
   ekstraItems: string[];
   checked: string[];
-  setChecked: (items: string[]) => void;
+  removeItems: (items: string[]) => void;
 }
 
 const UgyldigLocalStorage = (props: Props) => {
@@ -44,13 +30,10 @@ const UgyldigLocalStorage = (props: Props) => {
     .map((element) => element.navn)
     .concat(props.ekstraItems);
 
-  const [gyldigeElementer, ugyldigeElementer] = splitArray(
-    props.checked.concat(),
-    (e) => alleTing.includes(e),
-  );
+  const ugyldigeElementer = props.checked.filter((e) => !alleTing.includes(e));
 
   const handleUgyldigLocalStorage = () => {
-    props.setChecked(gyldigeElementer);
+    props.removeItems(ugyldigeElementer);
   };
 
   if (ugyldigeElementer.length === 0) {

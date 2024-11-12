@@ -7,8 +7,9 @@ import { Item } from "../models/liste";
 interface Props {
   kategori: ArrayGroup<Item>;
   checkedItems: string[];
-  updateCheckedItems: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setCheckedItems: (items: string[]) => void;
+  toggleItem: (item: string) => void;
+  setItems: (items: string[]) => void;
+  removeItems: (items: string[]) => void;
 }
 
 export const TingListe = styled.ul`
@@ -20,33 +21,27 @@ export const TingListe = styled.ul`
 `;
 
 function KategoriMarkup(props: Props) {
-  const updateCatogery = () => {
-    const allChecked = props.kategori.items.every((it) =>
-      props.checkedItems.includes(it.navn),
-    );
-    const filteredCheckedItems = props.checkedItems.filter(
-      (it) => !props.kategori.items?.some((item) => item.navn === it),
-    );
+  const allChecked = props.kategori.items.every((it) =>
+    props.checkedItems.includes(it.navn),
+  );
+
+  const toggleAll = () => {
+    const itemNames = props.kategori.items.map((it) => it.navn);
     if (allChecked) {
-      props.setCheckedItems(filteredCheckedItems);
+      props.removeItems(itemNames);
     } else {
-      props.setCheckedItems([
-        ...filteredCheckedItems,
-        ...props.kategori.items.map((it) => it.navn),
-      ]);
+      props.setItems(itemNames);
     }
   };
 
   return (
     <>
       <Checkbox
-        checked={props.kategori.items.every((it) =>
-          props.checkedItems.includes(it.navn),
-        )}
+        checked={allChecked}
         header={true}
         strikeThrough
         label={props.kategori.category}
-        onChange={updateCatogery}
+        onChange={toggleAll}
       />
       <TingListe>
         {props.kategori.items.map((element) => (
@@ -58,7 +53,7 @@ function KategoriMarkup(props: Props) {
               }
               checked={props.checkedItems.includes(element.navn)}
               strikeThrough={true}
-              onChange={props.updateCheckedItems}
+              onChange={() => props.toggleItem(element.navn)}
             />
           </li>
         ))}
