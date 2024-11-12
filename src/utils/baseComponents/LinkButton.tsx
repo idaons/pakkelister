@@ -8,23 +8,20 @@ interface Props extends HTMLAttributes<HTMLLinkElement> {
   children: string;
   href: string;
   className?: string;
-  style?: React.CSSProperties;
 }
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   margin: 1rem 0;
   text-decoration: none;
   ${buttonStyles};
 `;
 
 function LinkButton(props: Props) {
-  const { children, className, style, href } = props;
+  const { children, className, href } = props;
   return (
-    <Link href={href} passHref>
-      <StyledLink className={className} style={style}>
-        {children}
-      </StyledLink>
-    </Link>
+    <StyledLink className={className} href={href}>
+      {children}
+    </StyledLink>
   );
 }
 

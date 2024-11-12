@@ -1,4 +1,4 @@
-import styled from "styled-components/macro";
+import styled from "styled-components";
 import TextInput from "../../utils/baseComponents/TextInput";
 import { PakkeAppLocalStorage } from "../../utils/localStorage";
 import Button from "../../utils/baseComponents/Button";

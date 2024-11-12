@@ -1,6 +1,5 @@
 import * as React from "react";
-import { InputHTMLAttributes, useRef } from "react";
-import { guid } from "../guid";
+import { InputHTMLAttributes, useId } from "react";
 import styled from "styled-components";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -28,13 +27,13 @@ const Style = styled.div`
 `;
 
 function TextInput(props: InputProps) {
-  const ref = useRef(guid());
+  const id = useId();
   const { label, className, ...rest } = props;
 
   return (
     <Style className={className}>
-      <label htmlFor={ref.current}>{label}</label>
-      <input type="text" id={ref.current} {...rest} />
+      <label htmlFor={id}>{label}</label>
+      <input type="text" id={id} {...rest} />
     </Style>
   );
 }

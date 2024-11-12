@@ -1,6 +1,5 @@
 import * as React from "react";
-import { InputHTMLAttributes, useRef } from "react";
-import { guid } from "../guid";
+import { InputHTMLAttributes, useId } from "react";
 import styled, { css } from "styled-components";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -9,7 +8,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   header?: boolean;
 }
 
-const Style = styled.div<{ strikeThrough?: boolean; header?: boolean }>`
+const Style = styled.div<{ $strikeThrough?: boolean; $header?: boolean }>`
   display: inline-block;
   label {
     padding-left: 0.5rem;
@@ -28,7 +27,7 @@ const Style = styled.div<{ strikeThrough?: boolean; header?: boolean }>`
   }
 
   ${(p) =>
-    p.strikeThrough &&
+    p.$strikeThrough &&
     css`
       input:checked + label {
         text-decoration: line-through;
@@ -37,7 +36,7 @@ const Style = styled.div<{ strikeThrough?: boolean; header?: boolean }>`
     `}
 
   ${(p) =>
-    p.header &&
+    p.$header &&
     css`
       input {
         transform: scale(1.7);
@@ -52,15 +51,17 @@ const Style = styled.div<{ strikeThrough?: boolean; header?: boolean }>`
 `;
 
 function InputBase(props: InputProps) {
-  const ref = useRef(guid());
+  const id = useId();
   const { label, strikeThrough, header, className, ...rest } = props;
 
   return (
-    <Style strikeThrough={strikeThrough} header={header} className={className}>
-      <input id={ref.current} {...rest} />
-      <label htmlFor={ref.current}>
-        {props.header ? <h2>{label}</h2> : label}
-      </label>
+    <Style
+      $strikeThrough={strikeThrough}
+      $header={header}
+      className={className}
+    >
+      <input id={id} {...rest} />
+      <label htmlFor={id}>{props.header ? <h2>{label}</h2> : label}</label>
     </Style>
   );
 }

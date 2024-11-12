@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import * as React from "react";
 
-const Style = styled.div<{ progress: number }>`
-  --progress: ${(p) => p.progress + "%"};
+const Style = styled.div<{ $progress: number }>`
+  --progress: ${(p) => p.$progress + "%"};
   grid-area: koffert;
   position: relative;
   font-size: clamp(0.5rem, 2.5vw, 1.25rem);
@@ -42,7 +42,7 @@ const Prosent = styled.span`
 
 function Progress(props: { progress: number }) {
   return (
-    <Style progress={props.progress}>
+    <Style $progress={props.progress}>
       <StyledIcon />
       <Prosent>{props.progress}%</Prosent>
     </Style>

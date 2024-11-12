@@ -70,7 +70,7 @@ export function useDecodeUrlParamsToValg(): DecodedUrlParams {
       listeNavn: liste,
       key: JSON.stringify(params),
     };
-  } catch (e) {
+  } catch (e: any) {
     return {
       error: e,
       feilmelding: "Det skjedde en feil under parsing av params",

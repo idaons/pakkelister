@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ReactNode } from "react";
 import { InputGruppe, Valggruppe } from "../../pages";
-import styled from "styled-components/macro";
+import styled from "styled-components";
 
 const StyledH2 = styled.h2`
   margin-bottom: 1rem !important;
