@@ -50,5 +50,5 @@ export const useLocalStorage = () => {
     getLocalStorage()?.setItem(localStorageKey, JSON.stringify(nyeLister));
   }
 
-  return { saveList, getList, getLists };
+  return { saveList, getList, getLists, isReady: !!getLocalStorage() };
 };

@@ -55,6 +55,7 @@ const StyledH1 = styled.h1`
 
 export const KategoriListe = styled.ul`
   margin: 0;
+
   > li {
     margin-right: 3em;
 
@@ -62,6 +63,7 @@ export const KategoriListe = styled.ul`
       margin-right: 1em;
     }
   }
+
   grid-area: liste;
   display: flex;
   flex-flow: row wrap;
@@ -73,19 +75,20 @@ function Pakk() {
   const { valg, listeNavn, feilmelding } = useDecodeUrlParamsToValg();
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [lagrerListe, setLagrerListe] = useState(false);
-  const [initalSync, setInitialSync] = useState<string | undefined>();
+  const [initalLocalStorageSync, setInitialLocalStorageSync] = useState(false);
   const [ekstraTing, setEkstraTing] = useState<string[]>([]);
-  const urlParams = useDecodeUrlParamsToValg();
   const alleElementer = getAlleTing(valg);
   const ls = useLocalStorage();
 
+  // Sync with stored values from localstorage on mount
   useEffect(() => {
+    if (!ls.isReady || initalLocalStorageSync) return;
+    setInitialLocalStorageSync(true);
     const listFromLocalStorage = ls.getList(listeNavn);
     if (!listFromLocalStorage) return;
     setCheckedItems(listFromLocalStorage.checked);
     setEkstraTing(listFromLocalStorage.ekstraItems);
-    setInitialSync(listeNavn);
-  }, [ls, listeNavn]);
+  }, [listeNavn, ls, initalLocalStorageSync]);
 
   useEffect(() => {
     setLagrerListe(true);
@@ -95,15 +98,6 @@ function Pakk() {
       ekstraItems: ekstraTing,
       valg,
     });
-
-    const timer = setTimeout(() => {
-      document.getElementById("lagreknapp")?.blur();
-      setLagrerListe(false);
-    }, 1000);
-
-    return () => {
-      clearTimeout(timer);
-    };
   }, [checkedItems, ekstraTing]);
 
   const tilbakeKnapp = (
