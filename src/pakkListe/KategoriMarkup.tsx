@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Checkbox from "../utils/baseComponents/Checkbox";
+import Checkbox from "../ui/Checkbox";
 import * as React from "react";
 import { ArrayGroup } from "../utils/groupArray";
 import { Item } from "../models/liste";
@@ -22,10 +22,10 @@ export const TingListe = styled.ul`
 function KategoriMarkup(props: Props) {
   const updateCatogery = () => {
     const allChecked = props.kategori.items.every((it) =>
-      props.checkedItems.includes(it.navn)
+      props.checkedItems.includes(it.navn),
     );
     const filteredCheckedItems = props.checkedItems.filter(
-      (it) => !props.kategori.items?.some((item) => item.navn === it)
+      (it) => !props.kategori.items?.some((item) => item.navn === it),
     );
     if (allChecked) {
       props.setCheckedItems(filteredCheckedItems);
@@ -41,7 +41,7 @@ function KategoriMarkup(props: Props) {
     <>
       <Checkbox
         checked={props.kategori.items.every((it) =>
-          props.checkedItems.includes(it.navn)
+          props.checkedItems.includes(it.navn),
         )}
         header={true}
         strikeThrough

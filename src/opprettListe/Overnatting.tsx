@@ -4,8 +4,8 @@ import {
   getOvernattingArray,
   getOvernattingLabel,
   Overnatting,
-} from "../../models/overnatting";
-import Checkbox from "../../utils/baseComponents/Checkbox";
+} from "../models/overnatting";
+import Checkbox from "../ui/Checkbox";
 import { ChangeEvent } from "react";
 
 interface Props {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import ValgStyle from "./ValgStyle";
-import Checkbox from "../../utils/baseComponents/Checkbox";
+import Checkbox from "../ui/Checkbox";
 
 interface Props {
   idaBehov: boolean;

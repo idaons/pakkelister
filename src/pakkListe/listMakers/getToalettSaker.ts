@@ -5,7 +5,7 @@ import { Valg } from "../../models/valg";
 import { Kjonn } from "../../models/kjonn";
 import { Sesong } from "../../models/sesong";
 import { skalGåPåTur } from "../../models/aktivitet";
-import { erLangtur } from "../../lagListe/valg/LengdeValg";
+import { erLangtur } from "../../opprettListe/LengdeValg";
 
 export function getToalettSaker(valg: Valg): Item[] {
   let toalettSaker = ["Solkrem"];
@@ -26,7 +26,7 @@ export function getToalettSaker(valg: Valg): Item[] {
     "Linsebeholder",
     "Briller",
     "Piller",
-    "Deo"
+    "Deo",
   );
 
   if (valg.kjønn === Kjonn.Kvinne) {

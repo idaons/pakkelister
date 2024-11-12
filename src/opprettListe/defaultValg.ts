@@ -1,6 +1,6 @@
-import { Valg } from "../../models/valg";
-import { Sesong } from "../../models/sesong";
-import { Kjonn } from "../../models/kjonn";
+import { Valg } from "../models/valg";
+import { Sesong } from "../models/sesong";
+import { Kjonn } from "../models/kjonn";
 
 const today = new Date();
 

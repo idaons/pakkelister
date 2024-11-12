@@ -16,7 +16,9 @@ export const buttonStyles = css`
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 0 0 0.1rem #333, 0 0 0 0.3rem white;
+    box-shadow:
+      0 0 0 0.1rem #333,
+      0 0 0 0.3rem white;
   }
 `;
 

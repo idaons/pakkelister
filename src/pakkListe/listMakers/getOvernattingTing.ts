@@ -33,7 +33,7 @@ export function getOvernattingTing(valg: Valg): Item[] {
       "Hengekøyeoppheng",
       "Tarp",
       "Myggnetting",
-      "Våtservietter"
+      "Våtservietter",
     );
   }
 

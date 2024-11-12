@@ -1,5 +1,5 @@
 import { Valg } from "../models/valg";
-import { defaultValg } from "../lagListe/valg/defaultValg";
+import { defaultValg } from "../opprettListe/defaultValg";
 import { useRouter } from "next/router";
 import { Aktivitet } from "../models/aktivitet";
 import { Sesong } from "../models/sesong";

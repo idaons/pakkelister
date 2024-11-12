@@ -9,7 +9,7 @@ import {
   Overnatting,
   overnattingBareHus,
 } from "../../models/overnatting";
-import { erLangtur } from "../../lagListe/valg/LengdeValg";
+import { erLangtur } from "../../opprettListe/LengdeValg";
 import { Sesong } from "../../models/sesong";
 
 export function getDivTing(valg: Valg): Item[] {

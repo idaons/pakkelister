@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import Checkbox from "../utils/baseComponents/Checkbox";
-import Button from "../utils/baseComponents/Button";
+import Checkbox from "../ui/Checkbox";
+import Button from "../ui/Button";
 import Soppelkasse from "../ikoner/Soppelkasse";
 import * as React from "react";
 import { smallMobileMaxWidth } from "../commonStyles";
 import { useEffect, useState } from "react";
 import { TingListe } from "./KategoriMarkup";
-import TextInput from "../utils/baseComponents/TextInput";
+import TextInput from "../ui/TextInput";
 
 const EkstravalgWrapper = styled.div`
   margin-bottom: 1rem;
@@ -59,7 +59,7 @@ function ExtraItems(props: Props) {
   useEffect(() => {
     if (props.ekstraTing.length > 0) {
       const allItemsAreChecked = props.ekstraTing.every((it) =>
-        props.checkedItems.includes(it)
+        props.checkedItems.includes(it),
       );
       setAllChecked(allItemsAreChecked);
     }
@@ -83,7 +83,7 @@ function ExtraItems(props: Props) {
   const onAllExtrasChecked = (e) => {
     setAllChecked(e.target.checked);
     const otherCheckedItems = props.checkedItems.filter(
-      (it) => !props.ekstraTing?.includes(it)
+      (it) => !props.ekstraTing?.includes(it),
     );
     if (e.target.checked) {
       props.setCheckedItems([...otherCheckedItems, ...props.ekstraTing]);

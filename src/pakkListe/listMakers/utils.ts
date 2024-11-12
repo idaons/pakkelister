@@ -40,7 +40,7 @@ export function sikkerhetVinter(valg: Valg) {
 export function stringArrayToItems(
   array: string[],
   kategori: Kategori,
-  antall?: number
+  antall?: number,
 ): Item[] {
   return array.map((ting) => ({
     navn: ting,
@@ -55,7 +55,7 @@ export interface TingMedAntall {
 
 export function objektMedAntallTilItems(
   object: TingMedAntall,
-  kategori: Kategori
+  kategori: Kategori,
 ): Item[] {
   return Object.entries(object).map((ting) => ({
     navn: ting[0],

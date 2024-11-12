@@ -1,4 +1,4 @@
-import LinkButton from "../utils/baseComponents/LinkButton";
+import LinkButton from "../ui/LinkButton";
 import styled from "styled-components";
 
 const Style = styled.div`

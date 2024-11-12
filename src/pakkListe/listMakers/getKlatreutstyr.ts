@@ -38,7 +38,7 @@ export function getKlatreutstyr(valg: Valg): Item[] {
       "Bailetau",
       "Diverse karabiner",
       "Nøttepirker",
-      "Prusiker"
+      "Prusiker",
     );
   }
 

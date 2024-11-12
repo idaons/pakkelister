@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import Button from "../utils/baseComponents/Button";
+import Button from "../ui/Button";
 import { Item } from "../models/liste";
 
 const Style = styled.div`
@@ -28,7 +28,7 @@ function splitArray(array, isValid) {
         return [pass, [...fail, elem]];
       }
     },
-    [[], []]
+    [[], []],
   );
 }
 
@@ -46,7 +46,7 @@ const UgyldigLocalStorage = (props: Props) => {
 
   const [gyldigeElementer, ugyldigeElementer] = splitArray(
     props.checked.concat(),
-    (e) => alleTing.includes(e)
+    (e) => alleTing.includes(e),
   );
 
   const handleUgyldigLocalStorage = () => {

@@ -11,7 +11,7 @@ import { getSkiTing } from "./getSkiTing";
 import { getKlatreutstyr } from "./getKlatreutstyr";
 import { getFjellturTing } from "./getFjellturTing";
 import { getSpesielleTing } from "./getSpesielleTing";
-import { getKajakkTing } from "../../pakk/listMakers/getKajakkTing";
+import { getKajakkTing } from "../listMakers/getKajakkTing";
 import { getSykkelTing } from "./getSykkelTing";
 
 export const alleLister: ItemsGetter[] = [
@@ -36,7 +36,7 @@ function removeDuplicates(items: Item[]) {
   let uniqueItems: Item[] = [];
   items.forEach((candidate) => {
     let duplicate = uniqueItems.find(
-      (it) => it.navn === candidate.navn && it.kategori === candidate.kategori
+      (it) => it.navn === candidate.navn && it.kategori === candidate.kategori,
     );
     if (!duplicate) {
       uniqueItems.push(candidate);
@@ -52,6 +52,6 @@ function removeDuplicates(items: Item[]) {
 
 export function getAlleTing(valg: Valg): Item[] {
   return removeDuplicates(
-    alleLister.flatMap((rule) => rule(valg)).sort(sortAlphabetically)
+    alleLister.flatMap((rule) => rule(valg)).sort(sortAlphabetically),
   );
 }

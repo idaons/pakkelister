@@ -1,7 +1,7 @@
 import * as React from "react";
 import ValgStyle from "./ValgStyle";
-import Radio from "../../utils/baseComponents/Radio";
-import { getKjønnArray, getKjønnLabel, Kjonn } from "../../models/kjonn";
+import Radio from "../ui/Radio";
+import { getKjønnArray, getKjønnLabel, Kjonn } from "../models/kjonn";
 
 interface Props {
   kjønn: Kjonn;

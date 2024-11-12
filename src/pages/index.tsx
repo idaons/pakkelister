@@ -1,21 +1,21 @@
 import * as React from "react";
 import { useEffect, useReducer, useState } from "react";
-import SesongValg from "../lagListe/valg/SesongValg";
-import AktiviteterValg from "../lagListe/valg/AktiviteterValg";
-import OvernattingValg from "../lagListe/valg/Overnatting";
-import KjonnValg from "../lagListe/valg/KjonnValg";
-import CustomValg from "../lagListe/valg/CustomValg";
-import LengdeValg from "../lagListe/valg/LengdeValg";
+import SesongValg from "../opprettListe/SesongValg";
+import AktiviteterValg from "../opprettListe/AktiviteterValg";
+import OvernattingValg from "../opprettListe/Overnatting";
+import KjonnValg from "../opprettListe/KjonnValg";
+import CustomValg from "../opprettListe/CustomValg";
+import LengdeValg from "../opprettListe/LengdeValg";
 import { UnmountClosed } from "react-collapse";
-import LinkButton from "../utils/baseComponents/LinkButton";
+import LinkButton from "../ui/LinkButton";
 import {
   encodeValgToUrlParams,
   useDecodeUrlParamsToValg,
 } from "../utils/encodeValgToUrlParams";
-import { defaultValg } from "../lagListe/valg/defaultValg";
+import { defaultValg } from "../opprettListe/defaultValg";
 import styled from "styled-components";
 import { Valg } from "../models/valg";
-import VelgListe from "../lagListe/valg/VelgListe";
+import VelgListe from "../opprettListe/VelgListe";
 
 const StyledForm = styled.form`
   border: 0.2em white solid;
@@ -56,17 +56,13 @@ const Opprett = styled.div`
   padding: 2rem;
 `;
 
-function reducer(state: Valg, update: Partial<Valg>): Valg {
-  return {
-    ...state,
-    ...update,
-  };
-}
-
 export default function Index() {
-  const [valg, updateValg] = useReducer(reducer, defaultValg);
+  const [valg, setValg] = useState(defaultValg);
   const [listeNavn, setListeNavn] = useState<string | undefined>("");
 
+  const updateValg = (update: Partial<Valg>) => {
+    setValg({ ...valg, ...update });
+  };
   const urlParams = useDecodeUrlParamsToValg();
   useEffect(() => {
     updateValg(urlParams.valg);

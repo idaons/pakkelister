@@ -7,7 +7,7 @@ import { stringArrayToItems } from "./utils";
 export function getSkredTing(valg: Valg): Item[] {
   if (
     ![Aktivitet.Randonée, Aktivitet.Fjellski].some((it) =>
-      valg.aktiviteter.includes(it)
+      valg.aktiviteter.includes(it),
     )
   ) {
     return [];

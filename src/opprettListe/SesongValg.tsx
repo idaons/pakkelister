@@ -1,7 +1,7 @@
 import * as React from "react";
 import ValgStyle from "./ValgStyle";
-import Radio from "../../utils/baseComponents/Radio";
-import { Sesong } from "../../models/sesong";
+import Radio from "../ui/Radio";
+import { Sesong } from "../models/sesong";
 
 interface Props {
   sesong: Sesong;

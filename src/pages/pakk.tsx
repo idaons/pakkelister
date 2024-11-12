@@ -1,21 +1,21 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { getAlleTing } from "../pakk/listMakers/getAlleTing";
+import { getAlleTing } from "../pakkListe/listMakers/getAlleTing";
 import { groupArray } from "../utils/groupArray";
 import { Kategori } from "../models/kategori";
 import {
   useDecodeUrlParamsToValg,
   encodeValgToUrlParams,
 } from "../utils/encodeValgToUrlParams";
-import LinkButton from "../utils/baseComponents/LinkButton";
-import VisValg from "../pakk/Valg";
+import LinkButton from "../ui/LinkButton";
+import VisValg from "../pakkListe/Valg";
 import styled from "styled-components";
-import Progress from "../pakk/Progress";
+import Progress from "../pakkListe/Progress";
 import { desktopMinWidth, smallMobileMaxWidth } from "../commonStyles";
-import Bunnknapper from "../pakk/Bunnknapper";
-import ExtraItems from "../pakk/ExtraItems";
-import KategoriMarkup from "../pakk/KategoriMarkup";
-import UgyldigLocalStorage from "../pakk/UgyldigLocalStorage";
+import Bunnknapper from "../pakkListe/Bunnknapper";
+import ExtraItems from "../pakkListe/ExtraItems";
+import KategoriMarkup from "../pakkListe/KategoriMarkup";
+import UgyldigLocalStorage from "../pakkListe/UgyldigLocalStorage";
 import { useLocalStorage } from "../utils/useLocalStorage";
 
 const Style = styled.div`
@@ -73,17 +73,19 @@ function Pakk() {
   const { valg, listeNavn, feilmelding } = useDecodeUrlParamsToValg();
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [lagrerListe, setLagrerListe] = useState(false);
+  const [initalSync, setInitialSync] = useState<string | undefined>();
   const [ekstraTing, setEkstraTing] = useState<string[]>([]);
   const urlParams = useDecodeUrlParamsToValg();
   const alleElementer = getAlleTing(valg);
   const ls = useLocalStorage();
-  const listFromLocalStorage = ls.getList(listeNavn);
 
   useEffect(() => {
+    const listFromLocalStorage = ls.getList(listeNavn);
     if (!listFromLocalStorage) return;
     setCheckedItems(listFromLocalStorage.checked);
     setEkstraTing(listFromLocalStorage.ekstraItems);
-  }, [urlParams.key]);
+    setInitialSync(listeNavn);
+  }, [ls, listeNavn]);
 
   useEffect(() => {
     setLagrerListe(true);

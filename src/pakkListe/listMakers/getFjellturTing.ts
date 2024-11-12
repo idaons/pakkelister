@@ -9,7 +9,7 @@ export function getFjellturTing(valg: Valg): Item[] {
 
   if (
     ![Aktivitet.Fottur, Aktivitet.Tinderangling].some((it) =>
-      valg.aktiviteter.includes(it)
+      valg.aktiviteter.includes(it),
     )
   ) {
     return [];
