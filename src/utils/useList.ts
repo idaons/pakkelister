@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { Valg } from "../models/valg";
+import { useLocalStorageValue } from "./useLocalStorageValue";
 
 const localStorageKeyPrefix = "pakkelister";
 
@@ -15,15 +15,15 @@ export const useAllLists = () =>
 
 export const useList = (listName = "default", valg: Valg) => {
   const [lists, setLists] = useAllLists();
+  const initialValue: LocalStorageListe = {
+    listeNavn: listName,
+    valg,
+    checkedItems: [],
+    extraItems: [],
+  };
 
   const currentList =
-    lists?.find((list) => list.listeNavn === listName) ||
-    ({
-      listeNavn: listName,
-      valg,
-      checkedItems: [],
-      extraItems: [],
-    } satisfies LocalStorageListe);
+    lists?.find((list) => list.listeNavn === listName) || initialValue;
 
   const updateList = (update: Partial<LocalStorageListe>) => {
     const updatedList = {
@@ -38,29 +38,4 @@ export const useList = (listName = "default", valg: Valg) => {
   };
 
   return { list: currentList, updateList };
-};
-
-const useLocalStorageValue = <T extends object>(key: string) => {
-  const [value, setValue] = useState<T>();
-  const [status, setStatus] = useState<"loading" | "syncedWithLocalStorage">(
-    "loading",
-  );
-
-  useEffect(() => {
-    if (status === "syncedWithLocalStorage") return;
-    const localStorageValue = window.localStorage.getItem(key);
-    if (localStorageValue) setValue(JSON.parse(localStorageValue));
-    setStatus("syncedWithLocalStorage");
-  }, [key, status]);
-
-  useEffect(() => {
-    setStatus("loading");
-  }, [key]);
-
-  const setLocalStorageValue = (value: T) => {
-    window.localStorage.setItem(key, JSON.stringify(value));
-    setValue(value);
-  };
-
-  return [value, setLocalStorageValue] as const;
 };

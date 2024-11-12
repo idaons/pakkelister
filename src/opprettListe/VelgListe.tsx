@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import TextInput from "../ui/TextInput";
-
 import Button from "../ui/Button";
 import * as React from "react";
 import { InputGruppe } from "../pages";
 import { Valg } from "../models/valg";
 import ValgStyle from "./ValgStyle";
-import { useLocalStorage } from "../utils/useLocalStorage";
 import { LocalStorageListe, useAllLists } from "../utils/useList";
 
 const FlexCol = styled.div`
