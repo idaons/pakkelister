@@ -9,7 +9,7 @@ import {
 } from "../utils/encodeValgToUrlParams";
 import LinkButton from "../utils/baseComponents/LinkButton";
 import VisValg from "../pakk/Valg";
-import { PakkeAppLocalStorage } from "../utils/localStorage";
+import { usePakkeAppLocalStorage } from "../utils/localStorage";
 import styled from "styled-components";
 import Progress from "../pakk/Progress";
 import { desktopMinWidth, smallMobileMaxWidth } from "../commonStyles";
@@ -76,7 +76,8 @@ function Pakk() {
   const [ekstraTing, setEkstraTing] = useState<string[]>([]);
   const urlParams = useDecodeUrlParamsToValg();
   const alleElementer = getAlleTing(valg);
-  const listFromLocalStorage = PakkeAppLocalStorage.getList(listeNavn);
+  const { getList, saveList } = usePakkeAppLocalStorage();
+  const listFromLocalStorage = getList(listeNavn);
 
   useEffect(() => {
     if (!listFromLocalStorage) return;
@@ -86,7 +87,7 @@ function Pakk() {
 
   useEffect(() => {
     setLagrerListe(true);
-    PakkeAppLocalStorage.saveList({
+    saveList({
       listeNavn,
       checked: checkedItems,
       ekstraItems: ekstraTing,

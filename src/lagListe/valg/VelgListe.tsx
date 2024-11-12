@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import TextInput from "../../utils/baseComponents/TextInput";
-import { PakkeAppLocalStorage } from "../../utils/localStorage";
+import { usePakkeAppLocalStorage } from "../../utils/localStorage";
 import Button from "../../utils/baseComponents/Button";
 import * as React from "react";
 import { InputGruppe } from "../../pages";
@@ -25,13 +25,13 @@ interface Props {
 
 function VelgListe(props: Props) {
   const onListeValgt = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const valg = PakkeAppLocalStorage.getList(e.currentTarget.value)?.valg;
+    const valg = usePakkeAppLocalStorage().getList(e.currentTarget.value)?.valg;
     if (!valg) return;
     props.setListeNavn(e.currentTarget.value);
     props.updateValg(valg);
   };
 
-  const eksisterendeLister = PakkeAppLocalStorage.getLists();
+  const eksisterendeLister = usePakkeAppLocalStorage().getLists();
 
   return (
     <ValgStyle name="Listenavn">
