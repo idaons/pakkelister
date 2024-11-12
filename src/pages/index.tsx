@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import SesongValg from "../opprettListe/SesongValg";
 import AktiviteterValg from "../opprettListe/AktiviteterValg";
 import OvernattingValg from "../opprettListe/Overnatting";
