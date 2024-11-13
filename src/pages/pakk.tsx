@@ -96,39 +96,39 @@ function Pakk() {
 
   const progress = list
     ? Math.floor(
-        (list.checkedItems.length * 100) /
-          (alleElementer.length + list.extraItems.length),
+        (list.checked.length * 100) /
+          (alleElementer.length + list.ekstraItems.length),
       )
     : 0;
 
   const toggleItem = (item: string) => {
-    const checkedItems = list.checkedItems ?? [];
+    const checkedItems = list.checked ?? [];
     const newCheckedItems = checkedItems.includes(item)
       ? checkedItems.filter((checkedItem) => checkedItem !== item)
       : [...checkedItems, item];
-    updateList({ checkedItems: newCheckedItems });
+    updateList({ checked: newCheckedItems });
   };
 
   const setItems = (items: string[]) =>
-    updateList({ checkedItems: [...list.checkedItems, ...items] });
+    updateList({ checked: [...list.checked, ...items] });
 
   const removeItems = (items: string[]) =>
     updateList({
-      checkedItems: list.checkedItems.filter(
+      checked: list.checked.filter(
         (checkedItem) => !items.includes(checkedItem),
       ),
     });
 
-  const clearList = () => updateList({ checkedItems: [] });
+  const clearList = () => updateList({ checked: [] });
 
   const toggleExtraItem = (item: string) => {
-    const extraItems = list?.extraItems ?? [];
+    const extraItems = list?.ekstraItems ?? [];
 
     const updatedExtraItems = extraItems.includes(item)
       ? extraItems.filter((i) => i !== item)
       : [...extraItems, item];
 
-    updateList({ extraItems: updatedExtraItems });
+    updateList({ ekstraItems: updatedExtraItems });
   };
 
   return (
@@ -140,8 +140,8 @@ function Pakk() {
       <VisValg valg={valg} />
       <Progress progress={progress} />
       <UgyldigLocalStorage
-        ekstraItems={list.extraItems}
-        checked={list.checkedItems}
+        ekstraItems={list.ekstraItems}
+        checked={list.checked}
         alleElementer={alleElementer}
         removeItems={removeItems}
       />
@@ -150,7 +150,7 @@ function Pakk() {
           <li key={kategori.category}>
             <KategoriMarkup
               kategori={kategori}
-              checkedItems={list?.checkedItems ?? []}
+              checkedItems={list?.checked ?? []}
               toggleItem={toggleItem}
               setItems={setItems}
               removeItems={removeItems}
@@ -159,8 +159,8 @@ function Pakk() {
         ))}
         <li>
           <ExtraItems
-            checkedItems={list?.checkedItems ?? []}
-            ekstraTing={list?.extraItems ?? []}
+            checkedItems={list?.checked ?? []}
+            ekstraTing={list?.ekstraItems ?? []}
             toggleItem={toggleItem}
             setItems={setItems}
             removeItems={removeItems}
