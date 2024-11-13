@@ -1,14 +1,12 @@
 import * as React from "react";
-import { Valg } from "../models/valg";
-import { Sesong } from "../models/sesong";
-import { getKjønnLabel } from "../models/kjonn";
+import { Aktivitet, IValg, Sesong } from "../utils/types";
+import { getKjønnLabel } from "../hjelpefunksjoner/kjonn";
 import { overnatting } from "./listMakers/utils";
-import { Aktivitet } from "../models/aktivitet";
-import { getOvernattingLabel } from "../models/overnatting";
+import { getOvernattingLabel } from "../hjelpefunksjoner/overnatting";
 import styled from "styled-components";
 
 interface Props {
-  valg: Valg;
+  valg: IValg;
 }
 
 const Style = styled.div`

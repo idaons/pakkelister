@@ -1,10 +1,10 @@
 import {
   getOvernattingArray,
   getOvernattingLabel,
-  Overnatting,
-} from "../models/overnatting";
+} from "../hjelpefunksjoner/overnatting";
 import Checkbox from "../ui/Checkbox";
 import ValgStyle from "./ValgStyle";
+import { Overnatting } from "../utils/types";
 
 interface Props {
   overnatting: Overnatting[];

@@ -1,13 +1,16 @@
 import { objektMedAntallTilItems, overnatting, TingMedAntall } from "./utils";
-import { Kategori } from "../../models/kategori";
-import { Valg } from "../../models/valg";
-import { Sesong } from "../../models/sesong";
-import { Item } from "../../models/liste";
-import { Overnatting } from "../../models/overnatting";
-import { Kjonn } from "../../models/kjonn";
-import { Aktivitet, skalGåPåTur } from "../../models/aktivitet";
+import {
+  Aktivitet,
+  IValg,
+  Kategori,
+  Kjonn,
+  Overnatting,
+} from "../../utils/types";
+import { Sesong } from "../../utils/types";
+import { Item } from "../../utils/types";
+import { skalGåPåTur } from "../../hjelpefunksjoner/aktivitet";
 
-export function getKlaer(valg: Valg): Item[] {
+export function getKlaer(valg: IValg): Item[] {
   let klær: TingMedAntall = {};
 
   const skalVæreInneBlantFolk =

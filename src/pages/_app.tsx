@@ -1,8 +1,8 @@
 import React from "react";
 import Head from "next/head";
 import { AppProps } from "next/app";
-import "../normalize";
-import GlobalStyles from "../GlobalStyles";
+import "../styles/normalize";
+import GlobalStyles from "../styles/GlobalStyles";
 import { Exo } from "next/font/google";
 
 // If loading a variable font, you don't need to specify the font weight

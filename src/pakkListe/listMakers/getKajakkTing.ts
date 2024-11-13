@@ -1,10 +1,7 @@
-import { Kategori } from "../../models/kategori";
-import { Aktivitet } from "../../models/aktivitet";
-import { Valg } from "../../models/valg";
-import { Item } from "../../models/liste";
+import { Aktivitet, IValg, Kategori, Item } from "../../utils/types";
 import { stringArrayToItems } from "./utils";
 
-export function getKajakkTing(valg: Valg): Item[] {
+export function getKajakkTing(valg: IValg): Item[] {
   if (!valg.aktiviteter.includes(Aktivitet.Kajakk)) {
     return [];
   }

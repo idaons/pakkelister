@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
-import { Valg } from "../models/valg";
+import { IValg } from "./types";
 import { defaultValg } from "../opprettListe/defaultValg";
 
-type Params = { valg: Valg; listeNavn?: string };
+type Params = { valg: IValg; listeNavn?: string };
 
-export function encodeValgToUrlParams(valg: Valg, listeNavn?: string) {
+export function encodeValgToUrlParams(valg: IValg, listeNavn?: string) {
   const params: Params = {
     valg: valg,
     listeNavn,
@@ -14,7 +14,7 @@ export function encodeValgToUrlParams(valg: Valg, listeNavn?: string) {
 }
 
 interface DecodedUrlParams {
-  valg: Valg;
+  valg: IValg;
   error?: Error;
   feilmelding?: string;
   listeNavn: string;

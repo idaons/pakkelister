@@ -1,16 +1,12 @@
-import { Kategori } from "../../models/kategori";
 import {
-  Aktivitet,
   skalBæreTungSekk,
   skalGåPåTur,
-} from "../../models/aktivitet";
-import { Valg } from "../../models/valg";
-import { Item } from "../../models/liste";
+} from "../../hjelpefunksjoner/aktivitet";
+import { IValg, Item, Sesong, Aktivitet, Kategori } from "../../utils/types";
 import { stringArrayToItems } from "./utils";
-import { Sesong } from "../../models/sesong";
-import { overnatteUkjentSted } from "../../models/overnatting";
+import { overnatteUkjentSted } from "../../hjelpefunksjoner/overnatting";
 
-export function getSpesielleTing(valg: Valg): Item[] {
+export function getSpesielleTing(valg: IValg): Item[] {
   let ting: string[] = [];
 
   if (valg.idaBehov) {

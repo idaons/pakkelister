@@ -1,10 +1,7 @@
-import { Aktivitet } from "../../models/aktivitet";
-import { Valg } from "../../models/valg";
-import { Item } from "../../models/liste";
+import { Aktivitet, Item, IValg, Kategori } from "../../utils/types";
 import { stringArrayToItems } from "./utils";
-import { Kategori } from "../../models/kategori";
 
-export function getSkiTing(valg: Valg): Item[] {
+export function getSkiTing(valg: IValg): Item[] {
   let skiTing: string[] = [];
 
   const langrenn = valg.aktiviteter.includes(Aktivitet.Langrenn);

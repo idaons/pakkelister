@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import Button from "../ui/Button";
-import { Item } from "../models/liste";
+import { Item } from "../utils/types";
 
 const Style = styled.div`
   color: #e8e862;

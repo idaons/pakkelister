@@ -1,10 +1,7 @@
-import { Kategori } from "../../models/kategori";
-import { Aktivitet } from "../../models/aktivitet";
-import { Valg } from "../../models/valg";
-import { Item } from "../../models/liste";
+import { Aktivitet, Item, IValg, Kategori } from "../../utils/types";
 import { overlapp, stringArrayToItems } from "./utils";
 
-export function getKlatreutstyr(valg: Valg): Item[] {
+export function getKlatreutstyr(valg: IValg): Item[] {
   let items: string[] = [];
 
   if (

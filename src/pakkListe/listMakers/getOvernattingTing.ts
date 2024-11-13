@@ -1,14 +1,11 @@
-import { Kategori } from "../../models/kategori";
-import { Valg } from "../../models/valg";
+import { IValg, Item, Overnatting, Kategori } from "../../utils/types";
 import {
   overnatteUkjentSted,
-  Overnatting,
   overnattingUte,
-} from "../../models/overnatting";
+} from "../../hjelpefunksjoner/overnatting";
 import { sikkerhetVinter, stringArrayToItems } from "./utils";
-import { Item } from "../../models/liste";
 
-export function getOvernattingTing(valg: Valg): Item[] {
+export function getOvernattingTing(valg: IValg): Item[] {
   let overnattingTing: string[] = [];
 
   if (sikkerhetVinter(valg)) {

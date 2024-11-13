@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import { Valg } from "../models/valg";
-import { InputGruppe } from "../pages";
 import Button from "../ui/Button";
+import * as React from "react";
+import { InputGruppe } from "../pages";
+import { IValg } from "../utils/types";
+import ValgStyle from "./ValgStyle";
 import TextInput from "../ui/TextInput";
 import { LocalStorageListe, useAllLists } from "../utils/useList";
-import ValgStyle from "./ValgStyle";
 
 const FlexCol = styled.div`
   display: flex;
@@ -19,7 +20,7 @@ const StyledTextinput = styled(TextInput)`
 interface Props {
   listeNavn?: string;
   setListeNavn: (navn: string) => void;
-  updateValg: (valg: Valg) => void;
+  updateValg: (valg: IValg) => void;
 }
 
 function VelgListe(props: Props) {

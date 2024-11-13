@@ -1,12 +1,10 @@
-import { Valg } from "../models/valg";
-import { Sesong } from "../models/sesong";
-import { Kjonn } from "../models/kjonn";
+import { IValg, Sesong, Kjonn } from "../utils/types";
 
 const today = new Date();
 
 const erVinter = today.getMonth() >= 10 || today.getMonth() <= 3;
 
-export const defaultValg: Valg = {
+export const defaultValg: IValg = {
   sesong: erVinter ? Sesong.Vinter : Sesong.Sommer,
   overnatting: [],
   kjønn: Kjonn.Irrelevant,

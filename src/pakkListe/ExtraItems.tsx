@@ -3,7 +3,7 @@ import Checkbox from "../ui/Checkbox";
 import Button from "../ui/Button";
 import Soppelkasse from "../ikoner/Soppelkasse";
 import * as React from "react";
-import { smallMobileMaxWidth } from "../commonStyles";
+import { smallMobileMaxWidth } from "../styles/commonStyles";
 import { useState } from "react";
 import { TingListe } from "./KategoriMarkup";
 import TextInput from "../ui/TextInput";

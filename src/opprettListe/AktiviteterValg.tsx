@@ -2,10 +2,10 @@ import ValgStyle from "./ValgStyle";
 import * as React from "react";
 import Checkbox from "../ui/Checkbox";
 import {
-  Aktivitet,
   getAktivitetAsArray,
   getAktivitetLabel,
-} from "../models/aktivitet";
+} from "../hjelpefunksjoner/aktivitet";
+import { Aktivitet } from "../utils/types";
 
 interface Props {
   valgteAktiviteter: Aktivitet[];

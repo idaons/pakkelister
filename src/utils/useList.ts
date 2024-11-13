@@ -1,4 +1,4 @@
-import { Valg } from "../models/valg";
+import { IValg } from "./types";
 import { useLocalStorageValue } from "./useLocalStorageValue";
 
 const localStorageKeyPrefix = "pakkelister";
@@ -6,7 +6,7 @@ const localStorageKeyPrefix = "pakkelister";
 // Dette er strukturen som lagres i local storage, så endringer her kan føre til at gamle lister ikke lenger fungerer
 export type LocalStorageListe = {
   listeNavn: string;
-  valg: Valg;
+  valg: IValg;
   checked: string[];
   ekstraItems: string[];
 };
@@ -14,7 +14,7 @@ export type LocalStorageListe = {
 export const useAllLists = () =>
   useLocalStorageValue<LocalStorageListe[]>(localStorageKeyPrefix);
 
-export const useList = (listName: string, valg: Valg) => {
+export const useList = (listName: string, valg: IValg) => {
   const [lists, setLists] = useAllLists();
   const initialValue: LocalStorageListe = {
     listeNavn: listName,
@@ -23,8 +23,10 @@ export const useList = (listName: string, valg: Valg) => {
     ekstraItems: [],
   };
 
-  const currentList =
-    lists?.find((list) => list.listeNavn === listName) || initialValue;
+  const currentList: LocalStorageListe =
+    (lists ?? []).find(
+      (list: LocalStorageListe) => list.listeNavn === listName,
+    ) || initialValue;
 
   const updateList = (update: Partial<LocalStorageListe>) => {
     const updatedList = {
@@ -33,7 +35,7 @@ export const useList = (listName: string, valg: Valg) => {
     };
 
     const otherLists =
-      lists?.filter((list) => list.listeNavn !== listName) ?? [];
+      (lists ?? []).filter((list) => list.listeNavn !== listName) ?? [];
 
     setLists([...otherLists, updatedList]);
   };

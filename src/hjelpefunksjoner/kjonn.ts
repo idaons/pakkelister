@@ -1,10 +1,5 @@
 import { getEnumAsArray } from "../utils/enum";
-
-export enum Kjonn {
-  Mann = "Mann",
-  Kvinne = "Kvinne",
-  Irrelevant = "Irrelevant",
-}
+import { Kjonn } from "../utils/types";
 
 export function getKjønnLabel(k: Kjonn) {
   let label = "";

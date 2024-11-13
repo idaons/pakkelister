@@ -1,7 +1,5 @@
-import { ItemsGetter } from "../../models/itemsGetter";
 import { getToalettSaker } from "./getToalettSaker";
-import { Valg } from "../../models/valg";
-import { Item } from "../../models/liste";
+import { IValg, Item, ItemsGetter } from "../../utils/types";
 import { getIsbreTing } from "./getIsbreTing";
 import { getKlaer } from "./getKlaer";
 import { getDivTing } from "./getDivTing";
@@ -11,7 +9,7 @@ import { getSkiTing } from "./getSkiTing";
 import { getKlatreutstyr } from "./getKlatreutstyr";
 import { getFjellturTing } from "./getFjellturTing";
 import { getSpesielleTing } from "./getSpesielleTing";
-import { getKajakkTing } from "../listMakers/getKajakkTing";
+import { getKajakkTing } from "./getKajakkTing";
 import { getSykkelTing } from "./getSykkelTing";
 
 export const alleLister: ItemsGetter[] = [
@@ -27,7 +25,7 @@ export const alleLister: ItemsGetter[] = [
   getSpesielleTing,
   getKajakkTing,
   getSykkelTing,
-];
+] as ItemsGetter[];
 
 const sortAlphabetically = (item1: Item, item2: Item) =>
   item1.navn > item2.navn ? 1 : -1;
@@ -50,7 +48,7 @@ function removeDuplicates(items: Item[]) {
   return uniqueItems;
 }
 
-export function getAlleTing(valg: Valg): Item[] {
+export function getAlleTing(valg: IValg): Item[] {
   return removeDuplicates(
     alleLister.flatMap((rule) => rule(valg)).sort(sortAlphabetically),
   );

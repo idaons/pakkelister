@@ -1,14 +1,10 @@
-import { Valg } from "../../models/valg";
-import { Sesong } from "../../models/sesong";
-import { Aktivitet } from "../../models/aktivitet";
-import { Item } from "../../models/liste";
-import { Kategori } from "../../models/kategori";
+import { IValg, Sesong, Aktivitet, Item, Kategori } from "../../utils/types";
 
-export function overnatting(valg: Valg) {
+export function overnatting(valg: IValg) {
   return valg.overnatting.length > 0;
 }
 
-export function sikkerhetVinter(valg: Valg) {
+export function sikkerhetVinter(valg: IValg) {
   let trengerSikkerhet = false;
   if (
     valg.sesong === Sesong.Vinter &&

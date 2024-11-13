@@ -1,10 +1,7 @@
-import { Kategori } from "../../models/kategori";
-import { Aktivitet } from "../../models/aktivitet";
-import { Valg } from "../../models/valg";
-import { Item } from "../../models/liste";
+import { IValg, Kategori, Aktivitet, Item } from "../../utils/types";
 import { stringArrayToItems } from "./utils";
 
-export function getSykkelTing(valg: Valg): Item[] {
+export function getSykkelTing(valg: IValg): Item[] {
   if (!valg.aktiviteter.includes(Aktivitet.Sykkel)) {
     return [];
   }

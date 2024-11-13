@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { desktopMinWidth, smallMobileMaxWidth } from "../commonStyles";
-import { Kategori } from "../models/kategori";
+import { desktopMinWidth, smallMobileMaxWidth } from "../styles/commonStyles";
 import Bunnknapper from "../pakkListe/Bunnknapper";
 import ExtraItems from "../pakkListe/ExtraItems";
 import KategoriMarkup from "../pakkListe/KategoriMarkup";
@@ -15,6 +14,7 @@ import {
 } from "../utils/encodeValgToUrlParams";
 import { groupArray } from "../utils/groupArray";
 import { useList } from "../utils/useList";
+import { Kategori } from "../utils/types";
 
 const Style = styled.div`
   min-height: 100vh;

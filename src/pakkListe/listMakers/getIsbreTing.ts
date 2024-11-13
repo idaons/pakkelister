@@ -1,10 +1,7 @@
-import { Kategori } from "../../models/kategori";
-import { Valg } from "../../models/valg";
+import { Aktivitet, Item, IValg, Kategori } from "../../utils/types";
 import { objektMedAntallTilItems } from "./utils";
-import { Item } from "../../models/liste";
-import { Aktivitet } from "../../models/aktivitet";
 
-export function getIsbreTing(valg: Valg): Item[] {
+export function getIsbreTing(valg: IValg): Item[] {
   if (!valg.aktiviteter.includes(Aktivitet.Isbre)) {
     return [];
   }

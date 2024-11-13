@@ -1,18 +1,21 @@
 import { overnatting, stringArrayToItems } from "./utils";
-import { Kategori } from "../../models/kategori";
-import { Aktivitet, skalGåPåTur } from "../../models/aktivitet";
-import { Valg } from "../../models/valg";
-import { Item } from "../../models/liste";
-import { Kjonn } from "../../models/kjonn";
+import { skalGåPåTur } from "../../hjelpefunksjoner/aktivitet";
+import {
+  Aktivitet,
+  Item,
+  Kategori,
+  Kjonn,
+  Overnatting,
+  IValg,
+  Sesong,
+} from "../../utils/types";
 import {
   overnatteUkjentSted,
-  Overnatting,
   overnattingBareHus,
-} from "../../models/overnatting";
+} from "../../hjelpefunksjoner/overnatting";
 import { erLangtur } from "../../opprettListe/LengdeValg";
-import { Sesong } from "../../models/sesong";
 
-export function getDivTing(valg: Valg): Item[] {
+export function getDivTing(valg: IValg): Item[] {
   let ting = [
     "Solbriller",
     "Lommebok",

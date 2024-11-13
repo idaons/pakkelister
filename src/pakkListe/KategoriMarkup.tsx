@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Checkbox from "../ui/Checkbox";
 import * as React from "react";
 import { ArrayGroup } from "../utils/groupArray";
-import { Item } from "../models/liste";
+import { Item } from "../utils/types";
 
 interface Props {
   kategori: ArrayGroup<Item>;

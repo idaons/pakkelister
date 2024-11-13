@@ -1,10 +1,7 @@
-import { Aktivitet } from "../../models/aktivitet";
-import { Valg } from "../../models/valg";
-import { Item } from "../../models/liste";
+import { Aktivitet, Item, Kategori, IValg } from "../../utils/types";
 import { stringArrayToItems } from "./utils";
-import { Kategori } from "../../models/kategori";
 
-export function getFjellturTing(valg: Valg): Item[] {
+export function getFjellturTing(valg: IValg): Item[] {
   let fjellturTing: string[] = [];
 
   if (

@@ -1,7 +1,7 @@
 import * as React from "react";
 import ValgStyle from "./ValgStyle";
 import Radio from "../ui/Radio";
-import { Valg } from "../models/valg";
+import { IValg } from "../utils/types";
 
 interface Props {
   lengde: number;
@@ -10,7 +10,7 @@ interface Props {
 
 export const maksAntallDager = 7;
 
-export function erLangtur(valg: Valg): boolean {
+export function erLangtur(valg: IValg): boolean {
   return valg.lengde >= maksAntallDager;
 }
 

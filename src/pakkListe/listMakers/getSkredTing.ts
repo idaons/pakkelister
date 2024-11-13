@@ -1,10 +1,7 @@
-import { Kategori } from "../../models/kategori";
-import { Aktivitet } from "../../models/aktivitet";
-import { Valg } from "../../models/valg";
-import { Item } from "../../models/liste";
+import { Aktivitet, Item, IValg, Kategori } from "../../utils/types";
 import { stringArrayToItems } from "./utils";
 
-export function getSkredTing(valg: Valg): Item[] {
+export function getSkredTing(valg: IValg): Item[] {
   if (
     ![Aktivitet.Randonée, Aktivitet.Fjellski].some((it) =>
       valg.aktiviteter.includes(it),

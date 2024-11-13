@@ -14,7 +14,7 @@ import {
 } from "../utils/encodeValgToUrlParams";
 import { defaultValg } from "../opprettListe/defaultValg";
 import styled from "styled-components";
-import { Valg } from "../models/valg";
+import { IValg } from "../utils/types";
 import VelgListe from "../opprettListe/VelgListe";
 
 const StyledForm = styled.form`
@@ -60,7 +60,7 @@ export default function Index() {
   const [valg, setValg] = useState(defaultValg);
   const [listeNavn, setListeNavn] = useState<string | undefined>("");
 
-  const updateValg = (update: Partial<Valg>) => {
+  const updateValg = (update: Partial<IValg>) => {
     setValg({ ...valg, ...update });
   };
 

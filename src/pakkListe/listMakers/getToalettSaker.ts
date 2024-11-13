@@ -1,13 +1,9 @@
 import { overnatting, stringArrayToItems } from "./utils";
-import { Kategori } from "../../models/kategori";
-import { Item } from "../../models/liste";
-import { Valg } from "../../models/valg";
-import { Kjonn } from "../../models/kjonn";
-import { Sesong } from "../../models/sesong";
-import { skalGåPåTur } from "../../models/aktivitet";
+import { Item, IValg, Kategori, Kjonn, Sesong } from "../../utils/types";
+import { skalGåPåTur } from "../../hjelpefunksjoner/aktivitet";
 import { erLangtur } from "../../opprettListe/LengdeValg";
 
-export function getToalettSaker(valg: Valg): Item[] {
+export function getToalettSaker(valg: IValg): Item[] {
   let toalettSaker = ["Solkrem"];
 
   if (skalGåPåTur(valg.aktiviteter)) {

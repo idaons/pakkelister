@@ -1,22 +1,5 @@
 import { getEnumAsArray } from "../utils/enum";
-
-export enum Aktivitet {
-  Sportsklatring = "Sportsklatring",
-  Tradklatring = "Tradklatring",
-  ViaFerrata = "ViaFerrata",
-  Fottur = "Fottur",
-  Tinderangling = "Tinderangling",
-  Jogging = "Jogging",
-  Randonée = "Randonée",
-  Isbre = "Isbre",
-  Fjellski = "Fjellski",
-  Langrenn = "Langrenn",
-  Skøyteski = "Skøyteski",
-  Bytur = "Bytur",
-  Kajakk = "Kajakk",
-  Sykkel = "Sykkel",
-  Bortekontor = "Bortekontor",
-}
+import { Aktivitet } from "../utils/types";
 
 export function getAktivitetLabel(aktivitet: Aktivitet) {
   let label = "";
