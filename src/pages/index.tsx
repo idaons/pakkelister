@@ -63,7 +63,9 @@ export default function Index() {
   const updateValg = (update: Partial<Valg>) => {
     setValg({ ...valg, ...update });
   };
+
   const urlParams = useDecodeUrlParamsToValg();
+
   useEffect(() => {
     updateValg(urlParams.valg);
     setListeNavn(urlParams.listeNavn);

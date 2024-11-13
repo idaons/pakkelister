@@ -1,12 +1,10 @@
-import * as React from "react";
-import ValgStyle from "./ValgStyle";
 import {
   getOvernattingArray,
   getOvernattingLabel,
   Overnatting,
 } from "../models/overnatting";
 import Checkbox from "../ui/Checkbox";
-import { ChangeEvent } from "react";
+import ValgStyle from "./ValgStyle";
 
 interface Props {
   overnatting: Overnatting[];
@@ -14,12 +12,11 @@ interface Props {
 }
 
 function OvernattingValg(props: Props) {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = +e.target.value;
-    if (e.target.checked) {
-      props.setOvernatting([...props.overnatting, value]);
+  const handleChange = (overnatting: Overnatting) => {
+    if (!props.overnatting.includes(overnatting)) {
+      props.setOvernatting([...props.overnatting, overnatting]);
     } else {
-      props.setOvernatting(props.overnatting.filter((a) => a !== value));
+      props.setOvernatting(props.overnatting.filter((a) => a !== overnatting));
     }
   };
 
@@ -31,7 +28,7 @@ function OvernattingValg(props: Props) {
           label={getOvernattingLabel(overnatting)}
           value={overnatting}
           checked={props.overnatting.includes(overnatting)}
-          onChange={handleChange}
+          onChange={() => handleChange(overnatting)}
         />
       ))}
     </ValgStyle>

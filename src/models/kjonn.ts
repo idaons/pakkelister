@@ -1,9 +1,9 @@
 import { getEnumAsArray } from "../utils/enum";
 
 export enum Kjonn {
-  Mann,
-  Kvinne,
-  Irrelevant,
+  Mann = "Mann",
+  Kvinne = "Kvinne",
+  Irrelevant = "Irrelevant",
 }
 
 export function getKjønnLabel(k: Kjonn) {

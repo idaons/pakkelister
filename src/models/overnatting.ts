@@ -2,11 +2,11 @@ import { getEnumAsArray } from "../utils/enum";
 import { Valg } from "../models/valg";
 
 export enum Overnatting {
-  DNThytte,
-  Telt,
-  Hengekøye,
-  HusHotell,
-  FamilieHytte,
+  DNThytte = "DNThytte",
+  Telt = "Telt",
+  Hengekøye = "Hengekøye",
+  HusHotell = "HusHotell",
+  FamilieHytte = "FamilieHytte",
 }
 
 export function getOvernattingLabel(o: Overnatting) {
@@ -33,13 +33,13 @@ export function getOvernattingArray(): Overnatting[] {
 
 export function overnattingUte(valg: Valg): boolean {
   return [Overnatting.Hengekøye, Overnatting.Telt].some((o) =>
-    valg.overnatting.includes(o)
+    valg.overnatting.includes(o),
   );
 }
 
 export function overnatteUkjentSted(overnatting: Overnatting[]) {
   return [Overnatting.Hengekøye, Overnatting.Telt, Overnatting.DNThytte].some(
-    (o) => overnatting.includes(o)
+    (o) => overnatting.includes(o),
   );
 }
 export function overnattingBareHus(valg: Valg): boolean {

@@ -1,21 +1,21 @@
 import { getEnumAsArray } from "../utils/enum";
 
 export enum Aktivitet {
-  Sportsklatring,
-  Tradklatring,
-  ViaFerrata,
-  Fottur,
-  Tinderangling,
-  Jogging,
-  Randonée,
-  Isbre,
-  Fjellski,
-  Langrenn,
-  Skøyteski,
-  Bytur,
-  Kajakk,
-  Sykkel,
-  Bortekontor,
+  Sportsklatring = "Sportsklatring",
+  Tradklatring = "Tradklatring",
+  ViaFerrata = "ViaFerrata",
+  Fottur = "Fottur",
+  Tinderangling = "Tinderangling",
+  Jogging = "Jogging",
+  Randonée = "Randonée",
+  Isbre = "Isbre",
+  Fjellski = "Fjellski",
+  Langrenn = "Langrenn",
+  Skøyteski = "Skøyteski",
+  Bytur = "Bytur",
+  Kajakk = "Kajakk",
+  Sykkel = "Sykkel",
+  Bortekontor = "Bortekontor",
 }
 
 export function getAktivitetLabel(aktivitet: Aktivitet) {

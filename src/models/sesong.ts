@@ -1,4 +1,4 @@
 export enum Sesong {
-  Sommer,
-  Vinter,
+  Sommer = "Sommer",
+  Vinter = "Vinter",
 }

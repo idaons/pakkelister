@@ -13,7 +13,7 @@ export type LocalStorageListe = {
 export const useAllLists = () =>
   useLocalStorageValue<LocalStorageListe[]>(localStorageKeyPrefix);
 
-export const useList = (listName = "default", valg: Valg) => {
+export const useList = (listName: string, valg: Valg) => {
   const [lists, setLists] = useAllLists();
   const initialValue: LocalStorageListe = {
     listeNavn: listName,

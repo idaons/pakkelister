@@ -11,13 +11,13 @@ interface Props {
 function KjonnValg(props: Props) {
   return (
     <ValgStyle name="Kjønn">
-      {getKjønnArray().map((k) => (
+      {getKjønnArray().map((kjønn) => (
         <Radio
-          label={getKjønnLabel(k)}
-          key={k}
-          value={k}
-          checked={props.kjønn === k}
-          onChange={(e) => props.setKjønn(+e.target.value)}
+          label={getKjønnLabel(kjønn)}
+          key={kjønn}
+          value={kjønn}
+          checked={props.kjønn === kjønn}
+          onChange={() => props.setKjønn(kjønn)}
         />
       ))}
     </ValgStyle>

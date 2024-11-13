@@ -13,12 +13,13 @@ interface Props {
 }
 
 function AktiviteterValg(props: Props) {
-  const handleChange = (e: any) => {
-    const value = +e.target.value;
-    if (e.target.checked) {
-      props.setAktiviteter([...props.valgteAktiviteter, value]);
+  const handleChange = (aktivitet: Aktivitet) => {
+    if (!props.valgteAktiviteter.includes(aktivitet)) {
+      props.setAktiviteter([...props.valgteAktiviteter, aktivitet]);
     } else {
-      props.setAktiviteter(props.valgteAktiviteter.filter((a) => a !== value));
+      props.setAktiviteter(
+        props.valgteAktiviteter.filter((a) => a !== aktivitet),
+      );
     }
   };
 
@@ -31,7 +32,7 @@ function AktiviteterValg(props: Props) {
             label={getAktivitetLabel(aktivitet)}
             value={aktivitet}
             checked={props.valgteAktiviteter.includes(aktivitet)}
-            onChange={handleChange}
+            onChange={() => handleChange(aktivitet)}
           />
         );
       })}
