@@ -25,6 +25,7 @@ export function getKlaer(valg: IValg): Item[] {
     Dunjakke: 1,
     Hansker: 1,
     Hals: 2,
+    Caps: 1,
   };
 
   if (valg.sesong === Sesong.Vinter) {
@@ -58,7 +59,6 @@ export function getKlaer(valg: IValg): Item[] {
       Ullsokker: 1,
       ["T-skjorte"]: 2,
       Badetøy: 1,
-      Caps: 1,
       Lue: 1,
     };
 
