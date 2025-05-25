@@ -26,6 +26,7 @@ export enum Kategori {
   Ski,
   Sykkel,
   Kajakk,
+  Matkasse,
 }
 
 export interface IValg {
@@ -53,6 +54,7 @@ export enum Overnatting {
   Hengekøye = "Hengekøye",
   HusHotell = "HusHotell",
   FamilieHytte = "FamilieHytte",
+  AirBnB = "AirBnB",
 }
 
 export enum Sesong {
