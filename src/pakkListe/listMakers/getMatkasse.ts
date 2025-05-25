@@ -31,7 +31,10 @@ export function getMatkasse(valg: IValg): Item[] {
     "Bokser",
     "Matpakkeposer",
     "Kjøkkenrull",
-    "Våteservietter",
+    "Våtservietter",
+    "Vinopptrekker",
+    "Champagnestopper",
+    "Coravin",
   ];
 
   return stringArrayToItems(ting, Kategori.Matkasse);
