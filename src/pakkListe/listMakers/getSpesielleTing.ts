@@ -2,32 +2,33 @@ import {
   skalBæreTungSekk,
   skalGåPåTur,
 } from "../../hjelpefunksjoner/aktivitet";
-import { IValg, Item, Sesong, Aktivitet, Kategori } from "../../utils/types";
-import { stringArrayToItems } from "./utils";
 import { overnatteUkjentSted } from "../../hjelpefunksjoner/overnatting";
+import { Aktivitet, IValg, Item, Kategori, Sesong } from "../../utils/types";
+import { stringArrayToItems } from "./utils";
 
 export function getSpesielleTing(valg: IValg): Item[] {
   let ting: string[] = [];
 
-  if (valg.idaBehov) {
-    if (skalBæreTungSekk(valg.aktiviteter)) {
-      ting.push("Hoftegnagsårbeskytter");
-    }
+  if (!valg.idaBehov) return [];
 
-    if (
-      overnatteUkjentSted(valg.overnatting) &&
-      valg.sesong === Sesong.Vinter
-    ) {
-      ting.push("Termos");
-    }
+  if (skalBæreTungSekk(valg.aktiviteter)) {
+    ting.push("Hoftegnagsårbeskytter");
+  }
 
-    if (skalGåPåTur(valg.aktiviteter) && valg.sesong === Sesong.Vinter) {
-      ting.push("Varmeposer");
-    }
+  if (overnatteUkjentSted(valg.overnatting) && valg.sesong === Sesong.Vinter) {
+    ting.push("Termos");
+  }
 
-    if (valg.aktiviteter.includes(Aktivitet.Jogging)) {
-      ting.push("Løpebelte");
-    }
+  if (skalGåPåTur(valg.aktiviteter) && valg.sesong === Sesong.Vinter) {
+    ting.push("Varmeposer");
+  }
+
+  if (
+    [Aktivitet.Jogging, Aktivitet.Tradklatring].some((a) =>
+      valg.aktiviteter.includes(a),
+    )
+  ) {
+    ting.push("Løpebelte");
   }
 
   return stringArrayToItems(ting, Kategori.Div);
